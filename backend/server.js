@@ -1,35 +1,74 @@
 import express from "express";
+import http from "http";
+import { Server } from "socket.io";
 import cors from "cors";
-import { connectDB } from "./config/db.js"; //this is correct
-import foodRouter from "./routes/foodRoute.js"; //this is correct
-import userRouter from "./routes/userRoute.js"; //This is correct
-import "dotenv/config"; //this is correct
-import cartRouter from "./routes/cartRoute.js"; //this is correct
-// import orderRouter from "./routes/orderRoute.js";
+import { connectDB } from "./config/db.js";
+import foodRouter from "./routes/foodRoute.js";
+import userRouter from "./routes/userRoute.js";
+import cartRouter from "./routes/cartRoute.js";
+import paymentRouter from "./routes/paymentRoute.js";
+import orderRouter from "./routes/orderRoute.js";
+import storeStatusRoute from './routes/storeStatusRoute.js';
+import "dotenv/config";
 
-//app config
 const app = express();
 const port = 4000;
 
-//middleware
-app.use(express.json());
-app.use(cors());
+// ✅ Local frontend & admin panel URLs
+const allowedOrigins = [
+  "http://localhost:5173", // frontend
+  "http://localhost:5174", // admin
+];
 
-// db connection
+// Create HTTP server
+const server = http.createServer(app);
+
+// ✅ CORS setup for Socket.IO
+const io = new Server(server, {
+  cors: {
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    credentials: true,
+  },
+});
+
+// ✅ CORS setup for Express routes
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
+
+// Middleware
+app.use(express.json());
+
+// DB connection
 connectDB();
 
-// api endpoints
-app.use("/api/food", foodRouter); //this is correct
-app.use("/images", express.static("uploads")); //this is correct
-app.use("/api/user", userRouter); //This is correct
-app.use("/api/cart", cartRouter); //this is correct
-// app.use("/api/order",orderRouter)
+// Inject io into app for use in routes
+app.set("io", io);
 
+// API routes
+app.use("/api/food", foodRouter);
+app.use("/images", express.static("uploads"));
+app.use("/api/user", userRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/payment", paymentRouter);
+app.use("/api/order", orderRouter);
+app.use('/api/store-status', storeStatusRoute);
+
+// Root test route
 app.get("/", (req, res) => {
   res.send("API working");
 });
-app.listen(port, () => {
-  console.log(`Server Started on http://localhost:${port}`);
+
+// Socket.IO connection setup
+io.on("connection", (socket) => {
+  socket.on("disconnect", () => {});
 });
 
-// mongodb+srv://purnachandrap:9777834155@cluster0.o4p3k.mongodb.net/?
+// Start server
+server.listen(port, () => {
+  console.log(`Server started on http://localhost:${port}`);
+});

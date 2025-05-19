@@ -1,14 +1,101 @@
 .food-display {
   margin-top: 30px;
 }
+
 .food-display h2 {
   font-size: max(2vw, 24px);
   font-weight: 600;
 }
+
 .food-display-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  margin-top: 30px;
   gap: 30px;
   row-gap: 50px;
+  align-items: stretch; /* Makes all items in a row equal height */
+}
+
+.food-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.food-item-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.food-display-list.no-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 300px;
+}
+
+.no-items-message {
+  text-align: center;
+  padding: 20px;
+  background-color: #fff3f3;
+  border: 1px solid #ffd1d1;
+  border-radius: 10px;
+  width: 50%;
+}
+
+.no-items-message h3 {
+  color: #ff4d4f;
+  font-size: 24px;
+  margin: 15px 0;
+}
+
+.no-items-message p {
+  color: #555;
+  font-size: 16px;
+}
+
+.no-items-image {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+.no-items-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  margin-top: 40px;
+  background-color: #fff8f0;
+  border: 1px dashed #ffa07a;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(255, 160, 122, 0.2);
+}
+
+.no-items-message img.no-items-image {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.no-items-message h3 {
+  color: #ff6347;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.no-items-message p {
+  font-size: 16px;
+  color: #444;
 }

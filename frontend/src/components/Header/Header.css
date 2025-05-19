@@ -19,9 +19,9 @@
 }
 
 .header-contents h2 {
-  font-weight: 500;
+  font-weight: 600;
   color: white;
-  font-size: max(4.5vw, 22px);
+  font-size: max(3.5vw, 22px);
 }
 
 .header-contents p {
@@ -29,14 +29,34 @@
   font-size: 1.09vw;
 }
 
+.header-contents h2::after {
+  content: "🖋️";
+  animation: blink 1s infinite;
+  color: white;
+  margin-left: 5px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+
 .header-contents button {
   border: none;
-  color: #747474;
+  color: #100f0f;
   font-weight: 500;
   padding: 1vw 2.3vw;
   background-color: white;
   font-size: max(1vw, 13px);
   border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.header-contents button:hover {
+  background-color: rgb(219, 149, 19);
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgb(133, 33%, 46%, 0.2);
 }
 @media (max-width: 1050px) {
   .header-contents {

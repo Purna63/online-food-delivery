@@ -1,19 +1,25 @@
+.plac{
+  margin-top: 100px;
+}
 .place-order {
   display: flex;
   align-items: start;
   justify-content: space-between;
   gap: 50px;
-  margin-top: 100px;
+  
 }
+
 .place-order-left {
   width: 100%;
   max-width: max(30%, 500px);
 }
+
 .place-order-left .title {
   font-size: 30px;
   font-weight: 600;
   margin-bottom: 50px;
 }
+
 .place-order-left input {
   margin-bottom: 15px;
   width: 100%;
@@ -22,14 +28,141 @@
   border-radius: 4px;
   outline-color: tomato;
 }
+
 .place-order-left .multi-fields {
   display: flex;
   gap: 10px;
 }
+
 .place-order-right {
   width: 100%;
   max-width: max(40%, 500px);
 }
+
 .place-order .cart-total button {
   margin-top: 30px;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.error-message-top {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff4d4d;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(-50%) translateY(0);
+  }
+  25% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  50% {
+    transform: translateX(-50%) translateY(10px);
+  }
+  75% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.payment-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.payment-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.payment-modal-content h3 {
+  margin-bottom: 15px;
+}
+
+.payment-modal-content button {
+  margin: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.close-btn {
+  background: red;
+  color: white;
+}
+/* Error Message Styles */
+/* Error Message Styles */
+.store-closed-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 0, 0, 0.8); /* Red background */
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  text-align: center;
+  width: 80%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.store-closed-message p {
+  margin: 0;
+}
+
+
+
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #f37254;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -13,6 +13,22 @@
 .list-table-format img {
   width: 50px;
 }
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
 @media (max-width: 600px) {
   .list-table-format {
     grid-template-columns: 1fr 3fr 1fr;

@@ -1,87 +1,120 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
+// Create context
 export const StoreContext = createContext(null);
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const StoreContextProvider = (props) => {
-  // this line of code check the item is already is avaliable or note
-  const [cartItems, setCartItems] = useState({});
-  const url = "http://localhost:4000";
-  const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const initialCart = localStorage.getItem("cartItems");
+  const [cartItems, setCartItems] = useState(
+    initialCart ? JSON.parse(initialCart) : {}
+  );
+
+  const url = BACKEND_URL;
 
   const addToCart = async (itemId) => {
-    if (!cartItems[itemId]) {
-      setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
-    } else {
-      setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    }
+    setCartItems((prev) => {
+      const updated = { ...prev, [itemId]: (prev[itemId] || 0) + 1 };
+      return updated;
+    });
+
     if (token) {
       await axios.post(
         url + "/api/cart/add",
         { itemId },
-        { headers: { token } }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
     }
   };
 
   const removeFromCart = async (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    setCartItems((prev) => {
+      const updated = { ...prev };
+      updated[itemId]--;
+      if (updated[itemId] <= 0) delete updated[itemId];
+      return updated;
+    });
+
     if (token) {
       await axios.post(
         url + "/api/cart/remove",
         { itemId },
-        { headers: { token } }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
     }
   };
 
   const getTotalCartAmount = () => {
-    let totalAmount = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        let itemInfo = food_list.find((product) => product._id === item);
-        totalAmount += itemInfo.price * cartItems[item];
-      }
+    let total = 0;
+    for (const itemId in cartItems) {
+      const product = food_list.find((item) => item._id === itemId);
+      if (product) total += product.price * cartItems[itemId];
     }
-    return totalAmount;
+    return total;
   };
 
   const fetchFoodList = async () => {
-    const response = await axios.get(url + "/api/food/list");
-    setFoodList(response.data.data);
+    const res = await axios.get(url + "/api/food/list");
+    setFoodList(res.data.data);
   };
 
-  const loadCartData = async (token) => {
-    const response = await axios.post(
+  const loadUserCart = async () => {
+    const res = await axios.post(
       url + "/api/cart/get",
       {},
-      { headers: { token } }
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
-    setCartItems(response.data.cartData);
+    if (res.data.cartData) {
+      setCartItems(res.data.cartData);
+    }
   };
 
   useEffect(() => {
-    async function loadData() {
+    const fetchData = async () => {
       await fetchFoodList();
-      if (localStorage.getItem("token")) {
-        setToken(localStorage.getItem("token"));
-        await loadCartData(localStorage.getItem("token"));
+      if (token) {
+        await loadUserCart();
       }
+      setLoading(false);
+    };
+    fetchData();
+  }, [token]);
+
+  useEffect(() => {
+    if (!token) {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }
-    loadData();
-  }, []);
+  }, [cartItems, token]);
 
   const contextValue = {
     food_list,
     cartItems,
-    setCartItems,
     addToCart,
     removeFromCart,
     getTotalCartAmount,
     url,
     token,
-    setToken, //this correct
+    setToken,
+    searchTerm,
+    setSearchTerm,
   };
 
   return (

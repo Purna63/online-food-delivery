@@ -8,6 +8,10 @@
 .add form {
   gap: 20px;
 }
+
+.add-img-upload label{
+  width: 15%;
+}
 .add-img-upload img {
   width: 120px;
   cursor: pointer;
@@ -23,6 +27,7 @@
 .add-category-price {
   display: flex;
   gap: 30px;
+  width: 40%;
 }
 .add-category-price select,
 .add-category-price input {
@@ -36,4 +41,5 @@
   background-color: black;
   color: white;
   cursor: pointer;
+  margin-left: 0px;
 }

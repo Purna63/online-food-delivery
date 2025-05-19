@@ -1,83 +1,43 @@
-// import React from "react";
-// import "./ExploreMenu.css";
-// import { menu_list } from "../../assets/assets";
-
-// const ExploreMenu = ({ category, setCategory }) => {
-//   return (
-//     <div className="explore-menu" id="explore-menu">
-//       <h1>Explore our menu</h1>
-//       <p className="explore-menu-text">
-//         Choose from a diverse menu featuring a delectable array of dishes. Our
-//         mission is to satisfy your cravings and elevate your dining experience,
-//         one delicious meal at a time.
-//       </p>
-//       <div className="explore-menu-list">
-//         {menu_list.map((item, index) => {
-//           return (
-//             <div
-//               onClick={() =>
-//                 setCategory((prev) =>
-//                   prev === item.menu_name ? "All" : item.menu_name
-//                 )
-//               }
-//               key={index}
-//               className="explore-menu-list-item"
-//             >
-//               <img
-//                 className={category === item.menu_name ? "active" : ""}
-//                 src={item.menu_image}
-//                 alt=""
-//               />
-//               <p>{item.menu_name}</p>
-//             </div>
-//           );
-//         })}
-//       </div>
-//       <hr />
-//     </div>
-//   );
-// };
-
-// export default ExploreMenu;
-
-// End Start New
-
-import React from "react";
+import React, { useState } from "react";
 import "./ExploreMenu.css";
 import { menu_list } from "../../assets/assets";
+import FoodDisplay from "../FoodDisplay/FoodDisplay";
 
-const ExploreMenu = ({ category, setCategory }) => {
+const ExploreMenu = () => {
+  const [category, setCategory] = useState("All"); // Default category
+
   return (
-    <div className="explore-menu" id="explore-menu">
-      <h1>Explore our menu</h1>
-      <p className="explore-menu-text">
-        Choose from a diverse menu featuring a delectable array of dishes. Our
-        mission is to satisfy your cravings and elevate your dining experience,
-        one delicious meal at a time.
-      </p>
-      <div className="explore-menu-list">
-        {menu_list.map((item, index) => {
-          return (
+    <div>
+      <div className="explore-menu" id="explore-menu">
+        <h1>Discover Our Menu</h1>
+        <p className="explore-menu-text">
+          Fast food offers a quick and satisfying solution for your hunger, perfect for busy days and late-night cravings. With a variety of flavors and dishes, it's all about convenience without compromising on taste. All foods are collected from different restaurants in <span className="tex">Rahama Market</span>.
+
+
+        </p>
+
+        <div className="explore-menu-list">
+          {menu_list.map((item, index) => (
             <div
-              onClick={() =>
-                setCategory((prev) =>
-                  prev === item.menu_name ? "All" : item.menu_name
-                )
-              }
+              onClick={() => setCategory(item.menu_name)}
               key={index}
               className="explore-menu-list-item"
             >
               <img
                 className={category === item.menu_name ? "active" : ""}
                 src={item.menu_image}
-                alt=""
+                alt={item.menu_name}
               />
               <p>{item.menu_name}</p>
             </div>
-          );
-        })}
+          ))}
+        </div>
+
+        <hr />
       </div>
-      <hr />
+
+      {/* Pass category to FoodDisplay */}
+      <FoodDisplay category={category} />
     </div>
   );
 };

@@ -1,58 +1,52 @@
+
 import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt"; // It is the bcrypt which is provide security using hashing method
-import validator from "validator";//this is correct
+import bcrypt from "bcrypt";
+import validator from "validator";
 
-//This is correct
-// login User
+// Login User with phone
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { phone, password } = req.body;
   try {
-    const user = await userModel.findOne({ email });
+    const user = await userModel.findOne({ phone });
 
-    // we gote any user or not
     if (!user) {
-      return res.json({ success: false, message: "User Doesn't exist" });
+      return res.json({ success: false, message: "User doesn't exist" });
     }
 
-    // we gating user then we match and store database
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.json({ success: false, message: "Invalid crentials" });
+      return res.json({ success: false, message: "Invalid credentials" });
     }
 
-    // generate token if it matched
     const token = createToken(user._id);
     res.json({ success: true, token });
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: "Error" });
+    res.json({ success: false, message: "Login failed" });
   }
 };
 
+// Create JWT
 const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET);
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 };
-//This is correct
-//register user
+
+// Register User with phone
 const registerUser = async (req, res) => {
-  const { name, password, email } = req.body;
+  const { name, phone, password } = req.body;
+
   try {
-    //checking is user already exists
-    const exists = await userModel.findOne({ email });
+    const exists = await userModel.findOne({ phone });
     if (exists) {
-      return res.json({ success: false, message: "User already exists" });
+      return res.json({ success: false, message: "Phone already registered" });
     }
 
-    //validating email format & strong password
-    if (!validator.isEmail(email)) {
-      return res.json({
-        success: false,
-        message: "Please enter a valid email",
-      });
+    // Validate phone number (basic length check)
+    if (!validator.isMobilePhone(phone + "", "any")) {
+      return res.json({ success: false, message: "Invalid phone number" });
     }
 
-    //It check it take 8 charecter or not
     if (password.length < 8) {
       return res.json({
         success: false,
@@ -60,14 +54,13 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // hashing user password
     const salt = await bcrypt.genSalt(10);
-    const  hashedPassword = await bcrypt.hash(password,salt)
-    // It is new user
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const newUser = new userModel({
-      name: name,
-      email: email,
-      password:  hashedPassword,
+      name,
+      phone,
+      password: hashedPassword,
     });
 
     const user = await newUser.save();
@@ -75,8 +68,32 @@ const registerUser = async (req, res) => {
     res.json({ success: true, token });
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: "Error" });
+    res.json({ success: false, message: "Registration failed" });
   }
 };
 
-export { loginUser, registerUser };
+// Reset Password functionality
+const resetPassword = async (req, res) => {
+  const { phone, newPassword } = req.body;  // Receive phone number and new password
+
+  try {
+    const user = await userModel.findOne({ phone });  // Find user by phone number
+    if (!user) {
+      return res.json({ success: false, message: "Phone number not found!" });
+    }
+
+    // Hash the new password before saving (security reason)
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    user.password = hashedPassword;  // Update the password
+    await user.save();  // Save the updated user info
+
+    res.json({ success: true, message: "Password reset successful!" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+export { loginUser, registerUser, resetPassword };

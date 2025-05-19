@@ -1,9 +1,12 @@
+
+
 import express from "express";
-import { loginUser, registerUser } from "../controllers/userController.js";
+import { loginUser, registerUser, resetPassword } from "../controllers/userController.js"; // Added resetPassword
 
 const userRouter = express.Router();
 
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
+userRouter.post("/reset-password", resetPassword); // Added the route for reset password
 
 export default userRouter;

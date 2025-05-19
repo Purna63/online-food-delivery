@@ -5,16 +5,22 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  padding: 20px 8vw;
-  padding-top: 80px;
+  padding: 30px 8vw;
+  padding-top: 60px;
   margin-top: 100px;
+  border-top: 5px solid #f5a623;
+  font-family: Arial, sans-serif;
+  width: 100vw;
+  box-sizing: border-box;
 }
+
 .footer-content {
   width: 100%;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
-  gap: 80px;
+  gap: 60px;
 }
+
 .footer-content-left,
 .footer-content-right,
 .footer-content-center {
@@ -23,34 +29,97 @@
   align-items: start;
   gap: 20px;
 }
+
+.footer-content-left img {
+  width: 150px;
+  margin-bottom: 10px;
+}
+
+.footer-content-left p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #e0e0e0;
+}
+
+.footer-content-center h2,
+.footer-content-right h2 {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
 .footer-content-left li,
 .footer-content-right li,
 .footer-content-center li {
   list-style: none;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  color: #e0e0e0;
   cursor: pointer;
+  font-size: 14px;
 }
-.footer-content-right h2,
-.footer-content-center h2 {
-  color: white;
+
+.footer-content-left li:hover,
+.footer-content-right li:hover,
+.footer-content-center li:hover {
+  color: #f5a623;
 }
+
 .footer-social-icons img {
-  width: 40px;
-  margin-right: 15px;
+  width: 35px;
+  margin-right: 12px;
+  transition: transform 0.3s ease-in-out;
 }
+
+.footer-social-icons img:hover {
+  transform: scale(1.1);
+}
+
 .footer hr {
   width: 100%;
-  height: 2px;
+  height: 1px;
   margin: 20px 0;
-  background-color: grey;
+  background-color: #555;
   border: none;
 }
+
+.footer-copyright {
+  text-align: center;
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+.footer-copyright a {
+  color: #f5a623;
+  text-decoration: none;
+}
+
+.footer-copyright a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Footer */
 @media (max-width: 750px) {
+  .footer {
+    padding: 30px 10px;
+  }
+
   .footer-content {
     display: flex;
     flex-direction: column;
-    gap: 35px;
+    gap: 40px;
   }
+
+  .footer-content-left {
+    align-items: center;
+  }
+
+  .footer-social-icons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+
   .footer-copyright {
     text-align: center;
   }

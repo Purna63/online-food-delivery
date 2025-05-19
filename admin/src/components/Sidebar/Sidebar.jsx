@@ -1,11 +1,11 @@
 import React from "react";
 import "./Sidebar.css";
-import { assets } from "../../assets/assets";//this is correct
-import { NavLink } from "react-router-dom";//this is correct
+import { assets } from "../../assets/assets";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div className="sidebar">
+    <div className="sidebar" style={{ width: 200 }}>
       <div className="sidebar-options">
         <NavLink to="/add" className="sidebar-option">
           <img src={assets.add_icon} alt="" />
@@ -18,6 +18,10 @@ const Sidebar = () => {
         <NavLink to="/orders" className="sidebar-option">
           <img src={assets.order_icon} alt="" />
           <p>Orders</p>
+        </NavLink>
+        <NavLink to="/store-settings" className="sidebar-option">
+        <img src={assets.time_icon} alt="" style={{ width: '30px', height: '30px' }} />
+          <p>Set Time</p>
         </NavLink>
       </div>
     </div>

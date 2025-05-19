@@ -1,0 +1,27 @@
+.store-status {
+    text-align: center;
+    padding: 10px;
+    border-radius: 12px;
+    margin: 15px auto;
+    width: fit-content;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .store-status.open {
+    background-color: #e6ffed;
+    color: #228b22;
+  }
+  
+  .store-status.closed {
+    background-color: #ffe6e6;
+    color: #cc0000;
+  }
+  
+  .hours {
+    display: block;
+    margin-top: 4px;
+    font-size: 14px;
+    color: #555;
+  }
+  

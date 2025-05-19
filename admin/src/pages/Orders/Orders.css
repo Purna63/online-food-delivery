@@ -1,0 +1,313 @@
+/* .orders-container {
+  padding: 20px;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.orders-heading {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.orders-empty {
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.orders-table th {
+  background-color: #007bff;
+  color: white;
+}
+
+.orders-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.status-badge.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.delivered {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-badge.cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+} */
+ 
+.orders {
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  min-height: 50vh;
+}
+
+.orders h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-right: 15%;
+  color: #333;
+}
+
+.orders table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.orders th,
+.orders td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.orders thead {
+  background-color: #333;
+  color: white;
+}
+
+.orders tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.orders tbody tr:hover {
+  background-color: #eaeaea;
+}
+
+.orders td:nth-child(1) {
+  font-weight: bold;
+  color: #555;
+}
+
+.orders td:nth-child(6) {
+  font-weight: bold;
+  color: #0a7f43;
+}
+
+.orders td:nth-child(7) {
+  cursor: pointer;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.orders td:nth-child(7):hover {
+  text-decoration: underline;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  padding: 6px 10px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Empty state centered */
+.orders.empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  text-align: center;
+}
+
+.orders.empty p {
+  font-size: 1.5rem;
+  color: #777;
+}
+
+.orders.empty p::before {
+  content: "📭";
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 10px;
+  animation: bounce 1.5s infinite;
+}
+
+
+
+/* Track button styling */
+.track-btn {
+  background-color: #3498db;
+  color: white;
+  padding: 6px 10px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.track-btn:hover {
+  background-color: #2c80b4;
+}
+
+/* Make buttons in same column flow nicely */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Loading & Error States */
+.loading, .error {
+  font-size: 1.2rem;
+  color: #555;
+  text-align: center;
+}
+/* Styling for the confirmation message */
+/* Smaller and top-aligned confirmation box */
+.confirmation-message {
+  position: fixed;
+  top: 15px;
+  left: 53%;
+  transform: translateX(-50%);
+  background-color: #f8d7da;
+  padding: 12px 20px;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: calc(100% - 40px);
+}
+
+.confirmation-message p {
+  margin: 0;
+  white-space: nowrap;
+  margin-right: 10px; /* small gap between text and buttons */
+}
+
+.confirmation-message button {
+  padding: 6px 12px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 5px; /* small gap between buttons */
+}
+
+.confirmation-message button.cancel {
+  background-color: #6c757d;
+}
+
+.confirmation-message button:hover {
+  opacity: 0.9;
+}
+
+
+
+.orders {
+  padding: 20px;
+}
+
+/* Make table look better */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+td {
+  background-color: #fff;
+}
+
+td select {
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

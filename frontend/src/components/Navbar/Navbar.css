@@ -1,14 +1,8 @@
 .navbar {
-  /* padding: 20px 0px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; */
-
   width: 100%;
   height: 60px;
   padding: 20px 0px;
   display: flex;
-  /* overflow: hidden; #f3ebeb*/
   position: fixed;
   top: 0;
   left: 0;
@@ -47,7 +41,7 @@
   cursor: pointer;
   transition: 0.3s;
 }
-/* This lice of code is change the background color when we hover mouse in sign button */
+
 .navbar button:hover {
   background-color: #fff4f2;
   transform: scale(1.05);
@@ -63,6 +57,10 @@
 
 .navbar-search-icon {
   position: relative;
+  cursor: pointer;
+}
+.navbar-search-icon:hover {
+  transform: scale(1.05);
 }
 .navbar-search-icon .dot {
   position: absolute;
@@ -105,6 +103,66 @@
 .nav-profile-dropdown li:hover {
   color: tomato;
 }
+.navbar-search-wrapper {
+  position: relative;
+}
+
+.navbar-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: white;
+  padding: 6px 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-search-box input {
+  padding: 6px 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.navbar-search-box button {
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.close-search {
+  font-size: 20px;
+  cursor: pointer;
+  padding-left: 6px;
+  color: red;
+}
+
+
+/* Toggle menu icon */
+.hamburger-icon {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+/* Show mobile nav menu when toggled */
+.show-menu {
+  display: flex !important;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  background-color: #f3ebeb;
+  padding: 20px 0;
+  gap: 20px;
+  z-index: 1001;
+}
+
 @media (max-width: 1050px) {
   .navbar .logo {
     width: 140px;
@@ -142,8 +200,32 @@
     font-size: 15px;
   }
 }
+/* Media query for small screens */
 @media (max-width: 750px) {
+  .hamburger-icon {
+    display: block;
+  }
+
   .navbar-menu {
     display: none;
+    flex-direction: column;
+    position: absolute;
+    background-color: #f3ebeb;
+    width: 100%;
+    top: 60px;
+    left: 0;
+    padding: 20px 0;
+    z-index: 1000;
+    gap: 15px;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .navbar-right {
+    gap: 20px;
+  }
+
+  .navbar {
+    padding: 10px 15px;
   }
 }

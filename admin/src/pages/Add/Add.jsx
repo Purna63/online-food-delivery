@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Add.css";
-import { assets } from "../../assets/assets";//This is correct
-import axios from "axios";//This is correct
+import { assets } from "../../assets/assets"; //This is correct
+import axios from "axios"; //This is correct
 import { toast } from "react-toastify";
 
 const Add = ({ url }) => {
@@ -10,7 +10,7 @@ const Add = ({ url }) => {
     name: "",
     description: "",
     price: "",
-    category: "Salad",
+    category: "Biryani",
   });
 
   const onChangeHandler = (event) => {
@@ -33,7 +33,7 @@ const Add = ({ url }) => {
         name: "",
         description: "",
         price: "",
-        category: "Salad",
+        category: "Biryani",
       });
       setImage(false);
       toast.success(response.data.message);
@@ -48,7 +48,7 @@ const Add = ({ url }) => {
         <div className="add-img-upload flex-col">
           <p>Upload Image</p>
           <label htmlFor="image">
-            <img
+            <img 
               src={image ? URL.createObjectURL(image) : assets.upload_area}
               alt=""
             />
@@ -84,16 +84,22 @@ const Add = ({ url }) => {
         </div>
         <div className="add-category-price">
           <div className="add-category flex-col">
-            <p>Product category</p>
-            <select onChange={onChangeHandler} name="category">
-              <option value="Salad">Salad</option>
+            <p>Product Name</p>
+            <select
+              value={data.category}
+              onChange={onChangeHandler}
+              name="category"
+            >
+              <option value="Biryani">Biryani</option>
               <option value="Rolls">Rolls</option>
-              <option value="Deserts">Deserts</option>
+              <option value="Non Vegetarian">Non Vegetarian</option>
+              <option value="Vegetarian">Vegetarian</option>
               <option value="Sandwich">Sandwich</option>
               <option value="Cake">Cake</option>
-              <option value="Pure Veg">Pure Veg</option>
-              <option value="Pasta">Pasta</option>
-              <option value="Noodles">Noodles</option>
+              <option value="Chow Mein">Chow Mein</option>
+              <option value="Meals">Meals</option>
+              <option value="Burger">Burger</option>
+              <option value="Cold Drink's">Cold Drink's</option>
             </select>
           </div>
           <div className="add-price flex-col">
