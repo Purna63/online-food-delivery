@@ -18,6 +18,8 @@ const port = process.env.PORT || 4000;
 const allowedOrigins = [
   "http://localhost:5173", // frontend
   "http://localhost:5174", // admin
+  "https://online-food-delivery-frontend-8i06.onrender.com",
+  "https://online-food-delivery-admin-spq5.onrender.com"
 ];
 
 // Create HTTP server
