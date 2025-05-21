@@ -16,4 +16,4 @@ export const assets ={
     time_icon
 }
 
-export const url = 'http://localhost:4000'
+export const url = 'https://online-food-delivery-backend-l3oq.onrender.com'
