@@ -12,7 +12,7 @@ import storeStatusRoute from './routes/storeStatusRoute.js';
 import "dotenv/config";
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 // ✅ Local frontend & admin panel URLs
 const allowedOrigins = [
