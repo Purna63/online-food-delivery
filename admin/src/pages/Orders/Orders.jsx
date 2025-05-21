@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import "./Orders.css";
 
-const socket = io("http://localhost:4000");
+const socket = io("https://online-food-delivery-backend-l3oq.onrender.com");
 
 const STATUS_OPTIONS = [
   "Pending",
