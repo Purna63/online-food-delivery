@@ -290,7 +290,7 @@ const PlaceOrder = () => {
               onChange={onChangeHandler}
               value={data.zipcode}
               type="text"
-              placeholder="Zip Code"
+              placeholder="Pin Code/Zip Code"
             />
             <input
               required
