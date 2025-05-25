@@ -3,10 +3,8 @@
 }
 .place-order {
   display: flex;
-  align-items: start;
   justify-content: space-between;
-  gap: 50px;
-  
+  gap: 20px;
 }
 
 .place-order-left {
@@ -164,5 +162,34 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .place-order {
+    flex-direction: column;
+  }
+
+  .place-order-left,
+  .place-order-right {
+    width: 100%;
+  }
+
+  .cart-total {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .multi-fields {
+    flex-direction: column;
+  }
+
+  .multi-fields input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .payment-modal-content {
+    width: 90%;
   }
 }
