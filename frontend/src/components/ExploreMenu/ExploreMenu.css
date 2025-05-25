@@ -5,6 +5,7 @@
 }
 .explore-menu h1 {
   color: #262626;
+  font-size: 25px;
   font-weight: 500;
 }
 .explore-menu-text {
@@ -17,7 +18,7 @@
   align-items: center;
   gap: 30px;
   text-align: center;
-  margin: 20px 0px;
+  margin: 10px 0px;
   overflow-x: scroll;
 }
 /* This line of code is scroll bar hidden the item menu list */
@@ -29,14 +30,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 120px; /* Set a consistent item width */
+  width: 110px; /* Set a consistent item width */
   min-width: 100px;
   flex-shrink: 0;
 }
 
 .explore-menu-list-item img {
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
   object-fit: cover; /* Ensures image fills area without distortion */
   border-radius: 50%;
   cursor: pointer;
