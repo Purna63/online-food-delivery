@@ -21,7 +21,7 @@ const Contact = () => {
       </p>
 
       <h2>Email</h2>
-      <p>purnachandraofficial63@gmail.com</p>
+      <p>purnachandrap585@gmail.com</p>
 
       <h2>Social Links</h2>
       <p>
@@ -32,3 +32,4 @@ const Contact = () => {
 };
 
 export default Contact;
+
