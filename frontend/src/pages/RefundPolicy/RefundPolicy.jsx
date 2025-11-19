@@ -3,37 +3,41 @@ import "./RefundPolicy.css";
 
 const RefundPolicy = () => {
   return (
-    <div className="refund-policy">
-      <h1>Refund Policy</h1>
-      <p>
-        We value your satisfaction and strive to provide you with the best service.
-        Please read our refund policy carefully to understand your rights as a customer.
-      </p>
+    <div className="policy-page">
+      <h1>Cancellation & Refund Policy</h1>
 
       <h2>1. Order Cancellation</h2>
       <p>
-        Once an order is confirmed and payment is completed, it cannot be cancelled if the food has already been prepared or dispatched.
+        Once an order is placed, it cannot be cancelled by the customer after
+        confirmation. You may request cancellation only before the restaurant
+        starts preparing your food.
       </p>
 
-      <h2>2. Refund Eligibility</h2>
+      <h2>2. Refund Policy</h2>
+      <p>
+        Refunds are provided only in the following cases:
+      </p>
       <ul>
-        <li>Refunds are only applicable if there is a proven issue such as wrong items delivered or non-delivery.</li>
-        <li>No refunds will be given for dissatisfaction with taste or change of mind after order placement.</li>
+        <li>Payment was deducted, but the order was not confirmed.</li>
+        <li>Restaurant cancelled the order due to unavailability.</li>
+        <li>Duplicate payment.</li>
       </ul>
 
-      <h2>3. How to Request a Refund</h2>
+      <h2>3. No Refund Cases</h2>
+      <ul>
+        <li>Customer is unavailable at the delivery location.</li>
+        <li>Incorrect address or phone number entered by the customer.</li>
+        <li>Food quality or taste issues (as it is subjective).</li>
+      </ul>
+
+      <h2>4. Refund Timeline</h2>
       <p>
-        To request a refund, contact our support team within 24 hours of receiving your order. Include order ID, issue details, and relevant photos (if applicable).
+        Approved refunds will be processed within 5–7 business days by Razorpay.
       </p>
 
-      <h2>4. Refund Processing</h2>
       <p>
-        If approved, refunds will be processed within 5–7 business days through the original payment method.
-      </p>
-
-      <h2>5. Contact Us</h2>
-      <p>
-        For support or refund inquiries, contact/message: <strong>9777834155.</strong>
+        For refund queries, contact: <br />
+        <strong>Phone:</strong> 9777834155 / 7750946466
       </p>
     </div>
   );
