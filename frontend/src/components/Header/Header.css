@@ -30,7 +30,7 @@
 }
 
 .header-contents h2::after {
-  content: "🖋️";
+  content: "";
   animation: blink 1s infinite;
   color: white;
   margin-left: 5px;
