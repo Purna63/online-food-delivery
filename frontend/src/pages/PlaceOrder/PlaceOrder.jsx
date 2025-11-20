@@ -4,6 +4,7 @@ import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID;
 
 const PlaceOrder = () => {
   const { getTotalCartAmount, token, cartItems, food_list } =
@@ -167,7 +168,7 @@ const PlaceOrder = () => {
           const order = await response.json();
 
           const options = {
-            key: "rzp_test_faG3OjjiMCoD2S",
+            key: RAZORPAY_KEY_ID,
             amount: order.amount,
             currency: "INR",
             name: "Food Delivery",
