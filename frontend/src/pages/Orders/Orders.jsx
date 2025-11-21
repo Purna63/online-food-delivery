@@ -30,7 +30,7 @@ const Orders = () => {
       // const response = await fetch("http://localhost:4000/api/order", {
       //   headers: { Authorization: `Bearer ${token}` },
       // });
-      const response = await fetch(`${BACKEND_URL}/api/order`, {
+      const response = await fetch(`${BACKEND_URL}/api/order/my-orders`, {
   headers: { Authorization: `Bearer ${token}` },
 });
 
