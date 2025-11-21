@@ -5,7 +5,7 @@ import authMiddleware from "../middleware/auth.js";
 const router = express.Router();
 
 // ✅ Place Order Route
-router.post("/my-orders", authMiddleware, async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
   try {
     const userId = req.userId;
     const { cartItems, food_list, deliveryInfo, amount, payment } = req.body;
@@ -38,13 +38,27 @@ router.post("/my-orders", authMiddleware, async (req, res) => {
 
 // ✅ Admin - Get ALL orders
 // router.get("/", authMiddleware, async (req, res) => {
-router.get("/", async (req, res) => {
+// router.get("/", async (req, res) => {
+//   try {
+//     const orders = await orderModel.find();
+//     res.json(orders);
+//   } catch (err) {
+//     console.error("Error fetching orders:", err);
+//     res.status(500).send("Failed to fetch orders");
+//   }
+// });
+
+
+router.get("/my-orders", authMiddleware, async (req, res) => {
   try {
-    const orders = await orderModel.find();
+    const userId = req.userId;
+
+    const orders = await orderModel.find({ userId }).sort({ createdAt: -1 });
+
     res.json(orders);
   } catch (err) {
-    console.error("Error fetching orders:", err);
-    res.status(500).send("Failed to fetch orders");
+    console.error("Error fetching user orders:", err);
+    res.status(500).send("Failed to fetch user orders");
   }
 });
 
