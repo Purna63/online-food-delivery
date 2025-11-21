@@ -5,7 +5,7 @@ import authMiddleware from "../middleware/auth.js";
 const router = express.Router();
 
 // ✅ Place Order Route
-router.post("/", authMiddleware, async (req, res) => {
+router.post("/my-orders", authMiddleware, async (req, res) => {
   try {
     const userId = req.userId;
     const { cartItems, food_list, deliveryInfo, amount, payment } = req.body;
