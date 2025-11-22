@@ -37,18 +37,18 @@ router.post("/", authMiddleware, async (req, res) => {
 });
 
 // ✅ Admin - Get ALL orders
-// router.get("/", authMiddleware, async (req, res) => {
-// router.get("/", async (req, res) => {
-//   try {
-//     const orders = await orderModel.find();
-//     res.json(orders);
-//   } catch (err) {
-//     console.error("Error fetching orders:", err);
-//     res.status(500).send("Failed to fetch orders");
-//   }
-// });
+router.get("/", authMiddleware, async (req, res) => {
+  try {
+    const orders = await orderModel.find();
+    res.json(orders);
+  } catch (err) {
+    console.error("Error fetching orders:", err);
+    res.status(500).send("Failed to fetch orders");
+  }
+});
 
 
+// ✅ USER - GET ONLY USER'S OWN ORDERS  (Frontend user uses this)
 router.get("/my-orders", authMiddleware, async (req, res) => {
   try {
     const userId = req.userId;
@@ -61,6 +61,8 @@ router.get("/my-orders", authMiddleware, async (req, res) => {
     res.status(500).send("Failed to fetch user orders");
   }
 });
+
+
 
 // ✅ Update Order Status & Emit via Socket.IO
 router.patch("/:id", async (req, res) => {
