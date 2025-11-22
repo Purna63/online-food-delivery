@@ -37,7 +37,7 @@ router.post("/", authMiddleware, async (req, res) => {
 });
 
 // ✅ Admin - Get ALL orders
-router.get("/", authMiddleware, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const orders = await orderModel.find();
     res.json(orders);
