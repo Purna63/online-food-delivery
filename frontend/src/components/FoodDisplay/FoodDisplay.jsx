@@ -7,9 +7,16 @@ import { useLocation } from "react-router-dom";
 const FoodDisplay = ({ category }) => {
   const { food_list } = useContext(StoreContext);
   const [filteredFood, setFilteredFood] = useState([]);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
+    // Wait for backend data to load
+    if (food_list.length === 0) {
+      setLoading(true);
+      return;
+    }
+
     const params = new URLSearchParams(location.search);
     const searchTerm =
       params.get("search")?.toLowerCase().replace(/\s|-/g, "") || "";
@@ -17,26 +24,32 @@ const FoodDisplay = ({ category }) => {
     let result = [];
 
     if (searchTerm) {
-      // If there's a search term, filter by it only
       result = food_list.filter((item) =>
         item.name.toLowerCase().replace(/\s|-/g, "").includes(searchTerm)
       );
     } else if (category && category !== "All") {
-      // If no search term but a valid category, filter by category
       result = food_list.filter((item) => item.category === category);
     } else {
-      // Otherwise, show all
       result = food_list;
     }
 
     setFilteredFood(result);
+    setLoading(false);
+    
   }, [location.search, food_list, category]);
 
   return (
     <div className="food-display" id="food-display">
       <h2>Top Dishes near you</h2>
       <div className="food-display-list">
-        {filteredFood.length > 0 ? (
+
+        {/* 🔥 Show loader while backend wakes up */}
+        {loading ? (
+          <div className="loader-container">
+            <div className="loader"></div>
+            <p>Loading delicious food...</p>
+          </div>
+        ) : filteredFood.length > 0 ? (
           filteredFood.map((item, index) => (
             <FoodItem
               key={index}
@@ -63,4 +76,4 @@ const FoodDisplay = ({ category }) => {
   );
 };
 
-export default FoodDisplay; 
+export default FoodDisplay;
