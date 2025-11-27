@@ -11,7 +11,7 @@ const FoodDisplay = ({ category }) => {
   const location = useLocation();
 
   useEffect(() => {
-    // Wait for backend data to load
+    // If backend hasn't returned food yet → show loader
     if (food_list.length === 0) {
       setLoading(true);
       return;
@@ -35,43 +35,44 @@ const FoodDisplay = ({ category }) => {
 
     setFilteredFood(result);
     setLoading(false);
-    
   }, [location.search, food_list, category]);
 
   return (
     <div className="food-display" id="food-display">
       <h2>Top Dishes near you</h2>
-      <div className="food-display-list">
 
-        {/* 🔥 Show loader while backend wakes up */}
-        {loading ? (
-          <div className="loader-container">
-            <div className="loader"></div>
-            <p>Loading delicious food...</p>
-          </div>
-        ) : filteredFood.length > 0 ? (
-          filteredFood.map((item, index) => (
-            <FoodItem
-              key={index}
-              id={item._id}
-              name={item.name}
-              price={item.price}
-              description={item.description}
-              image={item.image}
-            />
-          ))
-        ) : (
-          <div className="no-items-message">
-            <img
-              src="/no-food-found.png"
-              alt="No food found"
-              className="no-items-image"
-            />
-            <h3>Oops! No food found</h3>
-            <p>We're sorry, but we couldn't find any matching dishes.</p>
-          </div>
-        )}
-      </div>
+      {/* 🔥 Loader must be OUTSIDE the grid */}
+      {loading ? (
+        <div className="loader-container">
+          <div className="loader"></div>
+          <p>Loading delicious food...</p>
+        </div>
+      ) : (
+        <div className="food-display-list">
+          {filteredFood.length > 0 ? (
+            filteredFood.map((item, index) => (
+              <FoodItem
+                key={index}
+                id={item._id}
+                name={item.name}
+                price={item.price}
+                description={item.description}
+                image={item.image}
+              />
+            ))
+          ) : (
+            <div className="no-items-message">
+              <img
+                src="/no-food-found.png"
+                alt="No food found"
+                className="no-items-image"
+              />
+              <h3>Oops! No food found</h3>
+              <p>We're sorry, but we couldn't find any matching dishes.</p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
