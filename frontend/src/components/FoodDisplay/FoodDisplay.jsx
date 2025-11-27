@@ -39,18 +39,17 @@ const FoodDisplay = ({ category }) => {
   }, [location.search, food_list, category]);
 
   return (
-  <div className="food-display" id="food-display">
-    <h2>Top Dishes near you</h2>
-
-    {/* 🔥 Loader must be OUTSIDE the grid */}
-    {loading ? (
-      <div className="loader-container">
-        <div className="loader"></div>
-        <p>Loading delicious food...</p>
-      </div>
-    ) : (
+    <div className="food-display" id="food-display">
+      <h2>Top Dishes near you</h2>
       <div className="food-display-list">
-        {filteredFood.length > 0 ? (
+
+        {/* 🔥 Show loader while backend wakes up */}
+        {loading ? (
+          <div className="loader-container">
+            <div className="loader"></div>
+            <p>Loading delicious food...</p>
+          </div>
+        ) : filteredFood.length > 0 ? (
           filteredFood.map((item, index) => (
             <FoodItem
               key={index}
@@ -73,8 +72,8 @@ const FoodDisplay = ({ category }) => {
           </div>
         )}
       </div>
-    )}
-  </div>
-);
+    </div>
+  );
+};
 
 export default FoodDisplay;
