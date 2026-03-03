@@ -32,13 +32,14 @@ const OrderSuccess = () => {
   }, []);
 
   const handleTrackClick = () => {
-    const storeAddress = "RahamaMarket"; // Destination should be RahamaMarket
-    const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(
-      userAddress
-    )}&destination=${encodeURIComponent(storeAddress)}&travelmode=driving`;
+  const storeAddress = "Rahama Market, Balasore, Odisha"; // use full address
 
-    window.open(mapsUrl, "_blank");
-  };
+  const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(
+    storeAddress
+  )}&destination=${encodeURIComponent(userAddress)}&travelmode=driving`;
+
+  window.open(mapsUrl, "_blank");
+};
 
   const handleOrdersClick = () => {
     navigate("/orders");
