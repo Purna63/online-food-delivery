@@ -1,7 +1,7 @@
 .explore-menu {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 5px;
 }
 .explore-menu h1 {
   color: #262626;
