@@ -14,13 +14,12 @@ const PlaceOrder = () => {
 
   const [data, setData] = useState({
     firstName: "",
-    lastName: "",
     email: "",
     street: "",
     city: "",
-    state: "",
+    state: "Odisha",
     zipcode: "",
-    country: "",
+    country: "India",
     phone: "",
     landmark: "",
   });
@@ -228,19 +227,10 @@ const PlaceOrder = () => {
               onChange={onChangeHandler}
               value={data.firstName}
               type="text"
-              placeholder="First name"
-            />
-            <input
-              required
-              name="lastName"
-              onChange={onChangeHandler}
-              value={data.lastName}
-              type="text"
-              placeholder="Last name"
+              placeholder="Enter Your Name"
             />
           </div>
           <input
-            required
             name="email"
             onChange={onChangeHandler}
             value={data.email}
@@ -276,12 +266,9 @@ const PlaceOrder = () => {
               placeholder="City"
             />
             <input
-              required
-              name="state"
-              onChange={onChangeHandler}
-              value={data.state}
-              type="text"
-              placeholder="State"
+             name="state"
+              value="Odisha"
+              readOnly
             />
           </div>
           <div className="multi-fields">
@@ -294,12 +281,9 @@ const PlaceOrder = () => {
               placeholder="Pin Code/Zip Code"
             />
             <input
-              required
               name="country"
-              onChange={onChangeHandler}
-              value={data.country}
-              type="text"
-              placeholder="Country"
+              value="India"
+              readOnly
             />
           </div>
           <input
