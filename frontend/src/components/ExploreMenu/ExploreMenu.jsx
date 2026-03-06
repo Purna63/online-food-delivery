@@ -9,7 +9,7 @@ const ExploreMenu = () => {
   return (
     <div>
       <div className="explore-menu" id="explore-menu">
-        <h1>Discover Our Menu</h1>
+        <h1>About Our Food Service</h1>
         <p className="explore-menu-text">
           Fast food offers a quick and satisfying solution for your hunger, perfect for busy days and late-night cravings. With a variety of flavors and dishes, it's all about convenience without compromising on taste. All foods are collected from different restaurants in <span className="tex">Rahama Market</span>.
 
@@ -17,6 +17,7 @@ const ExploreMenu = () => {
         </p>
 
         <hr />
+        <h1>Menu Items</h1>
 
         <div className="explore-menu-list">
           {menu_list.map((item, index) => (
