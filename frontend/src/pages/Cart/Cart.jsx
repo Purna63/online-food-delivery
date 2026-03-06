@@ -39,7 +39,7 @@ const Cart = () => {
   return (
     <div className="cart">
       {message && (
-        <div className={`custom-message ${message.type}`}>
+        <div className={`custom-message ₹{message.type}`}>
           {message.text}
         </div>
       )}
@@ -89,7 +89,7 @@ const Cart = () => {
                     <div className="cart-items-title cart-items-item">
                       <img src={url + "/images/" + item.image} alt="" />
                       <p data-label="Title">{item.name}</p>
-                      <p data-label="Price">${item.price}</p>
+                      <p data-label="Price">₹{item.price}</p>
                       <div className="quantity-controls">
                         <button
                           onClick={() => removeFromCart(item._id)}
@@ -105,7 +105,7 @@ const Cart = () => {
                           +
                         </button>
                       </div>
-                      <p data-label="Total">${item.price * cartItems[item._id]}</p>
+                      <p data-label="Total">₹{item.price * cartItems[item._id]}</p>
                       <p data-label="Remove"
                         onClick={() => removeFromCart(item._id)}
                         className="cross"
@@ -127,18 +127,18 @@ const Cart = () => {
               <div>
                 <div className="cart-total-details">
                   <p>Subtotal</p>
-                  <p>${getTotalCartAmount()}</p>
+                  <p>₹{getTotalCartAmount()}</p>
                 </div>
                 <hr />
                 <div className="cart-total-details">
                   <p>Delivery Fee</p>
-                  <p>${getTotalCartAmount() === 0 ? 0 : Deliverycharge}</p>
+                  <p>₹{getTotalCartAmount() === 0 ? 0 : Deliverycharge}</p>
                 </div>
                 <hr />
                 <div className="cart-total-details">
                   <b>Total</b>
                   <b>
-                    ${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + Deliverycharge}
+                    ₹{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + Deliverycharge}
                   </b>
                 </div>
               </div>
