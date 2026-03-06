@@ -17,6 +17,7 @@ const ExploreMenu = () => {
         </p>
 
         <hr />
+        
         <h1>Menu Items</h1>
 
         <div className="explore-menu-list">
