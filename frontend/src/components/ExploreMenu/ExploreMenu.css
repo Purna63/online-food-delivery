@@ -16,7 +16,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 30px;
   text-align: center;
   margin: 10px 0px;
   overflow-x: scroll;
@@ -62,6 +61,7 @@
   height: 2px;
   background-color: #e2e2e2;
   border: none;
+  border: 1px solid rgb(201, 6, 32);
 }
 /* This line of code is whene we click menu list then it show one color round */
 .explore-menu-list-item .active {
