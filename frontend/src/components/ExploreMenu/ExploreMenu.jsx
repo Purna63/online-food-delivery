@@ -16,6 +16,8 @@ const ExploreMenu = () => {
 
         </p>
 
+        <hr />
+
         <div className="explore-menu-list">
           {menu_list.map((item, index) => (
             <div
