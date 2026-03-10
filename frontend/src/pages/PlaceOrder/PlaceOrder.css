@@ -30,6 +30,12 @@ cursor:pointer;
 font-weight:500;
 }
 
+.location-buttons{
+  display:flex;
+  flex-direction:column;
+  gap:10px;   /* space between buttons */
+}
+
 
 .place-order-left input {
   margin-bottom: 15px;
