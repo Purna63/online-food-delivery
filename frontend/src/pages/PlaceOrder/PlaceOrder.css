@@ -18,6 +18,19 @@
   margin-bottom: 50px;
 }
 
+
+.location-btn{
+margin-top:10px;
+padding:10px 15px;
+background:#ff6347;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:500;
+}
+
+
 .place-order-left input {
   margin-bottom: 15px;
   width: 100%;
