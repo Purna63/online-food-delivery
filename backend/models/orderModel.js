@@ -8,6 +8,8 @@ const orderSchema = new mongoose.Schema({
   status: { type: String, default: "Food Processing" }, // Order status
   date: { type: Date, default: Date.now }, // Optional custom order date
   payment: { type: Boolean, default: false }, // Payment success or not
+  deliveryCharge: { type: Number },
+  distance: { type: Number }
 }, { timestamps: true }); // ✅ Adds createdAt and updatedAt fields
 
 const orderModel =
