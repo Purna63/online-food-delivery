@@ -3,6 +3,7 @@ import "./PlaceOrder.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import LocationPicker from "../../components/LocationPicker/LocationPicker"; //new
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID;
 
@@ -10,7 +11,7 @@ const PlaceOrder = () => {
   const { getTotalCartAmount, token, cartItems, food_list } =
     useContext(StoreContext);
   const navigate = useNavigate();
-  const Deliverycharge = 10;
+  // const Deliverycharge = 10;
 
   const [data, setData] = useState({
     firstName: "",
@@ -22,6 +23,9 @@ const PlaceOrder = () => {
     country: "India",
     phone: "",
     landmark: "",
+    // NEW FIELD
+    lat: "",
+    lng: "",
   });
 
   const [errors, setErrors] = useState({ email: "", phone: "" });
@@ -31,12 +35,187 @@ const PlaceOrder = () => {
   const [isStoreOpen, setIsStoreOpen] = useState(true);
   const [countdown, setCountdown] = useState("");
   const [storeClosedMessage, setStoreClosedMessage] = useState(false);
+  
+  //new line add
+  const [locationMessage, setLocationMessage] = useState("");
+  const [deliveryFee, setDeliveryFee] = useState(0);
+  const [distance, setDistance] = useState(null);
+  const [showMap, setShowMap] = useState(false);
+  const [isLocationLocked, setIsLocationLocked] = useState(false);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
+
+
+
+
+
+    // GET USER CURRENT LOCATION
+  const getLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by this browser.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        console.log("User location:", lat, lng);
+
+        // setData((prev) => ({
+        //   ...prev,
+        //   lat,
+        //   lng,
+        // }));
+
+        setData((prev) => ({
+          ...prev,
+          lat: lat,
+          lng: lng,
+        }));
+
+        try {
+          const res = await axios.post(`${BACKEND_URL}/api/distance`, {
+            lat,
+            lng,
+          });
+
+          if (res.data.error) {
+            setLocationMessage(res.data.error);
+
+            setTimeout(() => {
+              setLocationMessage("");
+            }, 5000);
+
+            return;
+          }
+
+          console.log("Distance API:", res.data);
+
+          setDistance(res.data.distance);
+          setDeliveryFee(res.data.deliveryCharge);
+
+          // Auto fill address
+          if (res.data.address) {
+            setData((prev) => ({
+              ...prev,
+              lat: lat,
+              lng: lng,
+              street: res.data.address,
+            }));
+
+            setIsLocationLocked(true);
+
+            // save location
+            localStorage.setItem("deliveryAddress", res.data.address);
+            localStorage.setItem("deliveryLat", lat);
+            localStorage.setItem("deliveryLng", lng);
+          }
+        } catch (err) {
+          console.error("Distance API error:", err);
+          alert("Failed to calculate delivery distance.");
+        }
+      },
+
+      (error) => {
+        console.error("Location error:", error);
+
+        setLocationMessage(
+          "⚠️ We could not detect your location. Please click 'Select Location On Map' and tap your house.",
+        );
+
+        setShowMap(true);
+
+        setTimeout(() => {
+          setLocationMessage("");
+        }, 5000);
+      },
+    );
+  };
+
+  const setLocation = async (lat, lng) => {
+    setData((prev) => ({
+      ...prev,
+      lat,
+      lng,
+    }));
+
+    try {
+      const res = await axios.post(`${BACKEND_URL}/api/distance`, {
+        lat,
+        lng,
+      });
+
+      console.log("Distance API response:", res.data);
+
+      if (res.data.error) {
+        setLocationMessage(res.data.error);
+        return;
+      }
+
+      setDistance(res.data.distance);
+      setDeliveryFee(res.data.deliveryCharge);
+
+      // 🔹 Auto Fill Address
+      if (res.data.address) {
+        // setData((prev) => ({
+        //   ...prev,
+        //   street: res.data.address,
+        // }));
+
+        setData((prev) => ({
+          ...prev,
+          street: res.data.address,
+        }));
+
+        // lock address editing
+        setIsLocationLocked(true);
+
+        // save location
+        localStorage.setItem("deliveryAddress", res.data.address);
+        localStorage.setItem("deliveryLat", lat);
+        localStorage.setItem("deliveryLng", lng);
+      }
+    } catch (err) {
+      console.error("Distance API error:", err);
+    }
+  };
+
+  // RESET ADDRESS & MAP
+  const resetLocation = () => {
+    // clear localStorage
+    localStorage.removeItem("deliveryAddress");
+    localStorage.removeItem("deliveryLat");
+    localStorage.removeItem("deliveryLng");
+
+    // reset states
+    setData((prev) => ({
+      ...prev,
+      street: "",
+      lat: "",
+      lng: "",
+    }));
+
+    setDistance(null);
+    setDeliveryFee(0);
+    setIsLocationLocked(false);
+    setShowMap(false);
+
+    setLocationMessage("Location reset. Please select your location again.");
+
+    setTimeout(() => {
+      setLocationMessage("");
+    }, 4000);
+  };
+
+
+
+  
 
   const validate = () => {
     let valid = true;
@@ -102,20 +281,55 @@ const PlaceOrder = () => {
     }
   }, [token]);
 
+  
+
   useEffect(() => {
     fetchStoreStatus();
     const interval = setInterval(fetchStoreStatus, 1000);
     return () => clearInterval(interval);
   }, []);
 
+
+  // add new line
+  useEffect(() => {
+    const savedAddress = localStorage.getItem("deliveryAddress");
+    const savedLat = localStorage.getItem("deliveryLat");
+    const savedLng = localStorage.getItem("deliveryLng");
+
+    if (savedAddress && savedLat && savedLng) {
+      setData((prev) => ({
+        ...prev,
+        street: savedAddress,
+        lat: savedLat,
+        lng: savedLng,
+      }));
+
+      setIsLocationLocked(true);
+    }
+  }, []);
+
+  
+
   const placeOrder = (e) => {
     e.preventDefault();
     if (!validate()) return;
 
-    // if (!isStoreOpen) {
-    //   alert("Store is currently closed. Please try again later.");
-    //   return;
-    // }
+    // USER DID NOT SELECT LOCATION
+    if (!distance) {
+      setLocationMessage(
+        "⚠️ Please select your delivery location first using 'Use My Current Location' or 'Select Location On Map'.",
+      );
+
+      // hide message after 5 seconds
+      setTimeout(() => {
+        setLocationMessage("");
+      }, 5000);
+
+      return;
+    }
+
+
+    
     if(!isStoreOpen){
       setStoreClosedMessage(true);
       setTimeout(()=>setStoreClosedMessage(false),5000);
@@ -126,6 +340,21 @@ const PlaceOrder = () => {
   };
 
   const handlePaymentOption = async (option) => {
+
+    //Add New line
+    if (!distance) {
+      setLocationMessage(
+        "⚠️ Please select your delivery location first using 'Use My Current Location' or 'Select Location On Map'.",
+      );
+
+      setTimeout(() => {
+        setLocationMessage("");
+      }, 5000);
+
+      return;
+    }
+
+    
     await fetchStoreStatus();
 
     if (!isStoreOpen) {
@@ -134,12 +363,13 @@ const PlaceOrder = () => {
       return;
     }
 
-    const totalAmount = getTotalCartAmount() + Deliverycharge;
+    //add new line
+    // const totalAmount = getTotalCartAmount() + Deliverycharge;
+    const totalAmount = getTotalCartAmount() + deliveryFee;
     const orderData = {
       cartItems,
       food_list,
       deliveryInfo: data,
-      amount: totalAmount,
       payment: true, // online payment only
     };
 
@@ -211,6 +441,13 @@ const PlaceOrder = () => {
         </div>
       )}
 
+      {/* Add new line */}
+      {locationMessage && (
+        <div className="error-message-top">
+          <p>{locationMessage}</p>
+        </div>
+      )}
+
        {storeClosedMessage && (
         <div className="store-closed-message">
           <p>The store is currently closed. Please come back tomorrow.</p>
@@ -239,13 +476,22 @@ const PlaceOrder = () => {
           />
           {errors.email && <p className="error-message">{errors.email}</p>}
           <div className="multi-fields">
-            <input
+            {/* <input
               required
               name="street"
               onChange={onChangeHandler}
               value={data.street}
               type="text"
               placeholder="Street / Village"
+            /> */}
+            <input
+              required
+              name="street"
+              value={data.street}
+              onChange={onChangeHandler}
+              type="text"
+              placeholder="Street / Village"
+              readOnly={isLocationLocked}
             />
             <input
               required
@@ -294,6 +540,49 @@ const PlaceOrder = () => {
             type="text"
             placeholder="Mobile No."
           />
+
+
+          {/* new line add */}
+
+          <p style={{ fontSize: "14px", color: "#555", marginTop: "10px" }}>
+            📍 Please select your delivery location using one of the buttons
+            below.
+          </p>
+
+          <button
+            type="button"
+            className="location-btn"
+            onClick={resetLocation}
+          >
+            Reset Address
+          </button>
+
+          <br />
+
+          {/* STEP 6 NEW BUTTON */}
+          <div className="location-buttons">
+            <button
+              className="location-btn"
+              type="button"
+              onClick={getLocation}
+            >
+              Use My Current Location
+            </button>
+
+            <button
+              type="button"
+              className="location-btn"
+              onClick={() => setShowMap(true)}
+            >
+              Select Location On Map
+            </button>
+          </div>
+
+          {showMap && <LocationPicker setLocation={setLocation} />}
+
+
+
+          
           {errors.phone && <p className="error-message">{errors.phone}</p>}
         </div>
 
@@ -305,17 +594,27 @@ const PlaceOrder = () => {
               <p>₹{getTotalCartAmount()}</p>
             </div>
             <hr />
+
+            {distance && (
+              <div className="cart-total-details">
+                <p>Distance</p>
+                <p>{distance} km</p>
+              </div>
+            )}
+
+            <hr />
+            
+            
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>₹{getTotalCartAmount() === 0 ? 0 : Deliverycharge}</p>
+              <p>₹{deliveryFee}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
               <b>
                 ₹
-                {getTotalCartAmount() +
-                  (getTotalCartAmount() === 0 ? 0 : Deliverycharge)}
+                {getTotalCartAmount() + deliveryFee }
               </b>
             </div>
             <button type="submit">Proceed To Payment</button>
