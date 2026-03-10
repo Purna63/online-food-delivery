@@ -110,8 +110,29 @@
     gap: 40px;
   }
 
+  .footer-content-center h2 {
+    position: relative;
+    left: 90px;
+  }
+
   .footer-content-left {
     align-items: center;
+  }
+
+  .footer-content-right h2{
+    position: relative;
+    left: 110px;
+  }
+
+  .footer-content-center li{
+    position: relative;
+    left: 80px;
+  }
+
+  .footer-content-right li,
+  .footer-social-icons {
+    position: relative;
+    left: 80px;
   }
 
   .footer-social-icons {
