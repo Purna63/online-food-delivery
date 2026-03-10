@@ -111,11 +111,13 @@ const Orders = ({ url }) => {
   };
 
   const handleTrack = (address) => {
-    const origin = "RahamaMarket";
-    const destination = `${address.street}, ${address.city}, ${address.landmark}`;
-    const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(
-      origin
-    )}&destination=${encodeURIComponent(destination)}`;
+    // const origin = "RahamaMarket";
+
+    const restaurantLat = 20.302559;
+    const restaurantLng = 86.404263;
+    
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${restaurantLat},${restaurantLng}&destination=${address.lat},${address.lng}`;
+
     window.open(mapsUrl, "_blank");
   };
 
