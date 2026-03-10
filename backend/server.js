@@ -10,6 +10,8 @@ import paymentRouter from "./routes/paymentRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 import storeStatusRoute from './routes/storeStatusRoute.js';
 import "dotenv/config";
+import distanceRoute from "./routes/distanceRoute.js";//new
+
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -59,6 +61,7 @@ app.use("/api/cart", cartRouter);
 app.use("/api/payment", paymentRouter);
 app.use("/api/order", orderRouter);
 app.use('/api/store-status', storeStatusRoute);
+app.use("/api/distance", distanceRoute);//new
 
 // Root test route
 app.get("/", (req, res) => {
