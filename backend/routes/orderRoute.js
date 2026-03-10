@@ -1,6 +1,8 @@
 import express from "express";
 import orderModel from "../models/orderModel.js";
 import authMiddleware from "../middleware/auth.js";
+// NEW IMPORT
+import { calculateDistance } from "../utils/distance.js";
 
 const router = express.Router();
 
@@ -10,6 +12,42 @@ router.post("/", authMiddleware, async (req, res) => {
     const userId = req.userId;
     const { cartItems, food_list, deliveryInfo, amount, payment } = req.body;
 
+    // RESTAURANT LOCATION (FIXED)
+    const RESTAURANT_LAT = 20.302559;
+    const RESTAURANT_LNG = 86.404263;
+
+    const userLat = parseFloat(deliveryInfo.lat);
+    const userLng = parseFloat(deliveryInfo.lng);
+
+    if (!userLat || !userLng) {
+      return res.status(400).json({
+        error: "Please select delivery location on map.",
+      });
+    }
+
+    // CALCULATE DISTANCE
+    const distance = calculateDistance(
+      RESTAURANT_LAT,
+      RESTAURANT_LNG,
+      userLat,
+      userLng,
+    );
+
+    // ADD THIS
+    if (distance > 8) {
+      return res.status(400).json({
+        error: "Sorry, we do not deliver to this location.",
+      });
+    }
+
+    // DELIVERY CHARGE RULE
+    let deliveryCharge = 0;
+
+    if (distance <= 2) deliveryCharge = 10;
+    else if (distance <= 4) deliveryCharge = 20;
+    else if (distance <= 6) deliveryCharge = 30;
+    else deliveryCharge = 40;
+
     const orderDetails = food_list
       .filter((item) => cartItems[item._id] > 0)
       .map((item) => ({
@@ -18,18 +56,35 @@ router.post("/", authMiddleware, async (req, res) => {
         quantity: cartItems[item._id],
       }));
 
+    let foodTotal = 0;
+    orderDetails.forEach((item) => {
+      const product = food_list.find((f) => f.name === item.name);
+      if (product) {
+        foodTotal += product.price * item.quantity;
+      }
+    });
+    const totalAmount = foodTotal + deliveryCharge;
+
     const order = new orderModel({
       userId,
       items: orderDetails,
-      amount,
+      amount: totalAmount,
       address: deliveryInfo,
       payment,
       status: "Pending",
+      // NEW DATA SAVE
+      deliveryCharge,
+      distance,
     });
 
     await order.save();
 
-    res.status(201).send("Order placed");
+    res.status(201).json({
+      message: "Order placed",
+      distance,
+      deliveryCharge,
+      totalAmount,
+    });
   } catch (err) {
     console.error("Error placing order:", err);
     res.status(500).send("Failed to store order");
