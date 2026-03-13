@@ -21,10 +21,10 @@ const Orders = () => {
   const fetchOrders = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      setError("User not authenticated.");
-      setLoading(false);
-      return;
-    }
+    setOrders([]);
+    setLoading(false);
+    return;
+  }
 
     try {
       // const response = await fetch("http://localhost:4000/api/order", {
