@@ -128,10 +128,12 @@ const Orders = () => {
         </div>
       )}
 
-      {orders.length === 0 ? (
-        <div className="orders-empty">No paid orders found.</div>
-      ) : (
-        <table className="orders-table">
+      {!localStorage.getItem("token") ? (
+  <div className="orders-empty">Please login to view your orders</div>
+) : orders.length === 0 ? (
+  <div className="orders-empty">No paid orders found.</div>
+) : (
+  <table className="orders-table">
           <thead>
             <tr>
               <th>S.No.</th>
