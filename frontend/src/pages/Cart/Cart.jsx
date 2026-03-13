@@ -39,7 +39,7 @@ const Cart = () => {
   return (
     <div className="cart">
       {message && (
-        <div className={`custom-message ₹{message.type}`}>
+        <div className={`custom-message ${message.type}`}>
           {message.text}
         </div>
       )}
