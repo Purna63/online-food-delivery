@@ -10,6 +10,7 @@ const StoreContextProvider = (props) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+  const [showLogin, setShowLogin] = useState(false);
 
   const initialCart = localStorage.getItem("cartItems");
   const [cartItems, setCartItems] = useState(
@@ -80,10 +81,29 @@ const StoreContextProvider = (props) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
+
     if (res.data.cartData) {
-      setCartItems(res.data.cartData);
+      // get local cart before login
+      const localCart = JSON.parse(localStorage.getItem("cartItems")) || {};
+
+      // merge server cart + local cart
+      const mergedCart = { ...res.data.cartData };
+
+      for (const itemId in localCart) {
+        if (mergedCart[itemId]) {
+          mergedCart[itemId] += localCart[itemId];
+        } else {
+          mergedCart[itemId] = localCart[itemId];
+        }
+      }
+
+      setCartItems(mergedCart);
+
+      // clear localStorage cart after merge
+      // localStorage.removeItem("cartItems");
+      localStorage.setItem("cartItems", JSON.stringify(mergedCart));
     }
   };
 
@@ -98,11 +118,14 @@ const StoreContextProvider = (props) => {
     fetchData();
   }, [token]);
 
+  // useEffect(() => {
+  //   if (!token) {
+  //     localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  //   }
+  // }, [cartItems, token]);
   useEffect(() => {
-    if (!token) {
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    }
-  }, [cartItems, token]);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const contextValue = {
     food_list,
@@ -115,6 +138,7 @@ const StoreContextProvider = (props) => {
     setToken,
     searchTerm,
     setSearchTerm,
+    setShowLogin,
   };
 
   return (
