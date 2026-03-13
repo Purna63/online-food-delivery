@@ -3,7 +3,7 @@ import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 
-const Cart = () => {
+const Cart = ({ setShowLogin }) => {
   // let Deliverycharge = 10;
   const {
     cartItems,
@@ -26,11 +26,22 @@ const Cart = () => {
 
   const handleCheckout = () => {
     if (totalQuantity === 0) {
-      setMessage({ text: "Your cart is empty. Please add items.", type: "error" });
-      setTimeout(() => setMessage(null), 3000); // Remove message after 3 seconds
+      setMessage({
+        text: "Your cart is empty. Please add items.",
+        type: "error",
+      });
+
+      setTimeout(() => setMessage(null), 3000);
     } else if (!token) {
-      setMessage({ text: "You are not signed in", type: "error" });
-      setTimeout(() => setMessage(null), 3000); // Remove message after 3 seconds
+      setMessage({
+        text: "You are not signed in",
+        type: "error",
+      });
+
+      setTimeout(() => {
+        setMessage(null);
+        setShowLogin(true); // open login popup
+      }, 2000);
     } else {
       navigate("/order");
     }
