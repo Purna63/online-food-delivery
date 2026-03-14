@@ -9,7 +9,10 @@ const orderSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }, // Optional custom order date
   payment: { type: Boolean, default: false }, // Payment success or not
   deliveryCharge: { type: Number },
-  distance: { type: Number }
+  distance: { type: Number },
+   name: { type: String },
+  phone: { type: String },
+
 }, { timestamps: true }); // ✅ Adds createdAt and updatedAt fields
 
 const orderModel =
