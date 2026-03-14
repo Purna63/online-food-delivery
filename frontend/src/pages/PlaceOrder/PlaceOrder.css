@@ -80,6 +80,26 @@ font-weight:500;
   animation: shake 0.5s ease-in-out;
 }
 
+
+.saved-address-box{
+border:1px solid #ddd;
+padding:15px;
+border-radius:8px;
+background:#fafafa;
+margin-bottom:20px;
+}
+
+.change-address-btn{
+margin-top:10px;
+padding:6px 14px;
+background:#ff5a3c;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+
 @keyframes shake {
   0% {
     transform: translateX(-50%) translateY(0);
