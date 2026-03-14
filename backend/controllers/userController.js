@@ -96,4 +96,45 @@ const resetPassword = async (req, res) => {
   }
 };
 
-export { loginUser, registerUser, resetPassword };
+const saveAddress = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { street, landmark, lat, lng } = req.body;
+
+    const user = await userModel.findById(userId);
+
+    user.street = street;
+    user.landmark = landmark;
+    user.lat = lat;
+    user.lng = lng;
+
+    await user.save();
+
+    res.json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false });
+  }
+};
+
+const getAddress = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.userId);
+
+    res.json({
+      success: true,
+      street: user.street,
+      landmark: user.landmark,
+      //new add second time
+      lat: user.lat,
+      lng: user.lng,
+      name: user.name,
+      phone: user.phone
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false });
+  }
+};
+
+export { loginUser, registerUser, resetPassword, saveAddress, getAddress };
