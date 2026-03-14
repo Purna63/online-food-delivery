@@ -3,6 +3,7 @@ import orderModel from "../models/orderModel.js";
 import authMiddleware from "../middleware/auth.js";
 // NEW IMPORT
 import { calculateDistance } from "../utils/distance.js";
+import userModel from "../models/userModel.js";
 
 const router = express.Router();
 
@@ -64,6 +65,7 @@ router.post("/", authMiddleware, async (req, res) => {
       }
     });
     const totalAmount = foodTotal + deliveryCharge;
+    const user = await userModel.findById(userId);
 
     const order = new orderModel({
       userId,
@@ -75,6 +77,8 @@ router.post("/", authMiddleware, async (req, res) => {
       // NEW DATA SAVE
       deliveryCharge,
       distance,
+       name: user?.name || deliveryInfo.firstName || "Customer",
+      phone: user?.phone || deliveryInfo.phone || "",
     });
 
     await order.save();
