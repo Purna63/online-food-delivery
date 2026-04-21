@@ -232,3 +232,47 @@ cursor:pointer;
     width: 90%;
   }
 }
+
+
+.location-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+/* UPDATED: Message box center */
+.location-popup-box {
+  background: white;
+  padding: 25px;
+  width: 90%;
+  max-width: 420px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0,0,0,0.25);
+}
+
+/* UPDATED: Text */
+.location-popup-box p {
+  font-size: 17px;
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 18px;
+}
+
+/* UPDATED: Button */
+.location-popup-btn {
+  background: #F37254;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
