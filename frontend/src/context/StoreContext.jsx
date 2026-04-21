@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import { io } from "socket.io-client";
 
 // Create context
 export const StoreContext = createContext(null);
@@ -18,6 +19,7 @@ const StoreContextProvider = (props) => {
   );
 
   const url = BACKEND_URL;
+  const socket = io(url);
 
   const addToCart = async (itemId) => {
     setCartItems((prev) => {
@@ -126,6 +128,19 @@ const StoreContextProvider = (props) => {
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
+  
+
+    useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  useEffect(() => {
+    socket.on("foodUpdated", () => {
+      fetchFoodList();
+    });
+
+    return () => socket.off("foodUpdated");
+  }, []);
 
   const contextValue = {
     food_list,
