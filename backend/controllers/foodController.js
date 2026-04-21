@@ -12,6 +12,11 @@ const addFood = async (req, res) => {
     price: req.body.price,
     category: req.body.category,
     image: image_filename,
+    // NEW UPDATE START
+    shopName: req.body.shopName,
+    isAvailable: req.body.isAvailable === "true",
+    shopStatus: req.body.shopStatus,
+    // NEW UPDATE END
   });
   try {
     await food.save();
@@ -47,4 +52,22 @@ const removeFood = async (req, res) => {
   }
 };
 
-export { addFood, listFood, removeFood };
+// NEW UPDATE FOOD STATUS
+const updateFoodStatus = async (req, res) => {
+  try {
+    await foodModel.findByIdAndUpdate(req.body.id, {
+      shopName: req.body.shopName,
+      isAvailable: req.body.isAvailable,
+      shopStatus: req.body.shopStatus,
+    });
+
+    const io = req.app.get("io");
+    io.emit("foodUpdated");
+
+    res.json({ success: true, message: "Updated Successfully" });
+  } catch (error) {
+    res.json({ success: false, message: "Update Failed" });
+  }
+};
+
+export { addFood, listFood, removeFood, updateFoodStatus };
