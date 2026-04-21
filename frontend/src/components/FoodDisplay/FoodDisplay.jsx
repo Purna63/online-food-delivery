@@ -58,6 +58,10 @@ const FoodDisplay = ({ category }) => {
                 price={item.price}
                 description={item.description}
                 image={item.image}
+                              //new add
+              shopName={item.shopName}
+              isAvailable={item.isAvailable}
+              shopStatus={item.shopStatus}
               />
             ))
           ) : (
