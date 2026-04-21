@@ -1,5 +1,5 @@
 import express from "express";  //this all are correct
-import { addFood,listFood,removeFood } from "../controllers/foodController.js";  //this all are correct
+import { addFood,listFood,removeFood,updateFoodStatus } from "../controllers/foodController.js";  //this all are correct
 import multer from "multer";  //this all are correct
 
 
@@ -20,6 +20,8 @@ const upload = multer({ storage:storage });  //this all are correct
 foodRouter.post("/add", upload.single("image"), addFood);  //this all are correct
 foodRouter.get("/list",listFood)//this is correct
 foodRouter.post("/remove",removeFood); //tis is correct
+//New Update
+foodRouter.post("/update-status", updateFoodStatus);
 
 
 
