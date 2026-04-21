@@ -148,62 +148,65 @@
   }
 }
 
-/* UPDATED: Mobile responsive fix */
+/* MOBILE ONLY */
 @media (max-width: 768px) {
 
-  /* UPDATED: Better top heading alignment */
+  /* Header row + Product row same columns */
   .cart-items-title,
   .cart-items-item {
     display: grid;
-    grid-template-columns: 60px 1.6fr 0.9fr 1.2fr 0.9fr 0.6fr; /* UPDATED */
+    grid-template-columns: 42px 1.5fr 0.9fr 1.2fr 0.9fr 0.6fr;
     align-items: center;
-    text-align: center;
-    gap: 8px;
-  }
-
-  /* UPDATED: Header text fix */
-  .cart-items-title p {
-    font-size: 13px;
-    font-weight: bold;
-    margin: 0;
-    text-align: center;
-  }
-
-  /* UPDATED: Item row text fix */
-  .cart-items-item p {
-    font-size: 13px;
-    margin: 0;
-    text-align: center;
-    word-break: break-word;
-  }
-
-  /* UPDATED: Image perfectly under Items */
-  .cart-items-item img {
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-    margin: auto;
-    display: block;
-  }
-
-  /* UPDATED: Quantity center */
-  .quantity-controls {
-    justify-content: center;
     gap: 6px;
+    text-align: center;
+  }
+
+  /* Header labels */
+  .cart-items-title p {
+    margin: 0;
+    font-size: 11px;
+    font-weight: bold;
+    color: grey;
+    line-height: 1.2;
+  }
+
+  /* Product row text */
+  .cart-items-item p {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.2;
+  }
+
+  /* Product image exactly under Items */
+  .cart-items-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+    border-radius: 6px;
+  }
+
+  /* Quantity box center */
+  .quantity-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
   }
 
   .quantity-btn {
-    padding: 2px 8px;
-    font-size: 16px;
+    padding: 2px 6px;
+    font-size: 13px;
   }
 
-  /* UPDATED: Cart total full width */
+  /* Cart totals full width */
   .cart-total {
-    max-width: 100%;
     width: 100%;
+    max-width: 100%;
   }
 
-  /* UPDATED: Delivery fee line perfect alignment */
+  /* Delivery fee row fix */
   .cart-total-details {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -219,36 +222,38 @@
   .cart-total-details p:last-child,
   .cart-total-details b:last-child {
     text-align: right;
-  }
-}
-
-
-/* UPDATED: Extra small mobile */
-@media (max-width: 480px) {
-
-  .cart-items-title,
-  .cart-items-item {
-    grid-template-columns: 55px 1.5fr 0.9fr 1.1fr 0.9fr 0.5fr;
-    gap: 5px;
-  }
-
-  .cart-items-title p,
-  .cart-items-item p {
-    font-size: 11px;
-  }
-
-  .cart-items-item img {
-    width: 42px;
-    height: 42px;
-  }
-
-  .quantity-btn {
-    padding: 1px 6px;
+    justify-self: end;
+    white-space: nowrap;
     font-size: 14px;
   }
 
   .cart-total button {
-    font-size: 14px;
-    padding: 11px;
+    width: 100%;
+  }
+}
+
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+
+  .cart-items-title,
+  .cart-items-item {
+    grid-template-columns: 38px 1.4fr 0.8fr 1.1fr 0.8fr 0.5fr;
+    gap: 4px;
+  }
+
+  .cart-items-title p,
+  .cart-items-item p {
+    font-size: 10px;
+  }
+
+  .cart-items-item img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .quantity-btn {
+    padding: 1px 5px;
+    font-size: 12px;
   }
 }
