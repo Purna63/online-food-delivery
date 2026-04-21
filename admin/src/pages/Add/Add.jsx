@@ -11,6 +11,11 @@ const Add = ({ url }) => {
     description: "",
     price: "",
     category: "Biryani",
+
+        // NEW UPDATE
+    shopName: "",
+    isAvailable: "true",
+    shopStatus: "open",
   });
 
   const onChangeHandler = (event) => {
@@ -27,6 +32,12 @@ const Add = ({ url }) => {
     formData.append("price", Number(data.price));
     formData.append("category", data.category);
     formData.append("image", image);
+
+        //new UPDATE
+    formData.append("shopName", data.shopName);
+    formData.append("isAvailable", data.isAvailable);
+    formData.append("shopStatus", data.shopStatus);
+    //end UPDATE
     const response = await axios.post(`${url}/api/food/add`, formData);
     if (response.data.success) {
       setData({
@@ -113,6 +124,46 @@ const Add = ({ url }) => {
             />
           </div>
         </div>
+
+                <div className="add-product-name flex-col">
+          <p>Shop Name</p>
+          <input
+            type="text"
+            name="shopName"
+            value={data.shopName}
+            onChange={onChangeHandler}
+            placeholder="Enter shop name"
+            required
+          />
+        </div>
+
+        <div className="add-category-price">
+          <div className="add-category flex-col">
+            <p>Food Status</p>
+            <select
+              name="isAvailable"
+              value={data.isAvailable}
+              onChange={onChangeHandler}
+            >
+              <option value="true">Available</option>
+              <option value="false">Out Of Stock</option>
+            </select>
+          </div>
+
+          <div className="add-category flex-col">
+            <p>Shop Status</p>
+            <select
+              name="shopStatus"
+              value={data.shopStatus}
+              onChange={onChangeHandler}
+            >
+              <option value="open">Open</option>
+              <option value="closed">Closed</option>
+            </select>
+          </div>
+        </div>
+
+        
         <button type="submit" className="add-btn">
           ADD
         </button>
