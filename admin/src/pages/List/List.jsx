@@ -40,6 +40,33 @@ const List = ({ url }) => {
     }
   };
 
+    // NEW UPDATE STATUS
+  const updateStatus = async (item) => {
+    await axios.post(`${url}/api/food/update-status`, {
+      id: item._id,
+      shopName: item.shopName,
+      isAvailable: !item.isAvailable,
+      shopStatus: item.shopStatus,
+    });
+
+    toast.success("Food Status Updated");
+    fetchList();
+  };
+
+    // NEW SHOP OPEN/CLOSE
+  const updateShop = async (item) => {
+    await axios.post(`${url}/api/food/update-status`, {
+      id: item._id,
+      shopName: item.shopName,
+      isAvailable: item.isAvailable,
+      shopStatus:
+        item.shopStatus === "open" ? "closed" : "open",
+    });
+
+    toast.success("Shop Status Updated");
+    fetchList();
+  };
+
   useEffect(() => {
     fetchList();
   }, []);
@@ -68,6 +95,17 @@ const List = ({ url }) => {
                 <p>{item.name}</p>
                 <p>{item.category}</p>
                 <p>${item.price}</p>
+                <p>{item.shopName}</p>
+
+              <button onClick={() => updateStatus(item)}>
+              {item.isAvailable ? "Available" : "Out Of Stock"}
+              </button>
+
+              <button onClick={() => updateShop(item)}>
+              {item.shopStatus === "open"
+                ? "Open"
+                : "Closed"}
+              </button>
                 <p onClick={() => removeFood(item._id)} className="cursor">
                   X
                 </p>
