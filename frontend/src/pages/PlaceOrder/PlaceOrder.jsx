@@ -512,8 +512,20 @@ const PlaceOrder = () => {
 
       {/* Add new line */}
       {locationMessage && (
-        <div className="error-message-top">
-          <p>{locationMessage}</p>
+        // UPDATED: Full screen overlay block when message shows
+        <div className="location-popup-overlay">
+          <div className="location-popup-box">
+            <p>{locationMessage}</p>
+
+            {/* UPDATED: Close button */}
+            <button
+              type="button"
+              onClick={() => setLocationMessage("")}
+              className="location-popup-btn"
+            >
+              OK
+            </button>
+          </div>
         </div>
       )}
 
