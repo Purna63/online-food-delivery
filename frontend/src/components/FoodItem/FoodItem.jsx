@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./FoodItem.css";
 import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
+import { useNavigate } from "react-router-dom";
 
 const FoodItem = ({
   id,
@@ -15,8 +16,26 @@ const FoodItem = ({
 }) => {
   const { cartItems, addToCart, removeFromCart, url } =
     useContext(StoreContext);
+  const navigate = useNavigate();
+
+   // NEW UPDATE START - check clickable
+  const canOrder = shopStatus !== "closed" && isAvailable !== false;
+
+  const handleCardClick = () => {
+    if (canOrder) {
+      addToCart(id);
+      setTimeout(() => {
+        navigate("/cart");
+      }, 150);
+    }
+  };
+  // NEW UPDATE END
 
   return (
+        <div
+      className={`food-item ${canOrder ? "clickable-food" : ""}`}
+      onClick={handleCardClick}
+    >
     <div className="food-item">
       <div className="food-item-img-container">
         <img
@@ -37,7 +56,7 @@ const FoodItem = ({
             alt=""
           />
         ) : (
-          <div className="food-item-counter">
+          <div className="food-item-counter" onClick={(e) => e.stopPropagation()}>
             <img
               onClick={() => removeFromCart(id)}
               src={assets.remove_icon_red}
