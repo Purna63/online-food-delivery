@@ -16,14 +16,17 @@ const FoodItem = ({
 }) => {
   const { cartItems, addToCart, removeFromCart, url } =
     useContext(StoreContext);
+
   const navigate = useNavigate();
 
-   // NEW UPDATE START - check clickable
-  const canOrder = shopStatus !== "closed" && isAvailable !== false;
+  // NEW UPDATE START
+  const canOrder =
+    shopStatus !== "closed" && isAvailable !== false;
 
   const handleCardClick = () => {
     if (canOrder) {
       addToCart(id);
+
       setTimeout(() => {
         navigate("/cart");
       }, 150);
@@ -32,11 +35,10 @@ const FoodItem = ({
   // NEW UPDATE END
 
   return (
-        <div
+    <div
       className={`food-item ${canOrder ? "clickable-food" : ""}`}
       onClick={handleCardClick}
     >
-    <div className="food-item">
       <div className="food-item-img-container">
         <img
           className="food-item-image"
@@ -51,12 +53,18 @@ const FoodItem = ({
         ) : !cartItems[id] ? (
           <img
             className="add"
-            onClick={() => addToCart(id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart(id);
+            }}
             src={assets.add_icon_white}
             alt=""
           />
         ) : (
-          <div className="food-item-counter" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="food-item-counter"
+            onClick={(e) => e.stopPropagation()}
+          >
             <img
               onClick={() => removeFromCart(id)}
               src={assets.remove_icon_red}
