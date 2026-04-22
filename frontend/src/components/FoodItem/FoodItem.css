@@ -131,3 +131,9 @@
   font-size: 11px;
   margin: 0;
 }
+
+@media(max-width:480px){
+  .food-item-image{
+    height:110px;
+  }
+}
