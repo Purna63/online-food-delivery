@@ -14,7 +14,8 @@ import RefundPolicy from "./pages/RefundPolicy/RefundPolicy";
 import Terms from "./pages/Terms/Terms"; //new added
 import Privacy from "./pages/Privacy/Privacy";//new added
 import Shipping from "./pages/Shipping/Shipping";//new added
-import Contact from "./pages/Contact/Contact";//new added
+import Contact from "./pages/Contact/Contact";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -42,6 +43,7 @@ const App = () => {
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
       <div className="app">
         <Navbar setShowLogin={setShowLogin} />
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/cart" element={<Cart />} /> */}
@@ -51,10 +53,10 @@ const App = () => {
           <Route path="/order-success" element={<OrderSuccess />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
-          <Route path="/terms" element={<Terms />} /> //new added
-          <Route path="/privacy" element={<Privacy />} />//new added
-          <Route path="/shipping" element={<Shipping />} />//new added
-          <Route path="/contact" element={<Contact />} />//new added
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/shipping" element={<Shipping />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
       <Footer />
