@@ -1,5 +1,6 @@
 .food-display {
   margin-top: 30px;
+  padding: 0 10px;
 }
 
 .food-display h2 {
@@ -135,7 +136,7 @@
 
 @media screen and (max-width: 768px) {
   .food-display-list {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat( 1fr);
     gap: 16px;
   }
 }
@@ -143,11 +144,8 @@
 /* Mobile */
 @media screen and (max-width: 480px) {
   .food-display-list {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 12px;
   }
 
-  .food-display h2 {
-    font-size: 18px;
-  }
 }
