@@ -6,7 +6,7 @@ import { StoreContext } from "../../context/StoreContext";
 
 const Navbar = ({ setShowLogin }) => {
   const [menu, setMenu] = useState("home");
-  const { getTotalCartAmount, token, setToken } = useContext(StoreContext);
+  const { getTotalCartAmount, token, setToken, cartItems } = useContext(StoreContext);
   const [showSearch, setShowSearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [showMobileMenu, setShowMobileMenu] = useState(false); // Toggle for mobile nav
@@ -18,6 +18,11 @@ const Navbar = ({ setShowLogin }) => {
     setToken("");
     navigate("/");
   };
+
+  const totalQuantity = Object.values(cartItems).reduce(
+    (acc, curr) => acc + curr,
+    0,
+  );
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -150,7 +155,9 @@ const Navbar = ({ setShowLogin }) => {
           <Link to={"/cart"}>
             <img src={assets.basket_icon} alt="Cart" />
           </Link>
-          <div className={getTotalCartAmount() === 0 ? "" : "dot"}></div>
+                    {totalQuantity > 0 && (
+            <div className="cart-count">{totalQuantity}</div>
+          )}
         </div>
 
         {/* Auth */}
