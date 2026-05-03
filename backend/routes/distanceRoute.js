@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
   const distance = calculateDistance(RESTAURANT_LAT, RESTAURANT_LNG, lat, lng);
 
   // DELIVERY LIMIT
-  if (distance > 8) {
+  if (distance > 12) {
     return res.json({
       distance: Number(distance.toFixed(2)),
       deliveryCharge: 0,
@@ -21,12 +21,11 @@ router.post("/", async (req, res) => {
     });
   }
 
-  let deliveryCharge = 0;
+  const BASE_PRICE = 10;
+const PER_KM_RATE = 5;
 
-  if (distance <= 2) deliveryCharge = 10;
-  else if (distance <= 4) deliveryCharge = 20;
-  else if (distance <= 6) deliveryCharge = 30;
-  else deliveryCharge = 40;
+const roundedDistance = Math.ceil(distance);
+const deliveryCharge = BASE_PRICE + (roundedDistance * PER_KM_RATE);
 
   // 🔹 Reverse Geocode (Get Address)
   let address = "";
@@ -41,11 +40,6 @@ router.post("/", async (req, res) => {
         },
       },
     );
-    // console.log("Geocode response:", geoRes.data);
-
-    // if (geoRes.data.status === "OK") {
-    //   address = geoRes.data.results[0].formatted_address;
-    // }
 
     if (geoRes.data.status === "OK" && geoRes.data.results.length > 0) {
       address = geoRes.data.results[0].formatted_address;
