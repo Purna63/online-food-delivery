@@ -207,7 +207,12 @@ const LoginPopup = ({ setShowLogin }) => {
           <>
             <p>
               Create a new account?{" "}
-              <span onClick={() => setCurrState("Sign Up")}>Click here</span>
+                            <span
+                className="blink-link"
+                onClick={() => setCurrState("Sign Up")}
+              >
+                Click here
+              </span>
             </p>
             <p>
               <span onClick={() => setCurrState("Forgot Password")}>Forgot Password?</span>
