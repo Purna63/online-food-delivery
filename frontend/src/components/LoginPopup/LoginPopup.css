@@ -131,6 +131,19 @@
   color: #721c24;
 }
 
+.blink-link {
+  color: tomato;
+  font-weight: 700;
+  cursor: pointer;
+  animation: blinkText 1s infinite;
+}
+
+@keyframes blinkText {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
 @keyframes fadeInOut {
   0% { opacity: 0; }
   10% { opacity: 1; }
