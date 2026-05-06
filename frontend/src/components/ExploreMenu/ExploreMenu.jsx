@@ -20,22 +20,37 @@ const ExploreMenu = () => {
         
         <h1>Menu Items</h1>
 
-        <div className="explore-menu-list">
-          {menu_list.map((item, index) => (
-            <div
-              onClick={() => setCategory(item.menu_name)}
-              key={index}
-              className="explore-menu-list-item"
-            >
-              <img
-                className={category === item.menu_name ? "active" : ""}
-                src={item.menu_image}
-                alt={item.menu_name}
-              />
-              <p>{item.menu_name}</p>
-            </div>
-          ))}
-        </div>
+<div className="explore-menu-list">
+
+  {/* All Menu Option */}
+  <div
+    onClick={() => setCategory("All")}
+    className="explore-menu-list-item"
+  >
+    <img
+      className={category === "All" ? "active" : ""}
+      src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png"
+      alt="All"
+    />
+    <p>All</p>
+  </div>
+
+  {/* Other Categories */}
+  {menu_list.map((item, index) => (
+    <div
+      onClick={() => setCategory(item.menu_name)}
+      key={index}
+      className="explore-menu-list-item"
+    >
+      <img
+        className={category === item.menu_name ? "active" : ""}
+        src={item.menu_image}
+        alt={item.menu_name}
+      />
+      <p>{item.menu_name}</p>
+    </div>
+  ))}
+</div>
 
         <hr />
       </div>
