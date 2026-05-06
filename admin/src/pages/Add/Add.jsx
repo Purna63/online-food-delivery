@@ -102,7 +102,7 @@ const Add = ({ url }) => {
               name="category"
             >
               <option value="Biryani">Biryani</option>
-              <option value="Rolls">Rolls</option>
+              <option value="Roll/Chow Mein">Roll/Chow Mein</option>
               <option value="Non Vegetarian">Non Vegetarian</option>
               <option value="Vegetarian">Vegetarian</option>
               <option value="Sandwich">Sandwich</option>
