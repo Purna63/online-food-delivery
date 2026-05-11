@@ -105,8 +105,30 @@ const Orders = () => {
     setConfirmDeleteId(null);
   };
 
-  if (loading) return <div className="orders">Loading orders...</div>;
-  if (error) return <div className="orders">{error}</div>;
+if (loading) {
+  return (
+    <div className="orders-empty-container">
+      <div className="orders-empty-box">
+        <h2>Loading Orders...</h2>
+      </div>
+    </div>
+  );
+}
+if (error) {
+  return (
+    <div className="orders-empty-container">
+      <div className="orders-empty-box">
+        <img
+          src="/empty-order.png"
+          alt="Error"
+          className="empty-order-img"
+        />
+        <h2>Unable to load orders</h2>
+        <p>Please try again later.</p>
+      </div>
+    </div>
+  );
+}
 
   return (
     <div className="orders">
@@ -131,7 +153,17 @@ const Orders = () => {
       {!localStorage.getItem("token") ? (
   <div className="orders-empty">Please login to view your orders</div>
 ) : orders.length === 0 ? (
-  <div className="orders-empty">No paid orders found.</div>
+  <div className="orders-empty-container">
+  <div className="orders-empty-box">
+    <img
+      src="/empty-order.png"
+      alt="Empty Orders"
+      className="empty-order-img"
+    />
+    <h2>No Orders Yet</h2>
+    <p>Your order history will appear here.</p>
+  </div>
+</div>
 ) : (
   <table className="orders-table">
           <thead>
