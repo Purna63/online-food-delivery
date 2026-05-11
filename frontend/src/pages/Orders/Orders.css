@@ -171,6 +171,37 @@ body, html {
   background-color: #c82333;
 }
 
+
+.orders-empty-container {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.orders-empty-box {
+  text-align: center;
+}
+
+.empty-order-img {
+  width: 180px;
+  max-width: 90%;
+  opacity: 0.9;
+}
+
+.orders-empty-box h2 {
+  margin-top: 15px;
+  font-size: 28px;
+  color: #444;
+}
+
+.orders-empty-box p {
+  margin-top: 8px;
+  color: gray;
+  font-size: 16px;
+}
+
 /* Responsive styles for mobile devices */
 @media (max-width: 768px) and (min-width: 480px) {
   .orders-table {
