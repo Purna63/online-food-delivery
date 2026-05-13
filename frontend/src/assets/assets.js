@@ -96,6 +96,7 @@ import food_80 from "./food_80.png";
 import food_81 from "./food_81.png";
 import food_82 from "./food_82.png";
 import food_83 from "./food_83.png";
+import food_84 from "./food_84.png";
 
 import add_icon_white from "./add_icon_white.png";
 import add_icon_green from "./add_icon_green.png";
@@ -932,6 +933,15 @@ export const food_list = [
     description:
       "Food provides essential nutrients for overall health and well-being",
     category: "Chicken Biriyani",
+  },
+      {
+    _id: "84",
+    name: "Mutton Biriyani",
+    image: food_84,
+    price: 250,
+    description:
+      "Food provides essential nutrients for overall health and well-being",
+    category: "Mutton Biriyani",
   },
 
 ];
