@@ -94,6 +94,7 @@ import food_78 from "./food_78.png";
 import food_79 from "./food_79.png";
 import food_80 from "./food_80.png";
 import food_81 from "./food_81.png";
+import food_82 from "./food_82.png";
 
 import add_icon_white from "./add_icon_white.png";
 import add_icon_green from "./add_icon_green.png";
@@ -912,6 +913,15 @@ export const food_list = [
     description:
       "Food provides essential nutrients for overall health and well-being",
     category: "Cold Drink's",
+  },
+    {
+    _id: "82",
+    name: "Chicken Biriyani",
+    image: food_82,
+    price: 120,
+    description:
+      "Food provides essential nutrients for overall health and well-being",
+    category: "Chicken Biriyani",
   },
 
 ];
