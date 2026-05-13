@@ -1,28 +1,33 @@
-import express from "express";  //this all are correct
-import { addFood,listFood,removeFood,updateFoodStatus } from "../controllers/foodController.js";  //this all are correct
-import multer from "multer";  //this all are correct
+import express from "express";
+import {
+  addFood,
+  listFood,
+  removeFood,
+  updateFoodStatus,
+} from "../controllers/foodController.js";
 
+import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "../config/cloudinary.js";
 
+const foodRouter = express.Router();
 
-const foodRouter = express.Router();  //this all are correct
-
-// Image Storage Engine
-
-const storage = multer.diskStorage({
-    destination: "uploads",  //this all are correct
-  filename: (req, file, cb) => {
-    return cb(null, `${Date.now()}${file.originalname}`);  //this all are correct
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "food-delivery",
+    allowed_formats: ["jpg", "png", "jpeg"],
   },
 });
 
-const upload = multer({ storage:storage });  //this all are correct
+const upload = multer({ storage: storage });
 
-foodRouter.post("/add", upload.single("image"), addFood);  //this all are correct
-foodRouter.get("/list",listFood)//this is correct
-foodRouter.post("/remove",removeFood); //tis is correct
-//New Update
+foodRouter.post("/add", upload.single("image"), addFood);
+
+foodRouter.get("/list", listFood);
+
+foodRouter.post("/remove", removeFood);
+
 foodRouter.post("/update-status", updateFoodStatus);
-
-
 
 export default foodRouter;
