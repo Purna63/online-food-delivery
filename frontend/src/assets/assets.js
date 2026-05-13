@@ -100,6 +100,7 @@ import food_84 from "./food_84.png";
 import food_85 from "./food_85.png";
 import food_86 from "./food_86.png";
 import food_87 from "./food_87.png";
+import food_88 from "./food_88.png";
 
 import add_icon_white from "./add_icon_white.png";
 import add_icon_green from "./add_icon_green.png";
@@ -972,6 +973,15 @@ export const food_list = [
     description:
       "Food provides essential nutrients for overall health and well-being",
     category: "Egg Tadka",
+  },  
+    {
+    _id: "88",
+    name: "Veg Tadka",
+    image: food_88,
+    price: 120,
+    description:
+      "Food provides essential nutrients for overall health and well-being",
+    category: "Veg Tadka",
   },
 
 ];
