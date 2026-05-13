@@ -55,7 +55,7 @@ app.set("io", io);
 
 // API routes
 app.use("/api/food", foodRouter);
-app.use("/images", express.static("uploads"));
+//app.use("/images", express.static("uploads"));
 app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/payment", paymentRouter);
