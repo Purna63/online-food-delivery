@@ -102,6 +102,7 @@ import food_86 from "./food_86.png";
 import food_87 from "./food_87.png";
 import food_88 from "./food_88.png";
 import food_89 from "./food_89.png";
+import food_90 from "./food_90.png";
 
 import add_icon_white from "./add_icon_white.png";
 import add_icon_green from "./add_icon_green.png";
@@ -992,6 +993,15 @@ export const food_list = [
     description:
       "Food provides essential nutrients for overall health and well-being",
     category: "chana masala",
+  },
+    {
+    _id: "90",
+    name: "Mushroom masala",
+    image: food_90,
+    price: 220,
+    description:
+      "Food provides essential nutrients for overall health and well-being",
+    category: "Mushroom masala",
   },
 
 ];
