@@ -103,6 +103,8 @@ import food_87 from "./food_87.png";
 import food_88 from "./food_88.png";
 import food_89 from "./food_89.png";
 import food_90 from "./food_90.png";
+import food_91 from "./food_91.png";
+import food_92 from "./food_92.png";
 
 import add_icon_white from "./add_icon_white.png";
 import add_icon_green from "./add_icon_green.png";
@@ -998,6 +1000,24 @@ export const food_list = [
     _id: "90",
     name: "Mushroom masala",
     image: food_90,
+    price: 220,
+    description:
+      "Food provides essential nutrients for overall health and well-being",
+    category: "Mushroom masala",
+  },
+  {
+    _id: "91",
+    name: "Mushroom masala",
+    image: food_91,
+    price: 220,
+    description:
+      "Food provides essential nutrients for overall health and well-being",
+    category: "Mushroom masala",
+  },
+  {
+    _id: "92",
+    name: "Mushroom masala",
+    image: food_92,
     price: 220,
     description:
       "Food provides essential nutrients for overall health and well-being",
