@@ -142,8 +142,8 @@ const Cart = ({ setShowLogin }) => {
                 </div>
                 <hr />
                 <div className="cart-total-details">
-                  <p>Delivery Fee</p>
-                  <p>Calculated at checkout</p>
+                  <p>Delivery Fee + Distance Fee</p>
+                  <p>Calculated</p>
                 </div>
                 <hr />
                 <div className="cart-total-details">
