@@ -11,7 +11,7 @@ const router = express.Router();
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const userId = req.userId;
-    const { items, deliveryInfo, payment } = req.body;
+    const { items, deliveryInfo, payment, deliveryFee, amount } = req.body;
 
     // RESTAURANT LOCATION (FIXED)
     const RESTAURANT_LAT = 20.302559;
@@ -42,12 +42,6 @@ router.post("/", authMiddleware, async (req, res) => {
     }
 
     // DELIVERY CHARGE RULE
-    let deliveryCharge = 0;
-
-    if (distance <= 2) deliveryCharge = 10;
-    else if (distance <= 4) deliveryCharge = 20;
-    else if (distance <= 6) deliveryCharge = 30;
-    else deliveryCharge = 40;
 
     const orderDetails = items.map((item) => ({
   _id: item._id,
@@ -70,12 +64,11 @@ orderDetails.forEach((item) => {
     const order = new orderModel({
       userId,
       items: orderDetails,
-      amount: totalAmount,
+      amount: amount,
+      deliveryCharge: deliveryFee,
       address: deliveryInfo,
       payment,
       status: "Pending",
-      // NEW DATA SAVE
-      deliveryCharge,
       distance,
        name: user?.name || deliveryInfo.firstName || "Customer",
       phone: user?.phone || deliveryInfo.phone || "",
