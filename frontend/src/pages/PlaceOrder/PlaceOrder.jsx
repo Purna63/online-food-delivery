@@ -430,6 +430,8 @@ const orderData = {
   items: orderItems,
   deliveryInfo: data,
   payment: true,
+  deliveryFee: deliveryFee,
+  amount: totalAmount,
 };
 
     const saveDeliveryInfo = () => {
