@@ -707,7 +707,7 @@ const orderData = {
             
             
             <div className="cart-total-details">
-              <p>Delivery Fee</p>
+              <p>Delivery Fee + Distance Fee</p>
               <p>₹{deliveryFee}</p>
             </div>
             <hr />
