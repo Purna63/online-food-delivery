@@ -58,7 +58,7 @@ let foodTotal = 0;
 orderDetails.forEach((item) => {
   foodTotal += item.price * item.quantity;
 });
-    const totalAmount = foodTotal + deliveryCharge;
+    // const totalAmount = foodTotal + deliveryCharge;
     const user = await userModel.findById(userId);
 
     const order = new orderModel({
@@ -77,11 +77,11 @@ orderDetails.forEach((item) => {
     await order.save();
 
     res.status(201).json({
-      message: "Order placed",
-      distance,
-      deliveryCharge,
-      totalAmount,
-    });
+  message: "Order placed",
+  distance,
+  deliveryCharge: deliveryFee,
+  totalAmount: amount,
+});
   } catch (err) {
     console.error("Error placing order:", err);
     res.status(500).send("Failed to store order");
