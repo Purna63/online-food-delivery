@@ -163,6 +163,8 @@ const router = express.Router();
 // PLACE ORDER
 router.post("/", authMiddleware, async (req, res) => {
   try {
+    console.log(req.body);
+    
     const userId = req.userId;
 
     const {
@@ -234,6 +236,7 @@ router.post("/", authMiddleware, async (req, res) => {
     });
 
     await order.save();
+    console.log("ORDER SAVED");
 
     res.status(201).json({
       success: true,
