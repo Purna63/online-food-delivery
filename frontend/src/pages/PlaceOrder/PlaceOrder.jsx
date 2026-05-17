@@ -414,12 +414,23 @@ const PlaceOrder = () => {
     // const totalAmount = getTotalCartAmount() + Deliverycharge;
     const totalAmount = getTotalCartAmount() + deliveryFee;
 
-    const orderData = {
-      cartItems,
-      food_list,
-      deliveryInfo: data,
-      payment: true,
-    };
+const orderItems = food_list
+  .filter((item) => cartItems[item._id] > 0)
+  .map((item) => ({
+    _id: item._id,
+    name: item.name,
+    price: item.price,
+    quantity: cartItems[item._id],
+
+    // IMPORTANT
+    shopName: item.shopName,
+  }));
+
+const orderData = {
+  items: orderItems,
+  deliveryInfo: data,
+  payment: true,
+};
 
     const saveDeliveryInfo = () => {
       localStorage.setItem("deliveryInfo", JSON.stringify(data));
