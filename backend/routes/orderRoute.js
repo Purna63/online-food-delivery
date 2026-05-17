@@ -11,7 +11,7 @@ const router = express.Router();
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const userId = req.userId;
-    const { cartItems, food_list, deliveryInfo, amount, payment } = req.body;
+    const { items, deliveryInfo, payment } = req.body;
 
     // RESTAURANT LOCATION (FIXED)
     const RESTAURANT_LAT = 20.302559;
@@ -49,21 +49,21 @@ router.post("/", authMiddleware, async (req, res) => {
     else if (distance <= 6) deliveryCharge = 30;
     else deliveryCharge = 40;
 
-    const orderDetails = food_list
-      .filter((item) => cartItems[item._id] > 0)
-      .map((item) => ({
-        name: item.name,
-        category: item.category, // Include category
-        quantity: cartItems[item._id],
-      }));
+    const orderDetails = items.map((item) => ({
+  _id: item._id,
+  name: item.name,
+  price: item.price,
+  quantity: item.quantity,
 
-    let foodTotal = 0;
-    orderDetails.forEach((item) => {
-      const product = food_list.find((f) => f.name === item.name);
-      if (product) {
-        foodTotal += product.price * item.quantity;
-      }
-    });
+  // IMPORTANT
+  shopName: item.shopName,
+}));
+
+let foodTotal = 0;
+
+orderDetails.forEach((item) => {
+  foodTotal += item.price * item.quantity;
+});
     const totalAmount = foodTotal + deliveryCharge;
     const user = await userModel.findById(userId);
 
