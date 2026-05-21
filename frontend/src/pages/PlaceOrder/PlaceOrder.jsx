@@ -460,49 +460,128 @@ const orderData = {
 
         const order = await response.json();
 
-        const options = {
-          key: RAZORPAY_KEY_ID,
-          amount: order.amount,
-          currency: "INR",
-          name: "Food Delivery",
-          order_id: order.id,
-          handler: async function () {
-            await fetch(`${BACKEND_URL}/api/order`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify(orderData),
-            });
+        // const options = {
+        //   key: RAZORPAY_KEY_ID,
+        //   amount: order.amount,
+        //   currency: "INR",
+        //   name: "Food Delivery",
+        //   order_id: order.id,
+        //   handler: async function () {
+        //     await fetch(`${BACKEND_URL}/api/order`, {
+        //       method: "POST",
+        //       headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization: `Bearer ${token}`,
+        //       },
+        //       body: JSON.stringify(orderData),
+        //     });
 
-            saveDeliveryInfo();
-            await axios.post(
-              `${BACKEND_URL}/api/user/save-address`,
-              {
-                street: data.street,
-                landmark: data.landmark,
-                //new add second
-                lat: data.lat,
-                lng: data.lng,
-              },
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              },
-            );
-            navigate("/order-success");
-          },
-          prefill: {
-            name: `${data.firstName} ${data.lastName}`,
-            email: data.email,
-            contact: data.phone,
-          },
-          theme: {
-            color: "#F37254",
-          },
-        };
+        //     saveDeliveryInfo();
+        //     await axios.post(
+        //       `${BACKEND_URL}/api/user/save-address`,
+        //       {
+        //         street: data.street,
+        //         landmark: data.landmark,
+        //         //new add second
+        //         lat: data.lat,
+        //         lng: data.lng,
+        //       },
+        //       {
+        //         headers: {
+        //           Authorization: `Bearer ${token}`,
+        //         },
+        //       },
+        //     );
+        //     navigate("/order-success");
+        //   },
+        //   prefill: {
+        //     name: `${data.firstName} ${data.lastName}`,
+        //     email: data.email,
+        //     contact: data.phone,
+        //   },
+        //   theme: {
+        //     color: "#F37254",
+        //   },
+        // };
+        const options = {
+  key: RAZORPAY_KEY_ID,
+  amount: order.amount,
+  currency: "INR",
+  name: "Food Delivery",
+  description: "Order Payment",
+  order_id: order.id,
+
+  handler: async function () {
+    await fetch(`${BACKEND_URL}/api/order`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(orderData),
+    });
+
+    saveDeliveryInfo();
+
+    await axios.post(
+      `${BACKEND_URL}/api/user/save-address`,
+      {
+        street: data.street,
+        landmark: data.landmark,
+        lat: data.lat,
+        lng: data.lng,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    navigate("/order-success");
+  },
+
+  prefill: {
+    name: `${data.firstName}`,
+    email: data.email,
+    contact: data.phone,
+  },
+
+  notes: {
+    address: data.street,
+  },
+
+  theme: {
+    color: "#F37254",
+  },
+
+  config: {
+    display: {
+      blocks: {
+        upi: {
+          name: "Pay using UPI",
+          instruments: [
+            {
+              method: "upi",
+            },
+          ],
+        },
+      },
+
+      sequence: ["block.upi"],
+
+      preferences: {
+        show_default_blocks: true,
+      },
+    },
+  },
+
+  modal: {
+    ondismiss: function () {
+      console.log("Payment popup closed");
+    },
+  },
+};
 
         setIsLoadingPayment(false);
 
