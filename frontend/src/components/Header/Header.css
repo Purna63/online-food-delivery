@@ -2,7 +2,8 @@
   height: 34vw;
   margin: 60px auto;
   background: url("/header_img.png") no-repeat;
-  background-size: contain;
+  background-size: cover;
+  background-position: center;
   position: relative;
 }
 
@@ -99,30 +100,5 @@
   .header-contents button {
     padding: 1vw 2vw;
     font-size: 1.6vw;
-  }
-}
-
-@media (max-width: 480px) {
-  .header {
-    height: 48vw;
-    margin-top: 75px;
-  }
-
-  .header-contents {
-    max-width: 65%;
-    gap: 1vw;
-  }
-
-  .header-contents h2 {
-    font-size: 4vw;
-  }
-
-  .header-contents p {
-    display: none;
-  }
-
-  .header-contents button {
-    padding: 1.5vw 3vw;
-    font-size: 2vw;
   }
 }
