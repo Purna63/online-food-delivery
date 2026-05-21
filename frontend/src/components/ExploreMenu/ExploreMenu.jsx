@@ -11,7 +11,7 @@ const ExploreMenu = () => {
       <div className="explore-menu" id="explore-menu">
         <h1>About Our Food Service</h1>
         <p className="explore-menu-text">
-          Fast food offers a quick and satisfying solution for your hunger, perfect for busy days and late-night cravings. With a variety of flavors and dishes, it's all about convenience without compromising on taste. All foods are collected from different restaurants in <span className="tex">Rahama Market</span>.
+          Fast food offers a quick and satisfying solution for your hunger, perfect for busy days and late-night cravings. With a variety of flavors and dishes, it's all about convenience without compromising on taste. All foods are collected from different restaurants in <span className="tex">Rahama Market</span> for more details contact-9777834155.
 
 
         </p>
