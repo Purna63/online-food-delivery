@@ -134,18 +134,32 @@
 
 
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .food-display-list {
     grid-template-columns: repeat( 1fr);
     gap: 16px;
+  }
+} */
+
+/* Mobile */
+/* @media screen and (max-width: 480px) {
+  .food-display-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+} */
+@media screen and (max-width: 768px) {
+  .food-display-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
   }
 }
 
 /* Mobile */
 @media screen and (max-width: 480px) {
   .food-display-list {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
-
 }
