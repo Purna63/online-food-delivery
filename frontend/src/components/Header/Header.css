@@ -58,7 +58,7 @@
   transform: scale(1.05);
   box-shadow: 0 4px 10px rgb(133, 33%, 46%, 0.2);
 }
-@media (max-width: 1050px) {
+/* @media (max-width: 1050px) {
   .header-contents {
     max-width: 45%;
   }
@@ -73,4 +73,4 @@
   .header-contents button {
     padding: 2vw 4vw;
   }
-}
+} */
