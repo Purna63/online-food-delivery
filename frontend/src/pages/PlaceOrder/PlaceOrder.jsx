@@ -426,14 +426,21 @@ const orderItems = food_list
     shopName: item.shopName,
   }));
 
+// const orderData = {
+//   items: orderItems,
+//   deliveryInfo: data,
+//   payment: true,
+//   deliveryFee: deliveryFee,
+//   amount: totalAmount,
+// };
 const orderData = {
   items: orderItems,
   deliveryInfo: data,
-  payment: true,
+  payment: false,
   deliveryFee: deliveryFee,
   amount: totalAmount,
+  status: "Payment Pending",
 };
-
     const saveDeliveryInfo = () => {
       localStorage.setItem("deliveryInfo", JSON.stringify(data));
     };
@@ -503,6 +510,21 @@ const orderData = {
         //     color: "#F37254",
         //   },
         // };
+        const saveOrderResponse = await fetch(`${BACKEND_URL}/api/order`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  },
+  body: JSON.stringify(orderData),
+});
+
+const savedOrder = await saveOrderResponse.json();
+
+if (!savedOrder.success) {
+  alert("Failed to create order");
+  return;
+}
         const options = {
   key: RAZORPAY_KEY_ID,
   amount: order.amount,
