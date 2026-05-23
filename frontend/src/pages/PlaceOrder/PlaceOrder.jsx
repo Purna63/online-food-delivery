@@ -425,14 +425,7 @@ const orderItems = food_list
     // IMPORTANT
     shopName: item.shopName,
   }));
-const orderData = {
-  items: orderItems,
-  deliveryInfo: data,
-  payment: false,
-  deliveryFee: deliveryFee,
-  amount: totalAmount,
-  status: "Payment Pending",
-};
+
     const saveDeliveryInfo = () => {
       localStorage.setItem("deliveryInfo", JSON.stringify(data));
     };
@@ -458,6 +451,15 @@ const orderData = {
         );
 
         const order = await response.json();
+        const orderData = {
+  items: orderItems,
+  deliveryInfo: data,
+  payment: false,
+  deliveryFee: deliveryFee,
+  amount: totalAmount,
+  status: "Payment Pending",
+  razorpayOrderId: order.id,
+};
         const saveOrderResponse = await fetch(`${BACKEND_URL}/api/order`, {
   method: "POST",
   headers: {
@@ -483,24 +485,6 @@ if (!savedOrder.success) {
   handler: async function (response) {
 
   try {
-
-const paymentUpdate = await fetch(
-  `${BACKEND_URL}/api/order/payment-success/${savedOrder.order._id}`,
-  {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }
-);
-
-const result = await paymentUpdate.json();
-
-if (!result.success) {
-  alert("Payment successful but payment update failed.");
-  return;
-}
-
     saveDeliveryInfo();
 
     await axios.post(
