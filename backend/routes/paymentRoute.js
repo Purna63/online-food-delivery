@@ -1,10 +1,10 @@
-// ✅ Corrected paymentRoute.js
+// paymentRoute.js
+
 import express from "express";
 import Razorpay from "razorpay";
 import dotenv from "dotenv";
 import crypto from "crypto";
 
-// IMPORTANT
 import orderModel from "../models/orderModel.js";
 
 dotenv.config();
@@ -48,21 +48,20 @@ router.post("/create-order", async (req, res) => {
 
 // WEBHOOK
 router.post("/webhook", async (req, res) => {
-
   try {
 
     const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
 
-    // CREATE SIGNATURE
-    const shasum = crypto
-      .createHmac("sha256", secret)
-      .update(JSON.stringify(req.body))
-      .digest("hex");
-
     // RAZORPAY SIGNATURE
     const signature = req.headers["x-razorpay-signature"];
 
-    // VERIFY
+    // CREATE SIGNATURE
+    const shasum = crypto
+      .createHmac("sha256", secret)
+      .update(req.body)
+      .digest("hex");
+
+    // VERIFY SIGNATURE
     if (shasum !== signature) {
 
       console.log("Invalid webhook signature");
@@ -72,10 +71,13 @@ router.post("/webhook", async (req, res) => {
       });
     }
 
-    // PAYMENT DATA
-    const payment = req.body.payload.payment.entity;
+    // CONVERT RAW BODY
+    const body = JSON.parse(req.body.toString());
 
-    // IMPORTANT
+    // PAYMENT DATA
+    const payment = body.payload.payment.entity;
+
+    // RAZORPAY ORDER ID
     const razorpayOrderId = payment.order_id;
 
     console.log("Webhook Payment Success:", razorpayOrderId);
