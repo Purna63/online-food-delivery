@@ -31,7 +31,12 @@ const Orders = ({ url }) => {
       if (!res.ok) throw new Error("Failed to fetch orders");
 
       const data = await res.json();
-      setOrders(Array.isArray(data) ? data : []);
+      // setOrders(Array.isArray(data) ? data : []);
+      const paidOrders = Array.isArray(data)
+  ? data.filter((item) => item.payment === true)
+  : [];
+
+setOrders(paidOrders);
     } catch (err) {
       console.error("Fetch failed:", err);
       setError("Failed to load orders.");
