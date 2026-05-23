@@ -35,15 +35,15 @@ const PlaceOrder = () => {
   const [isStoreOpen, setIsStoreOpen] = useState(true);
   const [countdown, setCountdown] = useState("");
   const [storeClosedMessage, setStoreClosedMessage] = useState(false);
-  
+
   //new line add
   const [locationMessage, setLocationMessage] = useState("");
   const [deliveryFee, setDeliveryFee] = useState(0);
   const [distance, setDistance] = useState(null);
   const [showMap, setShowMap] = useState(false);
   const [isLocationLocked, setIsLocationLocked] = useState(false);
-  const [showAddressForm, setShowAddressForm] = useState(true);//new add
-  const [hasSavedAddress, setHasSavedAddress] = useState(false);//new add
+  const [showAddressForm, setShowAddressForm] = useState(true); //new add
+  const [hasSavedAddress, setHasSavedAddress] = useState(false); //new add
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -51,11 +51,7 @@ const PlaceOrder = () => {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-
-
-
-
-    // GET USER CURRENT LOCATION
+  // GET USER CURRENT LOCATION
   const getLocation = () => {
     if (!navigator.geolocation) {
       alert("Geolocation is not supported by this browser.");
@@ -215,10 +211,6 @@ const PlaceOrder = () => {
     }, 4000);
   };
 
-
-
-  
-
   const validate = () => {
     let valid = true;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -236,7 +228,7 @@ const PlaceOrder = () => {
     }
 
     setErrors(newErrors);
-    
+
     if (!valid) {
       setErrorVisible(true);
       setTimeout(() => setErrorVisible(false), 4000);
@@ -271,7 +263,9 @@ const PlaceOrder = () => {
         const minutes = Math.floor((diff % 3600000) / 60000);
         const seconds = Math.floor((diff % 60000) / 1000);
 
-        setCountdown(`Store closed. Reopens in ${hours}h ${minutes}m ${seconds}s`);
+        setCountdown(
+          `Store closed. Reopens in ${hours}h ${minutes}m ${seconds}s`,
+        );
       } else {
         setCountdown("");
       }
@@ -286,14 +280,11 @@ const PlaceOrder = () => {
     }
   }, [token]);
 
-  
-
   useEffect(() => {
     fetchStoreStatus();
     const interval = setInterval(fetchStoreStatus, 1000);
     return () => clearInterval(interval);
   }, []);
-
 
   // add new line
   useEffect(() => {
@@ -313,8 +304,7 @@ const PlaceOrder = () => {
     }
   }, []);
 
-
-   useEffect(() => {
+  useEffect(() => {
     const loadAddress = async () => {
       try {
         const res = await axios.get(`${BACKEND_URL}/api/user/get-address`, {
@@ -359,8 +349,6 @@ const PlaceOrder = () => {
     if (token) loadAddress();
   }, [token]);
 
-  
-
   const placeOrder = (e) => {
     e.preventDefault();
     if (!validate()) return;
@@ -379,11 +367,9 @@ const PlaceOrder = () => {
       return;
     }
 
-
-    
-    if(!isStoreOpen){
+    if (!isStoreOpen) {
       setStoreClosedMessage(true);
-      setTimeout(()=>setStoreClosedMessage(false),5000);
+      setTimeout(() => setStoreClosedMessage(false), 5000);
       return;
     }
 
@@ -414,17 +400,17 @@ const PlaceOrder = () => {
     // const totalAmount = getTotalCartAmount() + Deliverycharge;
     const totalAmount = getTotalCartAmount() + deliveryFee;
 
-const orderItems = food_list
-  .filter((item) => cartItems[item._id] > 0)
-  .map((item) => ({
-    _id: item._id,
-    name: item.name,
-    price: item.price,
-    quantity: cartItems[item._id],
+    const orderItems = food_list
+      .filter((item) => cartItems[item._id] > 0)
+      .map((item) => ({
+        _id: item._id,
+        name: item.name,
+        price: item.price,
+        quantity: cartItems[item._id],
 
-    // IMPORTANT
-    shopName: item.shopName,
-  }));
+        // IMPORTANT
+        shopName: item.shopName,
+      }));
 
     const saveDeliveryInfo = () => {
       localStorage.setItem("deliveryInfo", JSON.stringify(data));
@@ -452,109 +438,106 @@ const orderItems = food_list
 
         const order = await response.json();
         const orderData = {
-  items: orderItems,
-  deliveryInfo: data,
-  payment: false,
-  deliveryFee: deliveryFee,
-  amount: totalAmount,
-  status: "Payment Pending",
-  razorpayOrderId: order.id,
-};
+          items: orderItems,
+          deliveryInfo: data,
+          payment: false,
+          deliveryFee: deliveryFee,
+          amount: totalAmount,
+          status: "Payment Pending",
+          razorpayOrderId: order.id,
+        };
         const saveOrderResponse = await fetch(`${BACKEND_URL}/api/order`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
-  },
-  body: JSON.stringify(orderData),
-});
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(orderData),
+        });
 
-const savedOrder = await saveOrderResponse.json();
+        const savedOrder = await saveOrderResponse.json();
 
-if (!savedOrder.success) {
-  alert("Failed to create order");
-  return;
-}
+        if (!savedOrder.success) {
+          alert("Failed to create order");
+          return;
+        }
         const options = {
-  key: RAZORPAY_KEY_ID,
-  amount: order.amount,
-  currency: "INR",
-  name: "Food Delivery",
-  description: "Order Payment",
-  order_id: order.id,
-  handler: async function (response) {
+          key: RAZORPAY_KEY_ID,
+          amount: order.amount,
+          currency: "INR",
+          name: "Food Delivery",
+          description: "Order Payment",
+          order_id: order.id,
+          handler: async function (response) {
+            try {
+              saveDeliveryInfo();
 
-  try {
-    saveDeliveryInfo();
+              await axios.post(
+                `${BACKEND_URL}/api/user/save-address`,
+                {
+                  street: data.street,
+                  landmark: data.landmark,
+                  lat: data.lat,
+                  lng: data.lng,
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                },
+              );
 
-    await axios.post(
-      `${BACKEND_URL}/api/user/save-address`,
-      {
-        street: data.street,
-        landmark: data.landmark,
-        lat: data.lat,
-        lng: data.lng,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+              navigate("/order-success");
+            } catch (error) {
+              console.log("Order Save Error:", error);
 
-    navigate("/order-success");
+              alert(
+                "Payment completed. If order not shown, contact support with payment screenshot.",
+              );
+            }
+          },
 
-  } catch (error) {
+          prefill: {
+            name: `${data.firstName}`,
+            email: data.email,
+            contact: data.phone,
+          },
 
-    console.log("Order Save Error:", error);
+          notes: {
+            address: data.street,
+          },
 
-    alert(
-      "Payment completed. If order not shown, contact support with payment screenshot."
-    );
-  }
-},
+          theme: {
+            color: "#F37254",
+          },
 
-  prefill: {
-    name: `${data.firstName}`,
-    email: data.email,
-    contact: data.phone,
-  },
+          config: {
+            display: {
+              blocks: {
+                upi: {
+                  name: "Pay using UPI",
+                  instruments: [
+                    {
+                      method: "upi",
+                    },
+                  ],
+                },
+              },
 
-  notes: {
-    address: data.street,
-  },
+              sequence: ["block.upi"],
 
-  theme: {
-    color: "#F37254",
-  },
-
-  config: {
-    display: {
-      blocks: {
-        upi: {
-          name: "Pay using UPI",
-          instruments: [
-            {
-              method: "upi",
+              preferences: {
+                show_default_blocks: true,
+              },
             },
-          ],
-        },
-      },
+          },
 
-      sequence: ["block.upi"],
-
-      preferences: {
-        show_default_blocks: true,
-      },
-    },
-  },
-
-  modal: {
-    ondismiss: function () {
-      console.log("Payment popup closed");
-    },
-  },
-};
+          modal: {
+            ondismiss: function () {
+              console.log("Payment popup closed");
+            },
+          },
+        };
 
         setIsLoadingPayment(false);
 
@@ -594,7 +577,7 @@ if (!savedOrder.success) {
         </div>
       )}
 
-       {storeClosedMessage && (
+      {storeClosedMessage && (
         <div className="store-closed-message">
           <p>The store is currently closed. Please come back tomorrow.</p>
         </div>
@@ -756,8 +739,7 @@ if (!savedOrder.success) {
             )}
 
             <hr />
-            
-            
+
             <div className="cart-total-details">
               <p>Delivery Fee + Distance Fee</p>
               <p>₹{deliveryFee}</p>
@@ -765,10 +747,7 @@ if (!savedOrder.success) {
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>
-                ₹
-                {getTotalCartAmount() + deliveryFee }
-              </b>
+              <b>₹{getTotalCartAmount() + deliveryFee}</b>
             </div>
             <button type="submit">Proceed To Payment</button>
           </div>
@@ -782,11 +761,16 @@ if (!savedOrder.success) {
             <button onClick={() => handlePaymentOption("Online Payment")}>
               Online Payment
             </button>
-            <button className="close-btn" onClick={() => setShowPaymentModal(false)}>Cancel</button>
+            <button
+              className="close-btn"
+              onClick={() => setShowPaymentModal(false)}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       )}
-      {isLoadingPayment &&(
+      {isLoadingPayment && (
         <div className="spinner-overlay">
           <div className="spinner"></div>
         </div>
