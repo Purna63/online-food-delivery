@@ -511,15 +511,58 @@ const orderData = {
   description: "Order Payment",
   order_id: order.id,
 
-  handler: async function () {
-    await fetch(`${BACKEND_URL}/api/order`, {
+  // handler: async function () {
+  //   await fetch(`${BACKEND_URL}/api/order`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //     body: JSON.stringify(orderData),
+  //   });
+
+  //   saveDeliveryInfo();
+
+  //   await axios.post(
+  //     `${BACKEND_URL}/api/user/save-address`,
+  //     {
+  //       street: data.street,
+  //       landmark: data.landmark,
+  //       lat: data.lat,
+  //       lng: data.lng,
+  //     },
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     }
+  //   );
+
+  //   navigate("/order-success");
+  // },
+
+  handler: async function (response) {
+
+  try {
+
+    const orderResponse = await fetch(`${BACKEND_URL}/api/order`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(orderData),
+      body: JSON.stringify({
+        ...orderData,
+        razorpay_payment_id: response.razorpay_payment_id,
+      }),
     });
+
+    const result = await orderResponse.json();
+
+    if (!result.success) {
+      alert("Payment successful but order saving failed.");
+      return;
+    }
 
     saveDeliveryInfo();
 
@@ -539,7 +582,16 @@ const orderData = {
     );
 
     navigate("/order-success");
-  },
+
+  } catch (error) {
+
+    console.log("Order Save Error:", error);
+
+    alert(
+      "Payment completed. If order not shown, contact support with payment screenshot."
+    );
+  }
+},
 
   prefill: {
     name: `${data.firstName}`,
