@@ -532,59 +532,26 @@ if (!savedOrder.success) {
   name: "Food Delivery",
   description: "Order Payment",
   order_id: order.id,
-
-  // handler: async function () {
-  //   await fetch(`${BACKEND_URL}/api/order`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     body: JSON.stringify(orderData),
-  //   });
-
-  //   saveDeliveryInfo();
-
-  //   await axios.post(
-  //     `${BACKEND_URL}/api/user/save-address`,
-  //     {
-  //       street: data.street,
-  //       landmark: data.landmark,
-  //       lat: data.lat,
-  //       lng: data.lng,
-  //     },
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     }
-  //   );
-
-  //   navigate("/order-success");
-  // },
-
   handler: async function (response) {
 
   try {
 
-    const orderResponse = await fetch(`${BACKEND_URL}/api/order`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        ...orderData,
-        razorpay_payment_id: response.razorpay_payment_id,
-      }),
-    });
+const paymentUpdate = await fetch(
+  `${BACKEND_URL}/api/order/payment-success/${savedOrder.order._id}`,
+  {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
+);
 
-    const result = await orderResponse.json();
+const result = await paymentUpdate.json();
 
-    if (!result.success) {
-      alert("Payment successful but order saving failed.");
-      return;
-    }
+if (!result.success) {
+  alert("Payment successful but payment update failed.");
+  return;
+}
 
     saveDeliveryInfo();
 
