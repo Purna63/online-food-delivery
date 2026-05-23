@@ -425,14 +425,6 @@ const orderItems = food_list
     // IMPORTANT
     shopName: item.shopName,
   }));
-
-// const orderData = {
-//   items: orderItems,
-//   deliveryInfo: data,
-//   payment: true,
-//   deliveryFee: deliveryFee,
-//   amount: totalAmount,
-// };
 const orderData = {
   items: orderItems,
   deliveryInfo: data,
@@ -466,50 +458,6 @@ const orderData = {
         );
 
         const order = await response.json();
-
-        // const options = {
-        //   key: RAZORPAY_KEY_ID,
-        //   amount: order.amount,
-        //   currency: "INR",
-        //   name: "Food Delivery",
-        //   order_id: order.id,
-        //   handler: async function () {
-        //     await fetch(`${BACKEND_URL}/api/order`, {
-        //       method: "POST",
-        //       headers: {
-        //         "Content-Type": "application/json",
-        //         Authorization: `Bearer ${token}`,
-        //       },
-        //       body: JSON.stringify(orderData),
-        //     });
-
-        //     saveDeliveryInfo();
-        //     await axios.post(
-        //       `${BACKEND_URL}/api/user/save-address`,
-        //       {
-        //         street: data.street,
-        //         landmark: data.landmark,
-        //         //new add second
-        //         lat: data.lat,
-        //         lng: data.lng,
-        //       },
-        //       {
-        //         headers: {
-        //           Authorization: `Bearer ${token}`,
-        //         },
-        //       },
-        //     );
-        //     navigate("/order-success");
-        //   },
-        //   prefill: {
-        //     name: `${data.firstName} ${data.lastName}`,
-        //     email: data.email,
-        //     contact: data.phone,
-        //   },
-        //   theme: {
-        //     color: "#F37254",
-        //   },
-        // };
         const saveOrderResponse = await fetch(`${BACKEND_URL}/api/order`, {
   method: "POST",
   headers: {
