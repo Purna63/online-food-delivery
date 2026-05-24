@@ -13,16 +13,18 @@ body, html {
 .orders {
   padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  flex-grow: 1;  /* Allows the orders section to take up remaining space */
+  flex-grow: 1;
   width: 100vw;
   position: relative;
   left: 50%;
   right: 50%;
   margin-left: -50vw;
-  margin-right: -50vw;  /* Cancel parent's padding/margin if any */
+  margin-right: -50vw;
   box-sizing: border-box;
   background: #fff;
-  overflow: hidden;  /* Ensure no overflow outside the content */
+
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 /* Footer should be at the bottom */
@@ -203,76 +205,27 @@ body, html {
 }
 
 /* Responsive styles for mobile devices */
-@media (max-width: 768px) and (min-width: 480px) {
+/* MOBILE RESPONSIVE */
+
+@media (max-width: 768px) {
+
+  .orders {
+    overflow-x: auto;
+    padding: 1rem;
+  }
+
   .orders-table {
-    width: 100%;
-    border-collapse: collapse;
+    min-width: 750px;
   }
 
-  .orders-table thead {
-    display: none;
-  }
-
-  .orders-table tbody {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
-    display: block;
-  }
-
-  .orders-table tr {
-  display: grid;
-  grid-template-columns: 1fr 2fr 2fr 1fr 1fr 1fr; /* Updated to 6 columns */
-  border: 1px solid #ddd;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  background-color: #fafafa;
-  border-radius: 8px;
-}
-
-
+  .orders-table th,
   .orders-table td {
-    text-align: left;
-    padding: 0.5rem 1rem;
-    position: relative;
-  }
-
-  .orders-table td::before {
-    content: attr(data-label);
-    font-weight: bold;
-    display: block;
-    margin-bottom: 0.3rem;
-    color: #333;
+    white-space: nowrap;
+    font-size: 14px;
   }
 
   .remove-btn {
-    width: 100%;
-    padding: 0.6rem;
-    font-size: 1rem;
-    margin-top: 0.5rem;
-    border-radius: 6px;
-    background-color: #ff4d4f;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  .remove-btn:hover {
-    background-color: #d9363e;
-  }
-}
-
-@media (max-width: 480px)  {
-  .orders-table td {
-    font-size: 12px;
-    padding: 5px;
-  }
-
-  .orders-table td::before {
-    font-size: 12px;
-  }
-
-  .remove-btn {
-    font-size: 0.9rem;
-    padding: 0.5rem;
+    padding: 6px 12px;
+    font-size: 13px;
   }
 }
