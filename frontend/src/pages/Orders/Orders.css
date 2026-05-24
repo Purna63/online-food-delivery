@@ -22,8 +22,6 @@ body, html {
   margin-right: -50vw;
   box-sizing: border-box;
   background: #fff;
-
-  overflow-x: auto;
 }
 
 /* Footer should be at the bottom */
