@@ -16,7 +16,7 @@ body, html {
   flex-grow: 1;
   width: 100vw;
   position: relative;
-  left: 50%;
+  left: 40%;
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
