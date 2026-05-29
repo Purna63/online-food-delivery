@@ -99,11 +99,11 @@ router.post("/", authMiddleware, async (req, res) => {
 
     await order.save();
 
-await axios.post(
-  `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
-  {
-    chat_id: process.env.TELEGRAM_CHAT_ID,
-    text: `
+    await axios.post(
+      `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+      {
+        chat_id: process.env.TELEGRAM_CHAT_ID,
+        text: `
 🍔 NEW ORDER RECEIVED
 
 👤 Customer: ${order.name}
@@ -114,8 +114,8 @@ await axios.post(
 
 📌 Status: ${order.status}
 `,
-  }
-);
+      },
+    );
 
     console.log("ORDER SAVED");
 
