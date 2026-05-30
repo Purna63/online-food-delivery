@@ -4,6 +4,7 @@ import express from "express";
 import Razorpay from "razorpay";
 import dotenv from "dotenv";
 import crypto from "crypto";
+import axios from "axios";
 
 import orderModel from "../models/orderModel.js";
 
@@ -83,23 +84,41 @@ router.post("/webhook", async (req, res) => {
     console.log("Webhook Payment Success:", razorpayOrderId);
 
     // UPDATE ORDER
-    const updatedOrder = await orderModel.findOneAndUpdate(
-      { razorpayOrderId },
+const updatedOrder = await orderModel.findOneAndUpdate(
+  { razorpayOrderId },
+  {
+    payment: true,
+    status: "Pending",
+  },
+  { new: true }
+);
 
-      {
-        payment: true,
-        status: "Pending",
-      },
+console.log("UPDATED ORDER:", updatedOrder);
 
-      { new: true }
-    );
+if (updatedOrder) {
+  await axios.post(
+    `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+    {
+      chat_id: process.env.TELEGRAM_CHAT_ID,
+      text: `
+✅ PAYMENT SUCCESS
 
-    console.log("UPDATED ORDER:", updatedOrder);
+🍔 NEW ORDER RECEIVED
 
-    res.json({
-      success: true,
-    });
+👤 Customer: ${updatedOrder.name}
+📞 Phone: ${updatedOrder.phone}
 
+💰 Amount: ₹${updatedOrder.amount}
+
+📌 Status: ${updatedOrder.status}
+`,
+    }
+  );
+}
+
+res.json({
+  success: true,
+});
   } catch (error) {
 
     console.log("Webhook Error:", error);
