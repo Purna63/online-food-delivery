@@ -3,7 +3,7 @@ import orderModel from "../models/orderModel.js";
 import authMiddleware from "../middleware/auth.js";
 import { calculateDistance } from "../utils/distance.js";
 import userModel from "../models/userModel.js";
-import axios from "axios";
+
 
 const router = express.Router();
 
@@ -98,24 +98,6 @@ router.post("/", authMiddleware, async (req, res) => {
     });
 
     await order.save();
-
-    await axios.post(
-      `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
-      {
-        chat_id: process.env.TELEGRAM_CHAT_ID,
-        text: `
-🍔 NEW ORDER RECEIVED
-
-👤 Customer: ${order.name}
-📞 Phone: ${order.phone}
-
-💰 Amount: ₹${order.amount}
-🚚 Delivery Fee: ₹${order.deliveryCharge}
-
-📌 Status: ${order.status}
-`,
-      },
-    );
 
     console.log("ORDER SAVED");
 
