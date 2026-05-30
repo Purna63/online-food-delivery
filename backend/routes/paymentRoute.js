@@ -109,6 +109,7 @@ if (updatedOrder) {
 📞 Phone: ${updatedOrder.phone}
 
 💰 Amount: ₹${updatedOrder.amount}
+🚚 Delivery Fee: ₹${updatedOrder.deliveryCharge}
 
 📌 Status: ${updatedOrder.status}
 `,
