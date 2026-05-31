@@ -120,7 +120,7 @@ router.post("/", async (req, res) => {
     const BASE_PRICE = 10;
     const PER_KM_RATE = 5;
 
-    const roundedDistance = Math.ceil(distance);
+    const roundedDistance = Math.round(distance);
     const deliveryCharge =
       BASE_PRICE + roundedDistance * PER_KM_RATE;
 
