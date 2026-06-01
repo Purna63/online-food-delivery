@@ -166,13 +166,13 @@ setOrders(paidOrders);
                 <td>
                   {order.address.street}, {order.address.city}, {order.address.landmark}
                 </td>
-                <td>
-  {order.items.map((i, index) => (
-    <div key={index}>
-      {i.name} ({i.shopName})
-    </div>
-  ))}
-</td>
+                  <td>
+                    {order.items.map((i, index) => (
+                      <div key={index}>
+                        {i.name} × {i.quantity} ({i.shopName})
+                      </div>
+                    ))}
+                  </td>
                 <td>₹{order.amount}</td>
                 <td>
                   <select
