@@ -28,7 +28,8 @@ const FoodDisplay = ({ category }) => {
         item.name.toLowerCase().replace(/\s|-/g, "").includes(searchTerm)
       );
     } else if (category && category !== "All") {
-      result = food_list.filter((item) => item.category === category);
+      // result = food_list.filter((item) => item.category === category);
+      result = food_list.filter((item) => item.shopName === category);
     } else {
       result = food_list;
     }
