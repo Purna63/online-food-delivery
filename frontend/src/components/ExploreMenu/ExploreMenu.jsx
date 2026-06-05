@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./ExploreMenu.css";
-import { menu_list } from "../../assets/assets";
+// import { menu_list } from "../../assets/assets";
+import { StoreContext } from "../../context/StoreContext";
 import FoodDisplay from "../FoodDisplay/FoodDisplay";
 
 const ExploreMenu = () => {
   const [category, setCategory] = useState("All"); // Default category
+  const { food_list } = useContext(StoreContext);
+
+const restaurants = [
+  ...new Set(
+    food_list
+      .map((item) => item.shopName)
+      .filter(Boolean)
+  ),
+];
 
   return (
     <div>
@@ -18,7 +29,8 @@ const ExploreMenu = () => {
 
         <hr />
         
-        <h1>Menu Items</h1>
+        {/* <h1>Menu Items</h1> */}
+        <h1>Restaurants</h1>
 
 <div className="explore-menu-list">
 
@@ -36,20 +48,20 @@ const ExploreMenu = () => {
   </div>
 
   {/* Other Categories */}
-  {menu_list.map((item, index) => (
-    <div
-      onClick={() => setCategory(item.menu_name)}
-      key={index}
-      className="explore-menu-list-item"
-    >
-      <img
-        className={category === item.menu_name ? "active" : ""}
-        src={item.menu_image}
-        alt={item.menu_name}
-      />
-      <p>{item.menu_name}</p>
-    </div>
-  ))}
+ {restaurants.map((shop, index) => (
+  <div
+    onClick={() => setCategory(shop)}
+    key={index}
+    className="explore-menu-list-item"
+  >
+    <img
+      className={category === shop ? "active" : ""}
+      src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png"
+      alt={shop}
+    />
+    <p>{shop}</p>
+  </div>
+))}
 </div>
 
         <hr />
