@@ -9,13 +9,13 @@ const ExploreMenu = () => {
   const [category, setCategory] = useState("All"); // Default category
   const { food_list } = useContext(StoreContext);
 
-const restaurants = [
-  ...new Set(
-    food_list
-      .map((item) => item.shopName?.trim())
-      .filter((shop) => shop && shop !== "undefined")
-  ),
-];
+  const restaurants = [
+    ...new Set(
+      food_list
+        .map((item) => item.shopName?.trim())
+        .filter(Boolean)
+    ),
+  ];
 
   return (
     <div>
