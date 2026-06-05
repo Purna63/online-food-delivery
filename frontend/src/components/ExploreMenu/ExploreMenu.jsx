@@ -12,8 +12,8 @@ const ExploreMenu = () => {
 const restaurants = [
   ...new Set(
     food_list
-      .map((item) => item.shopName)
-      .filter(Boolean)
+      .map((item) => item.shopName?.trim())
+      .filter((shop) => shop && shop !== "undefined")
   ),
 ];
 
