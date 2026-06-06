@@ -22,7 +22,15 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
-foodRouter.post("/add", upload.single("image"), addFood);
+// foodRouter.post("/add", upload.single("image"), addFood);
+foodRouter.post(
+  "/add",
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "shopImage", maxCount: 1 },
+  ]),
+  addFood
+);
 
 foodRouter.get("/list", listFood);
 
