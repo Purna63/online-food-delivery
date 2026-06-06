@@ -9,13 +9,24 @@ const ExploreMenu = () => {
   const [category, setCategory] = useState("All"); // Default category
   const { food_list } = useContext(StoreContext);
 
+  // const restaurants = [
+  //   ...new Set(
+  //     food_list
+  //       .map((item) => item.shopName?.trim())
+  //       .filter(Boolean)
+  //   ),
+  // ];
   const restaurants = [
-    ...new Set(
-      food_list
-        .map((item) => item.shopName?.trim())
-        .filter(Boolean)
-    ),
-  ];
+  ...new Map(
+    food_list.map((item) => [
+      item.shopName?.trim(),
+      {
+        shopName: item.shopName?.trim(),
+        shopImage: item.shopImage,
+      },
+    ])
+  ).values(),
+];
 
   return (
     <div>
@@ -48,18 +59,22 @@ const ExploreMenu = () => {
   </div>
 
   {/* Other Categories */}
- {restaurants.map((shop, index) => (
+{restaurants.map((shop, index) => (
   <div
-    onClick={() => setCategory(shop)}
     key={index}
+    onClick={() => setCategory(shop.shopName)}
     className="explore-menu-list-item"
   >
-    <img
-      className={category === shop ? "active" : ""}
-      src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png"
-      alt={shop}
-    />
-    <p>{shop}</p>
+<img
+  src={
+    shop.shopImage ||
+    "https://cdn-icons-png.flaticon.com/512/3075/3075977.png"
+  }
+  alt={shop.shopName}
+  className={category === shop.shopName ? "active" : ""}
+/>
+
+    <p>{shop.shopName}</p>
   </div>
 ))}
 </div>
