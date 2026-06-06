@@ -5,7 +5,9 @@ import fs from "fs";
 
 const addFood = async (req, res) => {
   //let image_filename = `${req.file.filename}`;
-  let image_filename = req.file.path;
+  // let image_filename = req.file.path;
+  const image_filename = req.files.image[0].path;
+  const shop_image = req.files.shopImage[0].path;
 
   const food = new foodModel({
     name: req.body.name,
@@ -17,6 +19,7 @@ const addFood = async (req, res) => {
     shopName: req.body.shopName,
     isAvailable: req.body.isAvailable === "true",
     shopStatus: req.body.shopStatus,
+    shopImage: shop_image,
     // NEW UPDATE END
   });
   try {
