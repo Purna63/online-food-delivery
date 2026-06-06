@@ -17,6 +17,7 @@ const Add = ({ url }) => {
     isAvailable: "true",
     shopStatus: "open",
   });
+  const [shopImage, setShopImage] = useState(false);
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
@@ -32,6 +33,7 @@ const Add = ({ url }) => {
     formData.append("price", Number(data.price));
     formData.append("category", data.category);
     formData.append("image", image);
+    formData.append("shopImage", shopImage);
 
         //new UPDATE
     formData.append("shopName", data.shopName);
@@ -57,21 +59,42 @@ const Add = ({ url }) => {
     <div className="add">
       <form className="flex-col" onSubmit={onSubmitHandler}>
         <div className="add-img-upload flex-col">
-          <p>Upload Image</p>
-          <label htmlFor="image">
-            <img 
-              src={image ? URL.createObjectURL(image) : assets.upload_area}
-              alt=""
-            />
-          </label>
-          <input
-            onChange={(e) => setImage(e.target.files[0])}
-            type="file"
-            id="image"
-            hidden
-            required
-          />
-        </div>
+  <p>Food Image</p>
+  <label htmlFor="image">
+    <img
+      src={image ? URL.createObjectURL(image) : assets.upload_area}
+      alt=""
+    />
+  </label>
+  <input
+    onChange={(e) => setImage(e.target.files[0])}
+    type="file"
+    id="image"
+    hidden
+    required
+  />
+</div>
+
+<div className="add-img-upload flex-col">
+  <p>Restaurant Image</p>
+  <label htmlFor="shopImage">
+    <img
+      src={
+        shopImage
+          ? URL.createObjectURL(shopImage)
+          : assets.upload_area
+      }
+      alt=""
+    />
+  </label>
+  <input
+    onChange={(e) => setShopImage(e.target.files[0])}
+    type="file"
+    id="shopImage"
+    hidden
+    required
+  />
+</div>
         <div className="add-product-name flex-col">
           <p>Product name</p>
           <input
