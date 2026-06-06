@@ -9,6 +9,7 @@ const foodSchema = new mongoose.Schema({
 
     // NEW UPDATE START
   shopName: { type: String, default: "Rahama Market" },
+  shopImage: { type: String, default: "" },
   isAvailable: { type: Boolean, default: true }, // food available
   shopStatus: { type: String, default: "open" }, // open / closed
   // NEW UPDATE END
