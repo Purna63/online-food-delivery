@@ -70,10 +70,26 @@ const StoreContextProvider = (props) => {
     return total;
   };
 
+  // const fetchFoodList = async () => {
+  //   const res = await axios.get(url + "/api/food/list");
+  //   setFoodList(res.data.data);
+  // };
   const fetchFoodList = async () => {
-    const res = await axios.get(url + "/api/food/list");
-    setFoodList(res.data.data);
-  };
+  const res = await axios.get(url + "/api/food/list");
+
+  const shuffledFoods = [...res.data.data];
+
+  for (let i = shuffledFoods.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffledFoods[i], shuffledFoods[j]] = [
+      shuffledFoods[j],
+      shuffledFoods[i],
+    ];
+  }
+
+  setFoodList(shuffledFoods);
+};
 
   const loadUserCart = async () => {
     const res = await axios.post(
@@ -126,11 +142,6 @@ const StoreContextProvider = (props) => {
   //   }
   // }, [cartItems, token]);
   useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [cartItems]);
-  
-
-    useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
