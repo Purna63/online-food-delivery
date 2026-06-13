@@ -13,6 +13,7 @@ const FoodDisplay = ({ category }) => {
   useEffect(() => {
     // If backend hasn't returned food yet → show loader
     if (food_list.length === 0) {
+       setFilteredFood([]);
       setLoading(true);
       return;
     }
@@ -34,7 +35,19 @@ const FoodDisplay = ({ category }) => {
       result = food_list;
     }
 
-    setFilteredFood(result);
+    // setFilteredFood(result);
+    const shuffledFoods = [...result];
+
+for (let i = shuffledFoods.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+
+  [shuffledFoods[i], shuffledFoods[j]] = [
+    shuffledFoods[j],
+    shuffledFoods[i],
+  ];
+}
+
+setFilteredFood(shuffledFoods);
     setLoading(false);
   }, [location.search, food_list, category]);
 
