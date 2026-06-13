@@ -70,26 +70,26 @@ const StoreContextProvider = (props) => {
     return total;
   };
 
-  // const fetchFoodList = async () => {
-  //   const res = await axios.get(url + "/api/food/list");
-  //   setFoodList(res.data.data);
-  // };
   const fetchFoodList = async () => {
-  const res = await axios.get(url + "/api/food/list");
+    const res = await axios.get(url + "/api/food/list");
+    setFoodList(res.data.data);
+  };
+//   const fetchFoodList = async () => {
+//   const res = await axios.get(url + "/api/food/list");
 
-  const shuffledFoods = [...res.data.data];
+//   const shuffledFoods = [...res.data.data];
 
-  for (let i = shuffledFoods.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+//   for (let i = shuffledFoods.length - 1; i > 0; i--) {
+//     const j = Math.floor(Math.random() * (i + 1));
 
-    [shuffledFoods[i], shuffledFoods[j]] = [
-      shuffledFoods[j],
-      shuffledFoods[i],
-    ];
-  }
+//     [shuffledFoods[i], shuffledFoods[j]] = [
+//       shuffledFoods[j],
+//       shuffledFoods[i],
+//     ];
+//   }
 
-  setFoodList(shuffledFoods);
-};
+//   setFoodList(shuffledFoods);
+// };
 
   const loadUserCart = async () => {
     const res = await axios.post(
