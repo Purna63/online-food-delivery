@@ -7,6 +7,8 @@ const AdminStoreSettings = ({ url }) => {
     openHour: 8,
     closeHour: 21,
     isManuallyClosed: false,
+    openShops: "",
+    closedShops: "",
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -101,6 +103,36 @@ const AdminStoreSettings = ({ url }) => {
           onChange={handleChange}
         />
       </label>
+
+      <label>
+  Open Shops:
+  <input
+    type="text"
+    name="openShops"
+    value={storeStatus.openShops}
+    onChange={(e) =>
+      setStoreStatus({
+        ...storeStatus,
+        openShops: e.target.value,
+      })
+    }
+  />
+</label>
+
+<label>
+  Closed Shops:
+  <input
+    type="text"
+    name="closedShops"
+    value={storeStatus.closedShops}
+    onChange={(e) =>
+      setStoreStatus({
+        ...storeStatus,
+        closedShops: e.target.value,
+      })
+    }
+  />
+</label>
 
       <label className="toggle">
         <input
