@@ -24,4 +24,11 @@
     font-size: 14px;
     color: #555;
   }
+
+.shop-status-marquee {
+  margin-top: 10px;
+  font-weight: 600;
+  color: white;
+  width: 100%;
+}
   
