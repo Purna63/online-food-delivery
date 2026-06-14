@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 // UPDATE store hours or manual toggle
 router.patch('/', async (req, res) => {
   try {
-    const { openHour, closeHour, isManuallyClosed } = req.body;
+    const { openHour, closeHour, isManuallyClosed, openShops, closedShops } = req.body;
 
     // Validate input (optional but safe)
     if (openHour !== undefined && (openHour < 0 || openHour > 23)) {
@@ -41,6 +41,8 @@ router.patch('/', async (req, res) => {
     if (openHour !== undefined) status.openHour = openHour;
     if (closeHour !== undefined) status.closeHour = closeHour;
     if (isManuallyClosed !== undefined) status.isManuallyClosed = isManuallyClosed;
+    if (openShops !== undefined) status.openShops = openShops;
+    if (closedShops !== undefined) status.closedShops = closedShops;
 
     await status.save();
     res.json(status);
