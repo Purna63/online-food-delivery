@@ -16,6 +16,14 @@ const storeStatusSchema = new mongoose.Schema({
   isManuallyClosed: {
     type: Boolean,
     default: false
+  },
+   openShops: {
+    type: String,
+    default: ""
+  },
+  closedShops: {
+    type: String,
+    default: ""
   }
 });
 
