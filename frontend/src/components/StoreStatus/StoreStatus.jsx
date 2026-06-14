@@ -11,6 +11,8 @@ const StoreStatusProvider = ({ children }) => {
     openHour: 8,
     closeHour: 21,
     isManuallyClosed: false,
+    openShops: "",
+    closedShops: "",
   });
 
   const [countdown, setCountdown] = useState("");
@@ -72,14 +74,29 @@ const StoreStatusProvider = ({ children }) => {
     <StoreStatusContext.Provider
       value={{ isOpen: true, storeConfig, countdown }}
     >
-      <div className={`store-status ${isOpen ? "open" : "closed"}`}>
+      {/* <div className={`store-status ${isOpen ? "open" : "closed"}`}>
         <p>
           {isOpen ? "🟢 Ready to Take Your Order!" : `🔴 Closed - ${countdown}`}
         </p>
         <span className="hours">
           Hours: {storeConfig.openHour}:00 – {storeConfig.closeHour}:00
         </span>
-      </div>
+      </div> */}
+      <div className={`store-status ${isOpen ? "open" : "closed"}`}>
+  <p>
+    {isOpen ? "🟢 Ready to Take Your Order!" : `🔴 Closed - ${countdown}`}
+  </p>
+
+  <span className="hours">
+    Hours: {storeConfig.openHour}:00 – {storeConfig.closeHour}:00
+  </span>
+
+  <marquee className="shop-status-marquee">
+    🟢 Open: {storeConfig.openShops}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    🔴 Closed: {storeConfig.closedShops}
+  </marquee>
+</div>
       {children}
     </StoreStatusContext.Provider>
   );
