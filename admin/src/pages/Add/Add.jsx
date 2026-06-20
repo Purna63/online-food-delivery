@@ -71,16 +71,20 @@ const Add = ({ url }) => {
       toast.error(response.data.message);
       console.log("Backend Error:", response.data);
     }
-  } catch (error) {
-    console.error("ADD FOOD ERROR:", error);
+  }catch (error) {
+  console.error("FULL ERROR:", error);
 
-    if (error.response) {
-      console.log("Status:", error.response.status);
-      console.log("Data:", error.response.data);
-    }
-
-    toast.error("Failed to add food");
+  if (error.response) {
+    console.log("STATUS:", error.response.status);
+    console.log("RESPONSE DATA:", error.response.data);
+    alert(JSON.stringify(error.response.data));
+  } else {
+    console.log("ERROR MESSAGE:", error.message);
+    alert(error.message);
   }
+
+  toast.error("Failed to add food");
+}
 };
   return (
     <div className="add">
