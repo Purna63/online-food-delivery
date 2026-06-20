@@ -25,9 +25,12 @@ const Add = ({ url }) => {
     setData((data) => ({ ...data, [name]: value }));
   };
 
-  const onSubmitHandler = async (event) => {
-    event.preventDefault();
+ const onSubmitHandler = async (event) => {
+  event.preventDefault();
+
+  try {
     const formData = new FormData();
+
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("price", Number(data.price));
@@ -35,26 +38,50 @@ const Add = ({ url }) => {
     formData.append("image", image);
     formData.append("shopImage", shopImage);
 
-        //new UPDATE
     formData.append("shopName", data.shopName);
     formData.append("isAvailable", data.isAvailable);
     formData.append("shopStatus", data.shopStatus);
-    //end UPDATE
-    const response = await axios.post(`${url}/api/food/add`, formData);
+
+    console.log("Sending Food Data...");
+    console.log(data);
+
+    const response = await axios.post(
+      `${url}/api/food/add`,
+      formData
+    );
+
+    console.log("Response:", response.data);
+
     if (response.data.success) {
       setData({
         name: "",
         description: "",
         price: "",
         category: "Biryani",
+        shopName: "",
+        isAvailable: "true",
+        shopStatus: "open",
       });
+
       setImage(false);
+      setShopImage(false);
+
       toast.success(response.data.message);
     } else {
       toast.error(response.data.message);
+      console.log("Backend Error:", response.data);
     }
-  };
+  } catch (error) {
+    console.error("ADD FOOD ERROR:", error);
 
+    if (error.response) {
+      console.log("Status:", error.response.status);
+      console.log("Data:", error.response.data);
+    }
+
+    toast.error("Failed to add food");
+  }
+};
   return (
     <div className="add">
       <form className="flex-col" onSubmit={onSubmitHandler}>
