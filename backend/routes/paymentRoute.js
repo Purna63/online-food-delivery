@@ -62,7 +62,7 @@ router.post("/create-payment-link", async (req, res) => {
     }
 
     const paymentLink = await razorpay.paymentLink.create({
-      amount: Number(amount),
+      amount: Number(amount)*100,
       currency: "INR",
       description: "Food Delivery Order",
       customer: {
@@ -125,45 +125,87 @@ router.post("/webhook", async (req, res) => {
     const body = JSON.parse(req.body.toString());
 
     // PAYMENT DATA
-    const payment = body.payload.payment.entity;
+    // const payment = body.payload.payment.entity;
 
     // RAZORPAY ORDER ID
-    const razorpayOrderId = payment.order_id;
+    // const razorpayOrderId = payment.order_id;
+
+    const paymentLink = body.payload.payment_link.entity;
+
+// Payment Link ID
+const razorpayOrderId = paymentLink.id;
+
+console.log("Payment Link Success:", razorpayOrderId);
 
     console.log("Webhook Payment Success:", razorpayOrderId);
 
     // UPDATE ORDER
-const updatedOrder = await orderModel.findOneAndUpdate(
-  { razorpayOrderId },
+// const updatedOrder = await orderModel.findOneAndUpdate(
+//   { razorpayOrderId },
+//   {
+//     payment: true,
+//     status: "Pending",
+//   },
+//   { new: true }
+// );
+
+    const updatedOrder = await orderModel.findOneAndUpdate(
+  {
+    razorpayOrderId,
+  },
   {
     payment: true,
     status: "Pending",
   },
-  { new: true }
+  {
+    new: true,
+  }
 );
+
+console.log(updatedOrder);
 
 console.log("UPDATED ORDER:", updatedOrder);
 
 if (updatedOrder) {
+//   await axios.post(
+//     `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+//     {
+//       chat_id: process.env.TELEGRAM_CHAT_ID,
+//       text: `
+// ✅ PAYMENT SUCCESS
+
+// 🍔 NEW ORDER RECEIVED
+
+// 👤 Customer: ${updatedOrder.name}
+// 📞 Phone: ${updatedOrder.phone}
+
+// 💰 Amount: ₹${updatedOrder.amount}
+// 🚚 Delivery Fee: ₹${updatedOrder.deliveryCharge}
+
+// 📌 Status: ${updatedOrder.status}
+// `,
+//     }
+//   );
+
   await axios.post(
-    `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
-    {
-      chat_id: process.env.TELEGRAM_CHAT_ID,
-      text: `
-✅ PAYMENT SUCCESS
+  `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+  {
+    chat_id: process.env.TELEGRAM_CHAT_ID,
+    text: `
+✅ NEW PAID ORDER
 
-🍔 NEW ORDER RECEIVED
+👤 ${updatedOrder.name}
 
-👤 Customer: ${updatedOrder.name}
-📞 Phone: ${updatedOrder.phone}
+📞 ${updatedOrder.phone}
 
-💰 Amount: ₹${updatedOrder.amount}
-🚚 Delivery Fee: ₹${updatedOrder.deliveryCharge}
+💰 Amount : ₹${updatedOrder.amount}
 
-📌 Status: ${updatedOrder.status}
+🚚 Delivery : ₹${updatedOrder.deliveryCharge}
+
+📌 Status : ${updatedOrder.status}
 `,
-    }
-  );
+  }
+);
 }
 
 res.json({
