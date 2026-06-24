@@ -134,19 +134,6 @@ router.post("/webhook", async (req, res) => {
 
 // Payment Link ID
 // const razorpayOrderId = paymentLink.id;
-    console.log(
-  "WEBHOOK BODY:",
-  JSON.stringify(body, null, 2)
-);
-
-// STOP HERE FOR TESTING
-return res.json({
-  success: true,
-});
-
-console.log("Payment Link Success:", razorpayOrderId);
-
-    console.log("Webhook Payment Success:", razorpayOrderId);
 
     // UPDATE ORDER
 // const updatedOrder = await orderModel.findOneAndUpdate(
@@ -158,9 +145,16 @@ console.log("Payment Link Success:", razorpayOrderId);
 //   { new: true }
 // );
 
-    const updatedOrder = await orderModel.findOneAndUpdate(
+  const payment = body.payload.payment.entity;
+
+// Razorpay Payment Link ID
+const paymentLinkId = payment.description.replace("#", "");
+
+console.log("PAYMENT LINK ID:", paymentLinkId);
+
+const updatedOrder = await orderModel.findOneAndUpdate(
   {
-    razorpayOrderId,
+    razorpayOrderId: paymentLinkId,
   },
   {
     payment: true,
@@ -170,6 +164,8 @@ console.log("Payment Link Success:", razorpayOrderId);
     new: true,
   }
 );
+
+console.log("UPDATED ORDER:", updatedOrder);
 
 console.log(updatedOrder);
 
