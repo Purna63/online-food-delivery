@@ -49,42 +49,49 @@ router.post("/create-order", async (req, res) => {
 
 router.post("/create-payment-link", async (req, res) => {
   try {
+
     console.log("BODY:", req.body);
+
     const { amount, name, phone } = req.body;
 
+    if (!amount) {
+      return res.status(400).json({
+        success: false,
+        message: "Amount is required"
+      });
+    }
+
     const paymentLink = await razorpay.paymentLink.create({
-      amount: amount,
+      amount: Number(amount),
       currency: "INR",
-
       description: "Food Delivery Order",
-
       customer: {
         name: name || "Customer",
-        contact: phone || "",
+        contact: phone || ""
       },
-
       notify: {
         sms: false,
-        email: false,
+        email: false
       },
-
-      reminder_enable: false,
+      reminder_enable: false
     });
 
-    res.json({
+    return res.json({
       success: true,
       paymentLink: paymentLink.short_url,
-      paymentLinkId: paymentLink.id,
+      paymentLinkId: paymentLink.id
     });
-  } catch (error) {
-  console.log("PAYMENT LINK ERROR:", error);
 
-  res.status(500).json({
-    success: false,
-    message: error.message,
-    error,
-  });
-}
+  } catch (error) {
+
+    console.log(error);
+
+    return res.status(500).json({
+      success: false,
+      error
+    });
+
+  }
 });
 
 
