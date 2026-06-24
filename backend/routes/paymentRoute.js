@@ -130,10 +130,19 @@ router.post("/webhook", async (req, res) => {
     // RAZORPAY ORDER ID
     // const razorpayOrderId = payment.order_id;
 
-    const paymentLink = body.payload.payment_link.entity;
+    // const paymentLink = body.payload.payment_link.entity;
 
 // Payment Link ID
-const razorpayOrderId = paymentLink.id;
+// const razorpayOrderId = paymentLink.id;
+    console.log(
+  "WEBHOOK BODY:",
+  JSON.stringify(body, null, 2)
+);
+
+// STOP HERE FOR TESTING
+return res.json({
+  success: true,
+});
 
 console.log("Payment Link Success:", razorpayOrderId);
 
