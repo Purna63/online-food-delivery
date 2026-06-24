@@ -76,13 +76,14 @@ router.post("/create-payment-link", async (req, res) => {
       paymentLinkId: paymentLink.id,
     });
   } catch (error) {
-    console.log("CREATE PAYMENT LINK ERROR:", error);
+  console.log("PAYMENT LINK ERROR:", error);
 
-    res.status(500).json({
-      success: false,
-      message: "Failed to create payment link",
-    });
-  }
+  res.status(500).json({
+    success: false,
+    message: error.message,
+    error,
+  });
+}
 });
 
 
