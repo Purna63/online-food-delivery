@@ -122,33 +122,19 @@ router.post("/webhook", async (req, res) => {
     }
 
     // CONVERT RAW BODY
-    const body = JSON.parse(req.body.toString());
+   const body = JSON.parse(req.body.toString());
 
-    // PAYMENT DATA
-    // const payment = body.payload.payment.entity;
+const payment = body.payload.payment.entity;
 
-    // RAZORPAY ORDER ID
-    // const razorpayOrderId = payment.order_id;
+if (!payment.description) {
+  return res.status(400).json({
+    success: false,
+    message: "Payment description not found",
+  });
+}
 
-    // const paymentLink = body.payload.payment_link.entity;
-
-// Payment Link ID
-// const razorpayOrderId = paymentLink.id;
-
-    // UPDATE ORDER
-// const updatedOrder = await orderModel.findOneAndUpdate(
-//   { razorpayOrderId },
-//   {
-//     payment: true,
-//     status: "Pending",
-//   },
-//   { new: true }
-// );
-
-  const payment = body.payload.payment.entity;
-
-// Razorpay Payment Link ID
-const paymentLinkId = payment.description.replace("#", "");
+const paymentLinkId =
+  "plink_" + payment.description.substring(1);
 
 console.log("PAYMENT LINK ID:", paymentLinkId);
 
@@ -167,36 +153,12 @@ const updatedOrder = await orderModel.findOneAndUpdate(
 
 console.log("UPDATED ORDER:", updatedOrder);
 
-console.log(updatedOrder);
-
-console.log("UPDATED ORDER:", updatedOrder);
-
 if (updatedOrder) {
-//   await axios.post(
-//     `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
-//     {
-//       chat_id: process.env.TELEGRAM_CHAT_ID,
-//       text: `
-// ✅ PAYMENT SUCCESS
-
-// 🍔 NEW ORDER RECEIVED
-
-// 👤 Customer: ${updatedOrder.name}
-// 📞 Phone: ${updatedOrder.phone}
-
-// 💰 Amount: ₹${updatedOrder.amount}
-// 🚚 Delivery Fee: ₹${updatedOrder.deliveryCharge}
-
-// 📌 Status: ${updatedOrder.status}
-// `,
-//     }
-//   );
-
   await axios.post(
-  `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
-  {
-    chat_id: process.env.TELEGRAM_CHAT_ID,
-    text: `
+    `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+    {
+      chat_id: process.env.TELEGRAM_CHAT_ID,
+      text: `
 ✅ NEW PAID ORDER
 
 👤 ${updatedOrder.name}
@@ -209,13 +171,17 @@ if (updatedOrder) {
 
 📌 Status : ${updatedOrder.status}
 `,
-  }
-);
+    }
+  );
 }
 
-res.json({
+return res.json({
   success: true,
 });
+
+
+
+    
   } catch (error) {
 
     console.log("Webhook Error:", error);
