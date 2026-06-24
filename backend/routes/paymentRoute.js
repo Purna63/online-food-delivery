@@ -45,6 +45,46 @@ router.post("/create-order", async (req, res) => {
   }
 });
 
+// CREATE PAYMENT LINK FOR APP
+
+router.post("/create-payment-link", async (req, res) => {
+  try {
+    const { amount, name, phone } = req.body;
+
+    const paymentLink = await razorpay.paymentLink.create({
+      amount: amount,
+      currency: "INR",
+
+      description: "Food Delivery Order",
+
+      customer: {
+        name: name || "Customer",
+        contact: phone || "",
+      },
+
+      notify: {
+        sms: false,
+        email: false,
+      },
+
+      reminder_enable: false,
+    });
+
+    res.json({
+      success: true,
+      paymentLink: paymentLink.short_url,
+      paymentLinkId: paymentLink.id,
+    });
+  } catch (error) {
+    console.log("CREATE PAYMENT LINK ERROR:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to create payment link",
+    });
+  }
+});
+
 
 
 // WEBHOOK
