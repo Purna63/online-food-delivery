@@ -49,6 +49,7 @@ router.post("/create-order", async (req, res) => {
 
 router.post("/create-payment-link", async (req, res) => {
   try {
+    console.log("BODY:", req.body);
     const { amount, name, phone } = req.body;
 
     const paymentLink = await razorpay.paymentLink.create({
