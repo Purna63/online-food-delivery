@@ -455,12 +455,15 @@ const PlaceOrder = () => {
           body: JSON.stringify(orderData),
         });
 
-        const savedOrder = await saveOrderResponse.json();
+const savedOrder = await saveOrderResponse.json();
 
-        if (!savedOrder.success) {
-          alert("Failed to create order");
-          return;
-        }
+if (!savedOrder.success) {
+  alert("Failed to create order");
+  return;
+}
+
+// Save MongoDB Order ID
+const orderId = savedOrder.order._id;
         const options = {
           key: RAZORPAY_KEY_ID,
           amount: order.amount,
@@ -473,21 +476,26 @@ const PlaceOrder = () => {
               saveDeliveryInfo();
 
               await axios.post(
-                `${BACKEND_URL}/api/user/save-address`,
-                {
-                  street: data.street,
-                  landmark: data.landmark,
-                  lat: data.lat,
-                  lng: data.lng,
-                },
-                {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                },
-              );
+  `${BACKEND_URL}/api/user/save-address`,
+  {
+    street: data.street,
+    landmark: data.landmark,
+    lat: data.lat,
+    lng: data.lng,
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  },
+);
 
-              navigate("/order-success");
+// UPDATE PAYMENT STATUS
+await axios.patch(
+  `${BACKEND_URL}/api/order/payment-success/${orderId}`
+);
+
+navigate("/order-success");
             } catch (error) {
               console.log("Order Save Error:", error);
 
