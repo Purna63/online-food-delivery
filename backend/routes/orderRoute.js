@@ -3,7 +3,7 @@ import orderModel from "../models/orderModel.js";
 import authMiddleware from "../middleware/auth.js";
 import { calculateDistance } from "../utils/distance.js";
 import userModel from "../models/userModel.js";
-
+import axios from "axios";
 
 const router = express.Router();
 
@@ -153,13 +153,11 @@ router.patch("/payment-success/:id", async (req, res) => {
   try {
     const updatedOrder = await orderModel.findByIdAndUpdate(
       req.params.id,
-
       {
         payment: true,
         status: "Pending",
       },
-
-      { new: true },
+      { new: true }
     );
 
     if (!updatedOrder) {
@@ -168,6 +166,27 @@ router.patch("/payment-success/:id", async (req, res) => {
         message: "Order not found",
       });
     }
+
+    // SEND TELEGRAM NOTIFICATION
+    await axios.post(
+      `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+      {
+        chat_id: process.env.TELEGRAM_CHAT_ID,
+        text: `
+✅ NEW PAID ORDER
+
+👤 ${updatedOrder.name}
+
+📞 ${updatedOrder.phone}
+
+💰 Amount : ₹${updatedOrder.amount}
+
+🚚 Delivery : ₹${updatedOrder.deliveryCharge}
+
+📌 Status : ${updatedOrder.status}
+`,
+      }
+    );
 
     res.json({
       success: true,
