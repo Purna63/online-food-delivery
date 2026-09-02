@@ -13,25 +13,23 @@
   columns: #808080;
 }
 .explore-menu-list {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 25px 10px;
   text-align: center;
   margin: 10px 0px;
-  overflow-x: scroll;
 }
 /* This line of code is scroll bar hidden the item menu list */
-.explore-menu-list::-webkit-scrollbar {
+/* .explore-menu-list::-webkit-scrollbar {
   display: none;
-}
+} */
 
 .explore-menu-list-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 110px; /* Set a consistent item width */
-  min-width: 100px;
-  flex-shrink: 0;
+  width: 100%;
+  min-width: 0;
 }
 
 .explore-menu-list-item img {
@@ -82,4 +80,37 @@
   color: #ff4d4f;
   text-align: center;
   margin-top: 20px;
+}
+@media (max-width: 750px) {
+  .explore-menu-list {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px 8px;
+  }
+
+  .explore-menu-list-item img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .explore-menu-list-item p {
+    font-size: 14px;
+    max-width: 80px;
+  }
+}
+
+@media (max-width: 450px) {
+  .explore-menu-list {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px 5px;
+  }
+
+  .explore-menu-list-item img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .explore-menu-list-item p {
+    font-size: 13px;
+    max-width: 75px;
+  }
 }
