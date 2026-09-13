@@ -217,10 +217,15 @@ const PlaceOrder = () => {
     const phoneRegex = /^\d{10}$/;
     let newErrors = { email: "", phone: "" };
 
-    if (showAddressForm && !emailRegex.test(data.email)) {
-      newErrors.email = "Invalid email address";
-      valid = false;
-    }
+    // if (showAddressForm && !emailRegex.test(data.email)) {
+    //   newErrors.email = "Invalid email address";
+    //   valid = false;
+    // }
+
+    if (showAddressForm && data.email && !emailRegex.test(data.email)) {
+  newErrors.email = "Invalid email address";
+  valid = false;
+}
 
     if (showAddressForm && !phoneRegex.test(data.phone)) {
       newErrors.phone = "Phone must be 10 digits";
