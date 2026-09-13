@@ -15,11 +15,11 @@ const PlaceOrder = () => {
 
   const [data, setData] = useState({
     firstName: "",
-    email: "",
+    // email: "",
     street: "",
     city: "",
     state: "Odisha",
-    zipcode: "",
+    // zipcode: "",
     country: "India",
     phone: "",
     landmark: "",
@@ -28,7 +28,7 @@ const PlaceOrder = () => {
     lng: "",
   });
 
-  const [errors, setErrors] = useState({ email: "", phone: "" });
+  const [errors, setErrors] = useState({ phone: "" });
   const [errorVisible, setErrorVisible] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isLoadingPayment, setIsLoadingPayment] = useState(false);
@@ -213,19 +213,19 @@ const PlaceOrder = () => {
 
   const validate = () => {
     let valid = true;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^\d{10}$/;
-    let newErrors = { email: "", phone: "" };
+    let newErrors = {  phone: "" };
 
     // if (showAddressForm && !emailRegex.test(data.email)) {
     //   newErrors.email = "Invalid email address";
     //   valid = false;
     // }
 
-    if (showAddressForm && data.email && !emailRegex.test(data.email)) {
-  newErrors.email = "Invalid email address";
-  valid = false;
-}
+//     if (showAddressForm && data.email && !emailRegex.test(data.email)) {
+//   newErrors.email = "Invalid email address";
+//   valid = false;
+// }
 
     if (showAddressForm && !phoneRegex.test(data.phone)) {
       newErrors.phone = "Phone must be 10 digits";
@@ -512,7 +512,7 @@ navigate("/order-success");
 
           prefill: {
             name: `${data.firstName}`,
-            email: data.email,
+            // email: data.email,
             contact: data.phone,
           },
 
@@ -567,7 +567,7 @@ navigate("/order-success");
     <div className="plac">
       {errorVisible && (
         <div className="error-message-top">
-          <p>{errors.phone || errors.email}</p>
+          <p>{errors.phone}</p>
         </div>
       )}
 
@@ -630,7 +630,7 @@ navigate("/order-success");
                 />
               </div>
 
-              <input
+              {/* <input
                 name="email"
                 onChange={onChangeHandler}
                 value={data.email}
@@ -638,10 +638,10 @@ navigate("/order-success");
                 placeholder="Email address"
               />
 
-              {errors.email && <p className="error-message">{errors.email}</p>}
+              {errors.email && <p className="error-message">{errors.email}</p>} */}
 
               <div className="multi-fields">
-                <input
+                 <input
                   required
                   name="street"
                   value={data.street}
@@ -649,7 +649,7 @@ navigate("/order-success");
                   type="text"
                   placeholder="Street / Village"
                   readOnly={isLocationLocked}
-                />
+                /> 
 
                 <input
                   required
@@ -671,14 +671,14 @@ navigate("/order-success");
                   placeholder="City"
                 />
 
-                <input
+                {/* <input
                   required
                   name="zipcode"
                   onChange={onChangeHandler}
                   value={data.zipcode}
                   type="text"
                   placeholder="Pin Code"
-                />
+                /> */}
               </div>
 
               <div className="multi-fields">
