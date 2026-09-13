@@ -32,6 +32,11 @@ const allowedOrigins = [
   "https://getasoi.in",
   "https://www.getasoi.in",
 
+  // Live frontend
+  "https://gorasoi.com",
+  "https://www.gorasoi.com",
+
+
   // Old Render frontend
   "https://online-food-delivery-frontend-8i06.onrender.com",
 
