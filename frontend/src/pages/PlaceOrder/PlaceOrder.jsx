@@ -563,85 +563,126 @@ navigate("/order-success");
     }
   };
 
-  return (
-    <div className="plac">
-      {errorVisible && (
-        <div className="error-message-top">
-          <p>{errors.phone}</p>
+ return (
+  <div className="plac">
+    {/* TOP PHONE ERROR */}
+    {errorVisible && (
+      <div className="error-message-top">
+        <p>{errors.phone}</p>
+      </div>
+    )}
+
+    {/* LOCATION MESSAGE */}
+    {locationMessage && (
+      <div className="location-popup-overlay">
+        <div className="location-popup-box">
+          <p>{locationMessage}</p>
+
+          <button
+            type="button"
+            onClick={() => setLocationMessage("")}
+            className="location-popup-btn"
+          >
+            OK
+          </button>
         </div>
-      )}
+      </div>
+    )}
 
-      {/* Add new line */}
-      {locationMessage && (
-        // UPDATED: Full screen overlay block when message shows
-        <div className="location-popup-overlay">
-          <div className="location-popup-box">
-            <p>{locationMessage}</p>
+    {/* STORE CLOSED */}
+    {storeClosedMessage && (
+      <div className="store-closed-message">
+        <p>
+          The store is currently closed. Please come back tomorrow.
+        </p>
+      </div>
+    )}
 
-            {/* UPDATED: Close button */}
-            <button
-              type="button"
-              onClick={() => setLocationMessage("")}
-              className="location-popup-btn"
-            >
-              OK
-            </button>
+    <form onSubmit={placeOrder} className="place-order">
+
+      {/* ================= LEFT SIDE ================= */}
+      <div className="place-order-left">
+
+        {/* PAGE TITLE */}
+        <div className="page-heading">
+          <h1>Delivery Information</h1>
+          <p>Tell us where to deliver your delicious food</p>
+        </div>
+
+        {/* CONTACT & DELIVERY DETAILS */}
+        <div className="delivery-card">
+
+          <div className="card-heading">
+            <div className="card-icon">
+              👤
+            </div>
+
+            <div>
+              <h2>Contact &amp; delivery details</h2>
+              <p>Please fill in your delivery information</p>
+            </div>
           </div>
-        </div>
-      )}
-
-      {storeClosedMessage && (
-        <div className="store-closed-message">
-          <p>The store is currently closed. Please come back tomorrow.</p>
-        </div>
-      )}
-
-      <form onSubmit={placeOrder} className="place-order">
-        <div className="place-order-left">
-          <p className="title">Delivery Information</p>
 
           {!showAddressForm ? (
-            <div className="saved-address-box">
-              <p>
+            /* ================= SAVED ADDRESS ================= */
+            <div className="saved-address-new">
+
+              <div className="saved-address-row">
+                <span className="saved-label">Full Name</span>
                 <strong>{data.firstName || "Customer"}</strong>
-              </p>
-              <p>{data.street}</p>
-              <p>{data.landmark}</p>
-              <p>{data.phone}</p>
+              </div>
+
+              <div className="saved-address-row">
+                <span className="saved-label">Full Address</span>
+                <span>{data.street}</span>
+              </div>
+
+              <div className="saved-address-row">
+                <span className="saved-label">Landmark</span>
+                <span>{data.landmark}</span>
+              </div>
+
+              <div className="saved-address-grid">
+                <div className="saved-address-row">
+                  <span className="saved-label">Phone Number</span>
+                  <span>{data.phone}</span>
+                </div>
+
+                <div className="saved-address-row">
+                  <span className="saved-label">State</span>
+                  <span>Odisha</span>
+                </div>
+              </div>
 
               <button
                 className="change-address-btn"
                 type="button"
                 onClick={() => setShowAddressForm(true)}
               >
-                Change
+                ✏️ Change
               </button>
             </div>
           ) : (
             <>
-              <div className="multi-fields">
+              {/* FULL NAME */}
+              <div className="form-field full-width">
+                <label>Full Name</label>
+
                 <input
                   required
                   name="firstName"
                   onChange={onChangeHandler}
                   value={data.firstName}
                   type="text"
-                  placeholder="Enter Your name"
+                  placeholder="Enter your name"
                 />
               </div>
 
-              {/* <input
-                name="email"
-                onChange={onChangeHandler}
-                value={data.email}
-                type="email"
-                placeholder="Email address"
-              />
+              {/* FULL ADDRESS */}
+              <div className="form-field full-width">
+                <label>Full Address</label>
 
-              {errors.email && <p className="error-message">{errors.email}</p>} */}
-
-              <div className="multi-fields">
-                 <input
+                <input
                   required
                   name="street"
                   value={data.street}
@@ -649,147 +690,272 @@ navigate("/order-success");
                   type="text"
                   placeholder="Street / Village"
                   readOnly={isLocationLocked}
-                /> 
+                />
+              </div>
+
+              {/* LANDMARK */}
+              <div className="form-field full-width">
+                <label>
+                  Landmark <span>(Optional)</span>
+                </label>
 
                 <input
-                  required
                   name="landmark"
                   onChange={onChangeHandler}
                   value={data.landmark}
                   type="text"
-                  placeholder="Landmark"
+                  placeholder="Nearby landmark"
                 />
               </div>
 
-              <div className="multi-fields">
-                <input
-                  required
-                  name="city"
-                  onChange={onChangeHandler}
-                  value={data.city}
-                  type="text"
-                  placeholder="City"
-                />
+              {/* CITY + STATE */}
+              <div className="form-row">
 
-                {/* <input
-                  required
-                  name="zipcode"
-                  onChange={onChangeHandler}
-                  value={data.zipcode}
-                  type="text"
-                  placeholder="Pin Code"
-                /> */}
+                <div className="form-field">
+                  <label>City</label>
+
+                  <input
+                    required
+                    name="city"
+                    onChange={onChangeHandler}
+                    value={data.city}
+                    type="text"
+                    placeholder="City"
+                  />
+                </div>
+
+                <div className="form-field">
+                  <label>State</label>
+
+                  <input
+                    name="state"
+                    value="Odisha"
+                    readOnly
+                  />
+                </div>
+
               </div>
 
-              <div className="multi-fields">
-                <input name="state" value="Odisha" readOnly />
-                <input name="country" value="India" readOnly />
+              {/* COUNTRY + PHONE */}
+              <div className="form-row">
+
+                <div className="form-field">
+                  <label>Country</label>
+
+                  <input
+                    name="country"
+                    value="India"
+                    readOnly
+                  />
+                </div>
+
+                <div className="form-field">
+                  <label>Phone Number</label>
+
+                  <input
+                    required
+                    name="phone"
+                    onChange={onChangeHandler}
+                    value={data.phone}
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="10-digit mobile number"
+                  />
+                </div>
+
               </div>
 
-              <input
-                required
-                name="phone"
-                onChange={onChangeHandler}
-                value={data.phone}
-                type="text"
-                placeholder="Mobile No."
-              />
-
-              <p style={{ fontSize: "14px", color: "#555", marginTop: "10px" }}>
-                📍 Please select your delivery location using one of the buttons
-                below.
-              </p>
-
-              <button
-                type="button"
-                className="location-btn"
-                onClick={resetLocation}
-              >
-                Reset Address
-              </button>
-
-              <br />
-
-              <div className="location-buttons">
-                <button
-                  className="location-btn"
-                  type="button"
-                  onClick={getLocation}
-                >
-                  Use My Current Location
-                </button>
-
-                <button
-                  type="button"
-                  className="location-btn"
-                  onClick={() => setShowMap(true)}
-                >
-                  Select Location On Map
-                </button>
-              </div>
-
-              {showMap && <LocationPicker setLocation={setLocation} />}
-
-              {errors.phone && <p className="error-message">{errors.phone}</p>}
+              {errors.phone && (
+                <p className="error-message">{errors.phone}</p>
+              )}
             </>
           )}
         </div>
 
-        <div className="place-order-right">
-          <div className="cart-total">
-            <h2>Cart Totals</h2>
-            <div className="cart-total-details">
+
+        {/* ================= DELIVERY LOCATION ================= */}
+        <div className="delivery-card location-card">
+
+          <div className="card-heading">
+            <div className="card-icon location-icon">
+              📍
+            </div>
+
+            <div>
+              <h2>Delivery location</h2>
+              <p>
+                Select your delivery location using one of the options below.
+              </p>
+            </div>
+          </div>
+
+          {/* LOCATION BUTTONS */}
+          <div className="location-buttons-new">
+
+            <button
+              type="button"
+              className="current-location-btn"
+              onClick={getLocation}
+            >
+              <span className="location-button-icon">◎</span>
+              <span>Use My Current Location</span>
+            </button>
+
+            <button
+              type="button"
+              className="map-location-btn"
+              onClick={() => setShowMap(true)}
+            >
+              <span className="location-button-icon">▱</span>
+              <span>Select Location on Map</span>
+            </button>
+
+          </div>
+
+          {/* SELECTED LOCATION */}
+          {distance && data.street && (
+            <div className="selected-location">
+
+              <div className="selected-location-icon">
+                📍
+              </div>
+
+              <div className="selected-location-text">
+                <span>Selected location:</span>
+                <p>{data.street}</p>
+              </div>
+
+              <button
+                type="button"
+                className="selected-location-change"
+                onClick={resetLocation}
+              >
+                ✏️ Change
+              </button>
+
+            </div>
+          )}
+
+          {/* MAP */}
+          {showMap && (
+            <div className="location-picker-wrapper">
+              <LocationPicker setLocation={setLocation} />
+            </div>
+          )}
+
+          {/* DISTANCE */}
+          {distance && (
+            <div className="location-distance">
+              <span>📏 Delivery distance</span>
+              <strong>{distance} km</strong>
+            </div>
+          )}
+
+        </div>
+
+      </div>
+
+
+      {/* ================= RIGHT SIDE ================= */}
+      <div className="place-order-right">
+
+        <div className="cart-total order-summary-card">
+
+          <div className="card-heading summary-heading">
+            <div className="card-icon summary-icon">
+              🧾
+            </div>
+
+            <div>
+              <h2>Order Summary</h2>
+              <p>Here's a quick summary of your order</p>
+            </div>
+          </div>
+
+          <div className="summary-details">
+
+            <div className="summary-row">
               <p>Subtotal</p>
               <p>₹{getTotalCartAmount()}</p>
             </div>
-            <hr />
 
-            {distance && (
-              <div className="cart-total-details">
-                <p>Distance</p>
-                <p>{distance} km</p>
-              </div>
-            )}
+            <div className="summary-row">
+              <p>
+                Delivery Fee + Distance Fee
+                <span className="info-icon">ⓘ</span>
+              </p>
 
-            <hr />
-
-            <div className="cart-total-details">
-              <p>Delivery Fee + Distance Fee</p>
               <p>₹{deliveryFee}</p>
             </div>
-            <hr />
-            <div className="cart-total-details">
-              <b>Total</b>
-              <b>₹{getTotalCartAmount() + deliveryFee}</b>
-            </div>
-            <button type="submit">Proceed To Payment</button>
-          </div>
-        </div>
-      </form>
 
-      {showPaymentModal && (
-        <div className="payment-modal">
-          <div className="payment-modal-content">
-            <h3>Only Online Payment Available</h3>
-            <button onClick={() => handlePaymentOption("Online Payment")}>
-              Online Payment
-            </button>
-            <button
-              className="close-btn"
-              onClick={() => setShowPaymentModal(false)}
-            >
-              Cancel
-            </button>
           </div>
+
+          <div className="summary-divider"></div>
+
+          <div className="summary-total">
+            <b>Total</b>
+            <b>₹{getTotalCartAmount() + deliveryFee}</b>
+          </div>
+
         </div>
-      )}
-      {isLoadingPayment && (
-        <div className="spinner-overlay">
-          <div className="spinner"></div>
+
+      </div>
+
+
+      {/* ================= MOBILE PAYMENT BUTTON ================= */}
+      <div className="mobile-payment-bar">
+        <button type="submit" className="mobile-payment-btn">
+          <span>Proceed To Payment</span>
+          <span className="payment-arrow">→</span>
+        </button>
+      </div>
+
+      {/* DESKTOP PAYMENT BUTTON */}
+      <button type="submit" className="desktop-payment-btn">
+        Proceed To Payment
+      </button>
+
+    </form>
+
+
+    {/* ================= PAYMENT MODAL ================= */}
+    {showPaymentModal && (
+      <div className="payment-modal">
+
+        <div className="payment-modal-content">
+
+          <h3>Only Online Payment Available</h3>
+
+          <button
+            type="button"
+            onClick={() => handlePaymentOption("Online Payment")}
+          >
+            Online Payment
+          </button>
+
+          <button
+            type="button"
+            className="close-btn"
+            onClick={() => setShowPaymentModal(false)}
+          >
+            Cancel
+          </button>
+
         </div>
-      )}
-    </div>
-  );
+
+      </div>
+    )}
+
+
+    {/* ================= PAYMENT LOADING ================= */}
+    {isLoadingPayment && (
+      <div className="spinner-overlay">
+        <div className="spinner"></div>
+      </div>
+    )}
+
+  </div>
+);
 };
 
 export default PlaceOrder;
