@@ -17,10 +17,25 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 // ✅ Local frontend & admin panel URLs
+// const allowedOrigins = [
+//   "http://localhost:5173", // frontend
+//   "http://localhost:5174", // admin
+//   "https://online-food-delivery-frontend-8i06.onrender.com",
+//   "https://online-food-delivery-admin-spq5.onrender.com"
+// ];
+
 const allowedOrigins = [
-  "http://localhost:5173", // frontend
-  "http://localhost:5174", // admin
+  "http://localhost:5173",
+  "http://localhost:5174",
+
+  // Live frontend
+  "https://getasoi.in",
+  "https://www.getasoi.in",
+
+  // Old Render frontend
   "https://online-food-delivery-frontend-8i06.onrender.com",
+
+  // Admin panel
   "https://online-food-delivery-admin-spq5.onrender.com"
 ];
 
