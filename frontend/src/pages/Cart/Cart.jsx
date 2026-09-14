@@ -3,8 +3,7 @@ import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 
-const Cart = ({ setShowLogin }) => {
-  // let Deliverycharge = 10;
+const Cart = ({ setShowLogin, setLoginInitialState }) => {
   const {
     cartItems,
     food_list,
@@ -16,8 +15,8 @@ const Cart = ({ setShowLogin }) => {
   } = useContext(StoreContext);
 
   const navigate = useNavigate();
-  
-  const [message, setMessage] = useState(null); // State to store message
+
+  const [message, setMessage] = useState(null);
 
   const totalQuantity = Object.values(cartItems).reduce(
     (acc, curr) => acc + curr,
@@ -33,15 +32,28 @@ const Cart = ({ setShowLogin }) => {
 
       setTimeout(() => setMessage(null), 3000);
     } else if (!token) {
+      const hasAccount =
+        localStorage.getItem("hasAccount") === "true";
+
       setMessage({
-        text: "You are not signed in",
+        text: hasAccount
+          ? "Please login to continue"
+          : "Please create an account to continue",
         type: "error",
       });
 
       setTimeout(() => {
         setMessage(null);
-        setShowLogin(true); // open login popup
-      }, 2000);
+
+        // Decide whether to open Login or Sign Up
+        if (hasAccount) {
+          setLoginInitialState("Login");
+        } else {
+          setLoginInitialState("Sign Up");
+        }
+
+        setShowLogin(true);
+      }, 1500);
     } else {
       navigate("/order");
     }
@@ -62,8 +74,11 @@ const Cart = ({ setShowLogin }) => {
             alt="Empty Cart"
             className="empty-cart-image"
           />
+
           <h2>Your cart is empty.</h2>
+
           <p>Add some delicious items to fill it up!</p>
+
           <button
             className="go-home-btn"
             onClick={() => navigate("/")}
@@ -91,43 +106,70 @@ const Cart = ({ setShowLogin }) => {
               <p>Total</p>
               <p>Remove</p>
             </div>
+
             <br />
+
             <hr />
+
             {food_list.map((item, index) => {
               if (cartItems[item._id] > 0) {
                 return (
                   <div key={index}>
                     <div className="cart-items-title cart-items-item">
                       <img src={item.image} alt="" />
-                      <p data-label="Title">{item.name}</p>
-                      <p data-label="Price">₹{item.price}</p>
+
+                      <p data-label="Title">
+                        {item.name}
+                      </p>
+
+                      <p data-label="Price">
+                        ₹{item.price}
+                      </p>
+
                       <div className="quantity-controls">
                         <button
-                          onClick={() => removeFromCart(item._id)}
+                          onClick={() =>
+                            removeFromCart(item._id)
+                          }
                           className="quantity-btn"
                         >
                           -
                         </button>
-                        <span>{cartItems[item._id]}</span>
+
+                        <span>
+                          {cartItems[item._id]}
+                        </span>
+
                         <button
-                          onClick={() => addToCart(item._id)}
+                          onClick={() =>
+                            addToCart(item._id)
+                          }
                           className="quantity-btn"
                         >
                           +
                         </button>
                       </div>
-                      <p data-label="Total">₹{item.price * cartItems[item._id]}</p>
-                      <p data-label="Remove"
-                        onClick={() => removeFromCart(item._id)}
+
+                      <p data-label="Total">
+                        ₹{item.price * cartItems[item._id]}
+                      </p>
+
+                      <p
+                        data-label="Remove"
+                        onClick={() =>
+                          removeFromCart(item._id)
+                        }
                         className="cross"
                       >
                         x
                       </p>
                     </div>
+
                     <hr />
                   </div>
                 );
               }
+
               return null;
             })}
           </div>
@@ -135,24 +177,31 @@ const Cart = ({ setShowLogin }) => {
           <div className="cart-bottom">
             <div className="cart-total">
               <h2>Cart Totals</h2>
+
               <div>
                 <div className="cart-total-details">
                   <p>Subtotal</p>
                   <p>₹{getTotalCartAmount()}</p>
                 </div>
+
                 <hr />
+
                 <div className="cart-total-details">
                   <p>Delivery Fee + Distance Fee</p>
                   <p>Calculated</p>
                 </div>
+
                 <hr />
+
                 <div className="cart-total-details">
                   <b>Total</b>
                   <b>₹{getTotalCartAmount()}</b>
                 </div>
-                
               </div>
-              <button onClick={handleCheckout}>PROCEED TO CHECKOUT</button>
+
+              <button onClick={handleCheckout}>
+                PROCEED TO CHECKOUT
+              </button>
             </div>
           </div>
         </>
