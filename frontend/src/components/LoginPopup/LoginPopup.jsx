@@ -4,9 +4,9 @@ import { StoreContext } from "../../context/StoreContext";
 import { assets } from "../../assets/assets";
 import "./LoginPopup.css";
 
-const LoginPopup = ({ setShowLogin }) => {
+const LoginPopup = ({ setShowLogin, initialState = "Login" }) => {
   const { url, setToken } = useContext(StoreContext);
-  const [currState, setCurrState] = useState("Login");
+  const [currState, setCurrState] = useState(initialState);
   const [data, setData] = useState({
     name: "",
     phone: "",
@@ -40,24 +40,44 @@ const LoginPopup = ({ setShowLogin }) => {
       return showMessage("Passwords do not match!", "error");
     }
 
-    const endpoint = currState === "Login" ? "/api/user/login" : "/api/user/register";
+    const endpoint =
+      currState === "Login"
+        ? "/api/user/login"
+        : "/api/user/register";
 
     try {
       const res = await axios.post(url + endpoint, data);
+
       if (res.data.success) {
-        if (currState === "Login") {
+        // Login OR Sign Up successful
+        if (res.data.token) {
           setToken(res.data.token);
           localStorage.setItem("token", res.data.token);
+        }
+
+        // Remember that this browser has an account
+        if (currState === "Login" || currState === "Sign Up") {
+          localStorage.setItem("hasAccount", "true");
+        }
+
+        if (currState === "Login") {
           showMessage("Login successful!", "success");
         } else {
           showMessage("Account created successfully!", "success");
         }
+
         setTimeout(() => setShowLogin(false), 2000);
       } else {
-        showMessage(res.data.message || "Something went wrong.", "error");
+        showMessage(
+          res.data.message || "Something went wrong.",
+          "error"
+        );
       }
     } catch (error) {
-      const errMsg = error?.response?.data?.message || "Server error, try again.";
+      const errMsg =
+        error?.response?.data?.message ||
+        "Server error, try again.";
+
       showMessage(errMsg, "error");
     }
   };
@@ -70,19 +90,28 @@ const LoginPopup = ({ setShowLogin }) => {
     }
 
     try {
-      const res = await axios.post(`${url}/api/user/reset-password`, {
-        phone: data.phone,
-        newPassword: data.newPassword,
-      });
+      const res = await axios.post(
+        `${url}/api/user/reset-password`,
+        {
+          phone: data.phone,
+          newPassword: data.newPassword,
+        }
+      );
 
       if (res.data.success) {
         showMessage("Password reset successfully!", "success");
         setCurrState("Login");
       } else {
-        showMessage(res.data.message || "Reset failed.", "error");
+        showMessage(
+          res.data.message || "Reset failed.",
+          "error"
+        );
       }
     } catch (error) {
-      const errMsg = error?.response?.data?.message || "Error resetting password.";
+      const errMsg =
+        error?.response?.data?.message ||
+        "Error resetting password.";
+
       showMessage(errMsg, "error");
     }
   };
@@ -90,11 +119,20 @@ const LoginPopup = ({ setShowLogin }) => {
   return (
     <div className="login-popup">
       <form
-        onSubmit={currState === "Forgot Password" ? handleResetPassword : onLogin}
+        onSubmit={
+          currState === "Forgot Password"
+            ? handleResetPassword
+            : onLogin
+        }
         className="login-popup-container"
       >
         <div className="login-popup-title">
-          <h2>{currState === "Forgot Password" ? "Forgot Password" : currState}</h2>
+          <h2>
+            {currState === "Forgot Password"
+              ? "Forgot Password"
+              : currState}
+          </h2>
+
           <img
             onClick={() => setShowLogin(false)}
             src={assets.cross_icon}
@@ -145,10 +183,17 @@ const LoginPopup = ({ setShowLogin }) => {
                 placeholder="Re-enter Password"
                 required
               />
+
               <img
-                src={showRePassword ? assets.eye_open_icon : assets.eye_close_icon}
+                src={
+                  showRePassword
+                    ? assets.eye_open_icon
+                    : assets.eye_close_icon
+                }
                 className="eye-icon"
-                onClick={() => setShowRePassword(!showRePassword)}
+                onClick={() =>
+                  setShowRePassword(!showRePassword)
+                }
                 alt="eye"
               />
             </div>
@@ -164,6 +209,7 @@ const LoginPopup = ({ setShowLogin }) => {
                 placeholder="Enter New Password"
                 required
               />
+
               <div className="password-eye-container">
                 <input
                   name="reNewPassword"
@@ -173,10 +219,17 @@ const LoginPopup = ({ setShowLogin }) => {
                   placeholder="Re-enter New Password"
                   required
                 />
+
                 <img
-                  src={showRePassword ? assets.eye_open_icon : assets.eye_close_icon}
+                  src={
+                    showRePassword
+                      ? assets.eye_open_icon
+                      : assets.eye_close_icon
+                  }
                   className="eye-icon"
-                  onClick={() => setShowRePassword(!showRePassword)}
+                  onClick={() =>
+                    setShowRePassword(!showRePassword)
+                  }
                   alt="eye"
                 />
               </div>
@@ -200,33 +253,45 @@ const LoginPopup = ({ setShowLogin }) => {
 
         <div className="login-popup-condition">
           <input type="checkbox" required />
-          <p>By continuing, I agree to the terms of use & privacy policy.</p>
+          <p>
+            By continuing, I agree to the terms of use & privacy
+            policy.
+          </p>
         </div>
 
         {currState === "Login" ? (
           <>
             <p>
               Create a new account?{" "}
-                            <span
+              <span
                 className="blink-link"
                 onClick={() => setCurrState("Sign Up")}
               >
                 Click here
               </span>
             </p>
+
             <p>
-              <span onClick={() => setCurrState("Forgot Password")}>Forgot Password?</span>
+              <span
+                onClick={() => setCurrState("Forgot Password")}
+              >
+                Forgot Password?
+              </span>
             </p>
           </>
         ) : currState === "Sign Up" ? (
           <p>
             Already have an account?{" "}
-            <span onClick={() => setCurrState("Login")}>Login here</span>
+            <span onClick={() => setCurrState("Login")}>
+              Login here
+            </span>
           </p>
         ) : (
           <p>
             Back to Login?{" "}
-            <span onClick={() => setCurrState("Login")}>Login here</span>
+            <span onClick={() => setCurrState("Login")}>
+              Login here
+            </span>
           </p>
         )}
       </form>
