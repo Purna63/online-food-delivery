@@ -1,169 +1,624 @@
+/* =========================================================
+   POPUP BACKGROUND
+========================================================= */
+
 .login-popup {
   position: fixed;
-  z-index: 1;
+  inset: 0;
+
+  z-index: 9999;
+
   width: 100%;
   height: 100%;
-  background-color: #00000090;
+
+  background: rgba(0, 0, 0, 0.55);
+
   display: grid;
+  place-items: center;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  animation: popupFadeIn 0.25s ease;
 }
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
 .login-popup-container {
-  place-self: center;
-  border: 1px solid tomato;
-  width: max(23vw, 330px);
-  color: #808080;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  padding: 25px 30px;
-  border-radius: 8px;
-  font-size: 14px;
-  animation: fadeIn 0.5s;
-}
-.login-popup-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: black;
-}
-.login-popup-title img {
-  width: 16px;
-  cursor: pointer;
-}
-.login-popup-inputs {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.login-popup-inputs input {
-  outline: none;
-  border: 1px solid #c9c9c9;
-  padding: 10px;
-  border-radius: 4px;
-}
-.login-popup-container button {
-  border: none;
-  padding: 10px;
-  border-radius: 4px;
-  color: white;
-  background-color: tomato;
-  font-size: 15px;
-  cursor: pointer;
-}
-.login-popup-condition {
-  display: flex;
-  align-items: start;
-  gap: 8px;
-  margin-top: -15px;
-}
-.login-popup-condition input {
-  margin-top: 5px;
-}
-.login-popup p span {
-  color: tomato;
-  font-weight: 500;
-  cursor: pointer;
-}
-/* Error message style */
-.error-message {
-  color: red;
-  font-size: 12px;
-  margin-top: -10px;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-/* Slight padding to inputs for better look */
-.login-popup-inputs input {
-  outline: none;
-  border: 1px solid #c9c9c9;
-  padding: 12px;
-  border-radius: 4px;
-  transition: 0.3s;
-}
-
-.login-popup-inputs input:focus {
-  border-color: tomato;
-  box-shadow: 0 0 5px rgba(255, 99, 71, 0.5);
-}
-
-/* Adding hover effect to button */
-.login-popup-container button:hover {
-  background-color: #e04e2d;
-}
-.password-eye-container {
   position: relative;
+
+  width: min(100%, 410px);
+
+  box-sizing: border-box;
+
+  color: #5d6673;
+
+  background: #ffffff;
+
+  border: 1px solid #e8e8e8;
+
+  border-radius: 18px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 30px 32px 28px;
+
+  gap: 0;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.22);
+
+  animation: popupScaleIn 0.3s ease;
 }
 
-.password-eye-container input {
-  width: 100%;
-}
- 
-.eye-icon {
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.login-popup-close {
   position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
+
+  top: 16px;
+  right: 16px;
+
+  width: 30px;
+  height: 30px;
+
+  padding: 6px;
+
+  border: none;
+
+  background: transparent;
+
   cursor: pointer;
-}
-.popup-message {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #ffe0e0;
-  padding: 10px 20px;
-  border-radius: 8px;
-  color: #333;
-  font-weight: bold;
-  z-index: 1000;
-  animation: fadeInOut 2s forwards;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.popup-message.success {
-  background-color: #d4edda;
-  color: #155724;
+.login-popup-close img {
+  width: 18px;
+  height: 18px;
+
+  object-fit: contain;
+
+  opacity: 0.8;
+
+  transition: transform 0.2s ease;
 }
 
-.popup-message.error {
-  background-color: #f8d7da;
-  color: #721c24;
+.login-popup-close:hover img {
+  transform: rotate(90deg);
 }
 
-.blink-link {
-  color: tomato;
-  font-weight: 700;
-  cursor: pointer;
-  animation: blinkText 1s infinite;
+/* =========================================================
+   TOP ICON
+========================================================= */
+
+.login-popup-icon {
+  width: 58px;
+  height: 58px;
+
+  margin-bottom: 12px;
+
+  border-radius: 50%;
+
+  background: #fff0ec;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes blinkText {
-  0% { opacity: 1; }
-  50% { opacity: 0.3; }
-  100% { opacity: 1; }
+.login-popup-icon svg {
+  width: 31px;
+  height: 31px;
+
+  fill: none;
+
+  stroke: #ff4d3d;
+
+  stroke-width: 1.8;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-@keyframes fadeInOut {
-  0% { opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { opacity: 0; }
-}
-.form-message {
-  margin-top: 10px;
-  font-weight: 500;
-  padding: 8px;
-  border-radius: 5px;
+/* =========================================================
+   HEADING
+========================================================= */
+
+.login-popup-heading {
   text-align: center;
+
+  margin-bottom: 22px;
+}
+
+.login-popup-heading h2 {
+  margin: 0 0 4px;
+
+  color: #10233f;
+
+  font-size: 23px;
+
+  font-weight: 700;
+
+  line-height: 1.25;
+}
+
+.login-popup-heading p {
+  margin: 0;
+
+  color: #7b8490;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+/* =========================================================
+   INPUT AREA
+========================================================= */
+
+.login-popup-inputs {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  margin-bottom: 14px;
+}
+
+/* =========================================================
+   INPUT WRAPPER
+========================================================= */
+
+.input-wrapper {
+  position: relative;
+
+  width: 100%;
+  height: 50px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+
+  border: 1px solid #d9dee5;
+
+  border-radius: 7px;
+
+  background: #ffffff;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.input-wrapper:focus-within {
+  border-color: #ff543f;
+
+  box-shadow:
+    0 0 0 3px rgba(255, 84, 63, 0.08);
+}
+
+/* Input SVG icons */
+
+.input-wrapper > svg {
+  flex-shrink: 0;
+
+  width: 20px;
+  height: 20px;
+
+  margin-left: 13px;
+  margin-right: 12px;
+
+  fill: none;
+
+  stroke: #647181;
+
+  stroke-width: 1.8;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Inputs */
+
+.input-wrapper input {
+  flex: 1;
+
+  min-width: 0;
+
+  width: 100%;
+  height: 100%;
+
+  box-sizing: border-box;
+
+  padding: 0 12px 0 0;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #273444;
+
+  font-family: inherit;
+
+  font-size: 13px;
+}
+
+.input-wrapper input::placeholder {
+  color: #737d89;
+}
+
+/* =========================================================
+   EYE ICON
+========================================================= */
+
+.input-wrapper .eye-icon {
+  flex-shrink: 0;
+
+  width: 19px;
+  height: 19px;
+
+  margin-right: 13px;
+
+  object-fit: contain;
+
+  cursor: pointer;
+
+  opacity: 0.75;
+}
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+.login-submit-button {
+  width: 100%;
+
+  height: 46px;
+
+  border: none;
+
+  border-radius: 6px;
+
+  background: #ff503b;
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.login-submit-button:hover {
+  background: #ef4634;
+}
+
+.login-submit-button:active {
+  transform: scale(0.99);
+}
+
+/* =========================================================
+   TERMS / CHECKBOX
+========================================================= */
+
+.login-popup-condition {
+  width: 100%;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 9px;
+
+  margin-top: 14px;
+
+  margin-bottom: 20px;
+}
+
+.login-popup-condition input {
+  flex-shrink: 0;
+
+  width: 15px;
+  height: 15px;
+
+  margin: 2px 0 0;
+
+  accent-color: #ff503b;
+
+  cursor: pointer;
+}
+
+.login-popup-condition p {
+  margin: 0;
+
+  color: #697482;
+
+  font-size: 12px;
+
+  line-height: 1.45;
+}
+
+/* =========================================================
+   BOTTOM LINKS
+========================================================= */
+
+.account-switch-text,
+.login-bottom-links p {
+  margin: 0;
+
+  color: #737d89;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+.login-popup p span {
+  color: #ff503b;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.login-popup p span:hover {
+  text-decoration: underline;
+}
+
+/* Login bottom area */
+
+.login-bottom-links {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.login-bottom-links p:last-child {
+  text-align: right;
+}
+
+.forgot-link {
+  color: #ff503b !important;
+
+  cursor: pointer;
+
+  font-weight: 500;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.form-message {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  margin-bottom: 12px;
+
+  padding: 8px 10px;
+
+  border-radius: 6px;
+
+  text-align: center;
+
+  font-size: 12px;
+
+  font-weight: 500;
 }
 
 .form-message.success {
-  color: green;
-  background-color: #e6ffed;
+  color: #177245;
+
+  background: #e8f8ee;
 }
 
 .form-message.error {
-  color: red;
-  background-color: #ffe6e6;
+  color: #b42318;
+
+  background: #fff0ee;
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes popupScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 500px) {
+  .login-popup {
+    padding: 15px;
+  }
+
+  .login-popup-container {
+    width: 100%;
+
+    max-width: 390px;
+
+    padding: 27px 25px 25px;
+
+    border-radius: 16px;
+  }
+
+  .login-popup-icon {
+    width: 55px;
+    height: 55px;
+  }
+
+  .login-popup-heading h2 {
+    font-size: 21px;
+  }
+
+  .login-popup-heading p {
+    font-size: 12px;
+  }
+
+  .input-wrapper {
+    height: 48px;
+  }
+
+  .input-wrapper input {
+    font-size: 12px;
+  }
+
+  .login-submit-button {
+    height: 45px;
+
+    font-size: 13px;
+  }
+
+  .login-popup-condition p {
+    font-size: 11px;
+  }
+
+  .login-bottom-links {
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .login-bottom-links p:last-child {
+    text-align: center;
+  }
+
+  .account-switch-text,
+  .login-bottom-links p {
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 360px) {
+  .login-popup {
+    padding: 10px;
+  }
+
+  .login-popup-container {
+    padding: 24px 18px 22px;
+
+    border-radius: 14px;
+  }
+
+  .login-popup-icon {
+    width: 50px;
+    height: 50px;
+
+    margin-bottom: 10px;
+  }
+
+  .login-popup-icon svg {
+    width: 27px;
+    height: 27px;
+  }
+
+  .login-popup-heading {
+    margin-bottom: 17px;
+  }
+
+  .login-popup-heading h2 {
+    font-size: 19px;
+  }
+
+  .login-popup-inputs {
+    gap: 6px;
+  }
+
+  .input-wrapper {
+    height: 45px;
+  }
+
+  .input-wrapper > svg {
+    width: 18px;
+    height: 18px;
+
+    margin-left: 11px;
+    margin-right: 9px;
+  }
+
+  .input-wrapper input {
+    font-size: 11px;
+  }
+
+  .input-wrapper .eye-icon {
+    width: 17px;
+    height: 17px;
+
+    margin-right: 10px;
+  }
+
+  .login-popup-condition {
+    margin-top: 11px;
+    margin-bottom: 16px;
+  }
+
+  .login-popup-condition p {
+    font-size: 10px;
+  }
+
+  .login-submit-button {
+    height: 43px;
+
+    font-size: 12px;
+  }
 }
