@@ -11,21 +11,26 @@ import OrderSuccess from "./pages/OrderSuccess/OrderSuccess";
 import Orders from "./pages/Orders/Orders";
 import "./App.css";
 import RefundPolicy from "./pages/RefundPolicy/RefundPolicy";
-import Terms from "./pages/Terms/Terms"; //new added
-import Privacy from "./pages/Privacy/Privacy";//new added
-import Shipping from "./pages/Shipping/Shipping";//new added
+import Terms from "./pages/Terms/Terms";
+import Privacy from "./pages/Privacy/Privacy";
+import Shipping from "./pages/Shipping/Shipping";
 import Contact from "./pages/Contact/Contact";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
+
+  // Controls whether LoginPopup opens with Login or Sign Up
+  const [loginInitialState, setLoginInitialState] = useState("Login");
+
   const [loading, setLoading] = useState(true);
 
   // Simulate loading
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000); // 1.5s loading
+    }, 1000);
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -40,14 +45,30 @@ const App = () => {
 
   return (
     <>
-      {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
+      {showLogin && (
+        <LoginPopup
+          setShowLogin={setShowLogin}
+          initialState={loginInitialState}
+        />
+      )}
+
       <div className="app">
         <Navbar setShowLogin={setShowLogin} />
         <ScrollToTop />
+
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/cart" element={<Cart />} /> */}
-          <Route path="/cart" element={<Cart setShowLogin={setShowLogin} />} />
+
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                setShowLogin={setShowLogin}
+                setLoginInitialState={setLoginInitialState}
+              />
+            }
+          />
+
           <Route path="/order" element={<PlaceOrder />} />
           <Route path="/menu" element={<ExploreMenu />} />
           <Route path="/order-success" element={<OrderSuccess />} />
@@ -59,6 +80,7 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
+
       <Footer />
     </>
   );
