@@ -43,9 +43,9 @@ const ExploreMenu = () => {
         {/* <h1>Menu Items</h1> */}
         <h1>Restaurants</h1>
 
-<div className="explore-menu-list">
+{/* <div className="explore-menu-list">
 
-  {/* All Menu Option */}
+  
   <div
     onClick={() => setCategory("All")}
     className="explore-menu-list-item"
@@ -58,7 +58,7 @@ const ExploreMenu = () => {
     <p>All</p>
   </div>
 
-  {/* Other Categories */}
+  
 {restaurants.map((shop, index) => (
   <div
     key={index}
@@ -77,6 +77,56 @@ const ExploreMenu = () => {
     <p>{shop.shopName}</p>
   </div>
 ))}
+</div> */}
+
+        <div className="explore-menu-list">
+
+  {/* All Menu Option */}
+  <div
+    onClick={() => setCategory("All")}
+    className="explore-menu-list-item"
+  >
+    <img
+      className={category === "All" ? "active" : ""}
+      src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png"
+      alt="All"
+      width="70"
+      height="70"
+    />
+    <p>All</p>
+  </div>
+
+  {/* Other Categories */}
+  {restaurants.length === 0
+    ? Array.from({ length: 7 }).map((_, index) => (
+        <div
+          key={`restaurant-placeholder-${index}`}
+          className="explore-menu-list-item restaurant-placeholder"
+        >
+          <div className="restaurant-placeholder-image"></div>
+          <div className="restaurant-placeholder-text"></div>
+        </div>
+      ))
+    : restaurants.map((shop, index) => (
+        <div
+          key={index}
+          onClick={() => setCategory(shop.shopName)}
+          className="explore-menu-list-item"
+        >
+          <img
+            src={
+              shop.shopImage ||
+              "https://cdn-icons-png.flaticon.com/512/3075/3075977.png"
+            }
+            alt={shop.shopName}
+            className={category === shop.shopName ? "active" : ""}
+            width="70"
+            height="70"
+          />
+
+          <p>{shop.shopName}</p>
+        </div>
+      ))}
 </div>
 
         <hr />
