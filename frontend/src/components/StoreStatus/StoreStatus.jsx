@@ -124,7 +124,7 @@ const StoreStatusProvider = ({ children }) => {
   <div className="shop-status-column open-shops">
     <span className="shop-status-dot">🟢</span>
     <div>
-      <strong>Open: All Open</strong>
+      <strong>Open: </strong>
       <small>{storeConfig.openShops || "Restaurants currently open"}</small>
     </div>
   </div>
