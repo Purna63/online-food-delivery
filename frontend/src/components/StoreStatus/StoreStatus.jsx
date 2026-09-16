@@ -125,7 +125,7 @@ const StoreStatusProvider = ({ children }) => {
     <span className="shop-status-dot">🟢</span>
     <div>
       <strong>Open: </strong>
-      <small>{storeConfig.openShops || "Restaurants currently open"}</small>
+      <small>{storeConfig.openShops || "Restaurants currently closed"}</small>
     </div>
   </div>
 
