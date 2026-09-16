@@ -104,10 +104,14 @@
 
 .loader-container {
   width: 100%;
+  min-height: 500px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  box-sizing: border-box;
   padding: 50px 0;
 }
 
