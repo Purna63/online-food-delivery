@@ -1,10 +1,22 @@
 .header {
   height: 34vw;
   margin: 60px auto;
-  background: url("/header_img.png") no-repeat;
-  background-size: cover;
-  background-position: center;
   position: relative;
+  overflow: hidden;
+}
+.header-image {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  display: block;
+
+  z-index: 0;
 }
 
 .header-contents {
@@ -16,6 +28,9 @@
   max-width: 50%;
   bottom: 10%;
   left: 6vw;
+
+  z-index: 1;
+
   animation: fadeIn 3s;
 }
 
