@@ -32,3 +32,95 @@
   width: 100%;
 }
   
+/* ================================
+   Mobile Store Status UI
+   ================================ */
+
+@media (max-width: 600px) {
+
+  .store-status {
+    width: calc(100% - 32px);
+    max-width: none;
+    box-sizing: border-box;
+    margin: 15px auto;
+    padding: 16px 12px;
+    border-radius: 14px;
+
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    align-items: center;
+    gap: 8px;
+
+    text-align: left;
+    font-size: 14px;
+  }
+
+  .store-status-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    min-width: 0;
+  }
+
+  .store-status-icon {
+    font-size: 22px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .store-status-main p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.25;
+    font-weight: 500;
+  }
+
+  .store-countdown {
+    display: block;
+    margin-top: 2px;
+    font-size: 17px;
+    line-height: 1.2;
+    color: #e51c23;
+  }
+
+  .hours {
+    margin-top: 5px;
+    font-size: 11px;
+    line-height: 1.2;
+  }
+
+  .shop-status-column {
+    min-width: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .shop-status-dot {
+    font-size: 18px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .shop-status-column div {
+    min-width: 0;
+  }
+
+  .shop-status-column strong {
+    display: block;
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .shop-status-column small {
+    display: block;
+    margin-top: 4px;
+    font-size: 10px;
+    line-height: 1.25;
+    color: #555;
+  }
+
+  .shop-status-marquee {
+    display: none;
+  }
+}
