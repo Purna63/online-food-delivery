@@ -1,4 +1,5 @@
 import axios from "axios";
+// import { createContext, useEffect, useState } from "react";
 import { createContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
@@ -19,7 +20,21 @@ const StoreContextProvider = (props) => {
   );
 
   const url = BACKEND_URL;
+  // const socket = io(url);
+  useEffect(() => {
   const socket = io(url);
+
+  const handleFoodUpdated = () => {
+    fetchFoodList();
+  };
+
+  socket.on("foodUpdated", handleFoodUpdated);
+
+  return () => {
+    socket.off("foodUpdated", handleFoodUpdated);
+    socket.disconnect();
+  };
+}, [url]);
 
   const addToCart = async (itemId) => {
     setCartItems((prev) => {
@@ -145,13 +160,13 @@ const StoreContextProvider = (props) => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  useEffect(() => {
-    socket.on("foodUpdated", () => {
-      fetchFoodList();
-    });
+  // useEffect(() => {
+  //   socket.on("foodUpdated", () => {
+  //     fetchFoodList();
+  //   });
 
-    return () => socket.off("foodUpdated");
-  }, []);
+  //   return () => socket.off("foodUpdated");
+  // }, []);
 
   const contextValue = {
     food_list,
