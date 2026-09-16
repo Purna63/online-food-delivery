@@ -82,7 +82,7 @@ const StoreStatusProvider = ({ children }) => {
           Hours: {storeConfig.openHour}:00 – {storeConfig.closeHour}:00
         </span>
       </div> */}
-      <div className={`store-status ${isOpen ? "open" : "closed"}`}>
+      {/* <div className={`store-status ${isOpen ? "open" : "closed"}`}>
   <p>
     {isOpen ? "🟢 Ready to Take Your Order!" : `🔴 Closed - ${countdown}`}
   </p>
@@ -96,6 +96,46 @@ const StoreStatusProvider = ({ children }) => {
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     🔴 Closed: {storeConfig.closedShops}
   </marquee>
+</div> */}
+
+      <div className={`store-status ${isOpen ? "open" : "closed"}`}>
+  <div className="store-status-main">
+    <span className="store-status-icon">
+      {isOpen ? "🟢" : "🔴"}
+    </span>
+
+    <div>
+      <p>
+        {isOpen ? "Ready to Take Your Order!" : "Closed - Reopens in"}
+      </p>
+
+      {!isOpen && (
+        <strong className="store-countdown">
+          {countdown.replace("Reopens in ", "")}
+        </strong>
+      )}
+
+      <span className="hours">
+        Hours: {storeConfig.openHour}:00 – {storeConfig.closeHour}:00
+      </span>
+    </div>
+  </div>
+
+  <div className="shop-status-column open-shops">
+    <span className="shop-status-dot">🟢</span>
+    <div>
+      <strong>Open: All Open</strong>
+      <small>{storeConfig.openShops || "Restaurants currently open"}</small>
+    </div>
+  </div>
+
+  <div className="shop-status-column closed-shops">
+    <span className="shop-status-dot">🔴</span>
+    <div>
+      <strong>Closed:</strong>
+      <small>{storeConfig.closedShops || "Currently closed"}</small>
+    </div>
+  </div>
 </div>
       {children}
     </StoreStatusContext.Provider>
