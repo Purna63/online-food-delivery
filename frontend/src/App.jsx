@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home/Home";
@@ -23,25 +23,23 @@ const App = () => {
   // Controls whether LoginPopup opens with Login or Sign Up
   const [loginInitialState, setLoginInitialState] = useState("Login");
 
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 1000);
 
-  // Simulate loading
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="loading-screen">
-        <div className="spinner"></div>
-        <p>Loading...</p>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="loading-screen">
+  //       <div className="spinner"></div>
+  //       <p>Loading...</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
