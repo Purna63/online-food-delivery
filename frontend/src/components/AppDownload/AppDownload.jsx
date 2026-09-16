@@ -7,7 +7,7 @@ const AppDownload = () => {
     <div className="app-download" id="app-download">
       <p>
         For Better Experience Download <br />
-        Rasoi App
+        GoRasoi App
       </p>
 <div className="app-download-platfroms">
   <img
