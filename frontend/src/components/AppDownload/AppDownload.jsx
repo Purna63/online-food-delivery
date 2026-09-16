@@ -9,10 +9,21 @@ const AppDownload = () => {
         For Better Experience Download <br />
         Rasoi App
       </p>
-      <div className="app-download-platfroms">
-        <img src={assets.play_store} alt="" />
-        <img src={assets.app_store} alt="" />
-      </div>
+<div className="app-download-platfroms">
+  <img
+    src={assets.play_store}
+    alt="Get it on Google Play"
+    width="180"
+    height="60"
+  />
+
+  <img
+    src={assets.app_store}
+    alt="Download on the App Store"
+    width="180"
+    height="60"
+  />
+</div>
     </div>
   );
 };
