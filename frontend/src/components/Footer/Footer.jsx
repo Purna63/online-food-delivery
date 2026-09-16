@@ -42,7 +42,12 @@ const Footer = () => {
 
         {/* CENTER - LOGO / ABOUT */}
         <div className="footer-content-left">
-          <img src={assets.logo} alt="Restaurant Logo" />
+         <img
+  src={assets.logo}
+  alt="Restaurant Logo"
+  width="150"
+  height="60"
+/>
 
           <p>
             We prioritize security to ensure your personal and payment
