@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
@@ -9,28 +8,39 @@ const Header = () => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const typingSpeed = 100; // ms per character
-    const restartDelay = 3000; // delay before restarting after typing finishes
+    const typingSpeed = 100;
+    const restartDelay = 3000;
 
     if (index < fullText.length) {
       const timeout = setTimeout(() => {
         setDisplayedText((prev) => prev + fullText[index]);
         setIndex((prev) => prev + 1);
       }, typingSpeed);
+
       return () => clearTimeout(timeout);
     } else {
       const resetTimeout = setTimeout(() => {
         setDisplayedText("");
         setIndex(0);
       }, restartDelay);
+
       return () => clearTimeout(resetTimeout);
     }
   }, [index]);
 
   return (
     <div className="header">
+
+      {/* LCP image */}
+      <img
+        className="header-image"
+        src="/header_img.png"
+        alt=""
+        fetchPriority="high"
+      />
+
       <div className="header-contents">
-        {/* Animated typing text */}
+
         <h2>{displayedText}</h2>
 
         <p>
@@ -39,9 +49,11 @@ const Header = () => {
           with expert cooking. Our goal is to make every meal a great
           experience.
         </p>
+
         <Link to="/menu">
           <button>View Menu</button>
         </Link>
+
       </div>
     </div>
   );
