@@ -146,3 +146,96 @@
   transform: translateY(-3px);
   box-shadow: 0 6px 16px rgba(0,0,0,0.12);
 }
+/* =========================================
+   MOBILE FOOD CARD UI
+   Desktop remains unchanged
+   ========================================= */
+
+@media (max-width: 480px) {
+
+  .food-item {
+    height: 310px;
+    border-radius: 16px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .food-item-img-container {
+    height: 145px;
+    flex-shrink: 0;
+  }
+
+  .food-item-image {
+    width: 100%;
+    height: 145px;
+    object-fit: cover;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .food-item-counter,
+  .food-item-img-container .add {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .food-item-img-container .add {
+    width: 36px;
+  }
+
+  .food-item-counter {
+    gap: 8px;
+    padding: 5px;
+  }
+
+  .food-item-counter img {
+    width: 28px;
+  }
+
+  .food-item-info {
+    padding: 10px 11px 11px;
+  }
+
+  .food-item-name-rating {
+    margin-bottom: 5px;
+    gap: 5px;
+  }
+
+  .food-item-name-rating p {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+
+  .food-item-name-rating img {
+    width: 48px;
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  .food-item-desc {
+    font-size: 12px;
+    line-height: 1.35;
+    margin: 2px 0 7px;
+  }
+
+  .food-item-price {
+    font-size: 17px;
+    margin: 0 0 5px;
+  }
+
+  .shop-name {
+    font-size: 11px;
+    margin: 0 0 4px;
+  }
+
+  .open-status,
+  .closed-status,
+  .stock-status {
+    font-size: 10px;
+  }
+
+  .closed-btn {
+    bottom: 10px;
+    right: 10px;
+    padding: 6px 9px;
+    font-size: 11px;
+  }
+}
