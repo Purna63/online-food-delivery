@@ -34,7 +34,7 @@ const Header = () => {
       {/* LCP image */}
       <img
         className="header-image"
-        src="/header_img.png"
+        src="/header_img.webp"
         alt=""
         fetchPriority="high"
       />
