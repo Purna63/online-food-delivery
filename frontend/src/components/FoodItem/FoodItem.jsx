@@ -40,12 +40,20 @@ const FoodItem = ({
       onClick={handleCardClick}
     >
       <div className="food-item-img-container">
-        <img
+        {/* <img
           className="food-item-image"
-          //src={url + "/images/" + image}
           src={image}
           alt=""
-        />
+        /> */}
+        <img
+  className="food-item-image"
+  src={image}
+  alt={name}
+  loading="lazy"
+  decoding="async"
+  width="300"
+  height="300"
+/>
 
         {shopStatus === "closed" ? (
           <button className="closed-btn">Closed</button>
