@@ -72,6 +72,26 @@ display: flex;
 .tex{
   color: rgb(211, 31, 64);
 }
+
+/* Prevent restaurant section from changing height while food loads */
+.restaurant-placeholder {
+  pointer-events: none;
+}
+
+.restaurant-placeholder-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+}
+
+.restaurant-placeholder-text {
+  width: 60px;
+  height: 14px;
+  margin-top: 10px;
+  border-radius: 6px;
+  background-color: #f0f0f0;
+}
 @media (max-width: 1050px) {
   .explore-menu-text {
     max-width: 100%;
@@ -105,6 +125,15 @@ display: flex;
   .explore-menu-list-item p {
     font-size: 14px;
     max-width: 80px;
+  }
+    .restaurant-placeholder-image {
+    width: 65px;
+    height: 65px;
+  }
+
+  .restaurant-placeholder-text {
+    width: 55px;
+    height: 12px;
   }
 }
 @media (max-width: 450px) {
